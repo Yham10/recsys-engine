@@ -1,0 +1,65 @@
+# ================================================================
+# RECSYS ENGINE - Central Configuration File
+# All services read from this file for consistency
+# ================================================================
+
+project:
+  name: "recsys-recommendation-engine"
+  version: "0.1.0"
+  environment: "development"
+
+kafka:
+  bootstrap_servers: "localhost:29092"  # External port for local dev
+  topics:
+    user_events: "user-events"
+    item_events: "item-events"
+  consumer_group: "recsys-feature-consumer"
+  producer:
+    acks: "all"           # Wait for all replicas to acknowledge
+    retries: 3
+    batch_size: 16384
+    linger_ms: 5          # Small batching for throughput
+
+feast:
+  project: "recsys"
+  registry: "data/feast/registry.db"
+  provider: "local"
+  offline_store:
+    type: "postgres"
+    host: "localhost"
+    port: 5432
+    database: "recsys_db"
+    db_schema: "feast"
+    user: "recsys_user"
+    password: "recsys_password"
+  online_store:
+    type: "redis"
+    connection_string: "localhost:6379"
+
+mlflow:
+  tracking_uri: "http://localhost:5000"
+  experiment_name: "recsys-recommendation-engine"
+  model_name: "two-tower-recommender"
+  artifact_location: "s3://mlflow-artifacts/"
+
+model:
+  embedding_dim: 64
+  hidden_layers: [256, 128]
+  dropout_rate: 0.2
+  learning_rate: 0.001
+  batch_size: 2048
+  epochs: 20
+  top_k: 10               # Number of recommendations to return
+
+serving:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  latency_target_ms: 100  # Our SLA
+
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  n_users: 10000
+  n_items: 5000
+  n_interactions: 500000
