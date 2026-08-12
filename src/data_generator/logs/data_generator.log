@@ -1,0 +1,49 @@
+2026-08-11 19:02:31 | INFO | __main__:140 | RecSys Data Generator starting | mode=historical
+2026-08-11 19:02:31 | INFO | __main__:108 | Starting HISTORICAL data generation mode...
+2026-08-11 19:02:31 | INFO | historical_data:133 | HistoricalDataGenerator initialized | users=10,000 | items=5,000 | interactions=500,000 | days_back=90
+2026-08-11 19:02:31 | INFO | historical_data:579 | ============================================================
+2026-08-11 19:02:31 | INFO | historical_data:580 |   HISTORICAL DATA GENERATION STARTED
+2026-08-11 19:02:31 | INFO | historical_data:581 | ============================================================
+2026-08-11 19:02:31 | INFO | historical_data:149 | Generating 10,000 user profiles...
+2026-08-11 19:32:58 | INFO | __main__:140 | RecSys Data Generator starting | mode=historical
+2026-08-11 19:32:58 | INFO | __main__:108 | Starting HISTORICAL data generation mode...
+2026-08-11 19:32:58 | INFO | historical_data:133 | HistoricalDataGenerator initialized | users=10,000 | items=5,000 | interactions=500,000 | days_back=90
+2026-08-11 19:32:58 | INFO | historical_data:579 | ============================================================
+2026-08-11 19:32:58 | INFO | historical_data:580 |   HISTORICAL DATA GENERATION STARTED
+2026-08-11 19:32:58 | INFO | historical_data:581 | ============================================================
+2026-08-11 19:32:58 | INFO | historical_data:149 | Generating 10,000 user profiles...
+2026-08-11 19:44:36 | INFO | __main__:140 | RecSys Data Generator starting | mode=historical
+2026-08-11 19:44:36 | INFO | __main__:108 | Starting HISTORICAL data generation mode...
+2026-08-11 19:44:36 | INFO | historical_data:133 | HistoricalDataGenerator initialized | users=10,000 | items=5,000 | interactions=500,000 | days_back=90
+2026-08-11 19:44:36 | INFO | historical_data:579 | ============================================================
+2026-08-11 19:44:36 | INFO | historical_data:580 |   HISTORICAL DATA GENERATION STARTED
+2026-08-11 19:44:36 | INFO | historical_data:581 | ============================================================
+2026-08-11 19:44:36 | INFO | historical_data:149 | Generating 10,000 user profiles...
+2026-08-11 19:44:36 | SUCCESS | historical_data:177 | ✅ Users saved → data\raw\users.csv (10,000 rows)
+2026-08-11 19:44:36 | INFO | historical_data:190 | Generating 5,000 item profiles...
+2026-08-11 19:54:04 | INFO | __main__:140 | RecSys Data Generator starting | mode=historical
+2026-08-11 19:54:04 | INFO | __main__:108 | Starting HISTORICAL data generation mode...
+2026-08-11 19:54:04 | INFO | historical_data:133 | HistoricalDataGenerator initialized | users=10,000 | items=5,000 | interactions=500,000 | days_back=90
+2026-08-11 19:54:04 | INFO | historical_data:579 | ============================================================
+2026-08-11 19:54:04 | INFO | historical_data:580 |   HISTORICAL DATA GENERATION STARTED
+2026-08-11 19:54:04 | INFO | historical_data:581 | ============================================================
+2026-08-11 19:54:04 | INFO | historical_data:149 | Generating 10,000 user profiles...
+2026-08-11 19:54:04 | SUCCESS | historical_data:177 | ✅ Users saved → data\raw\users.csv (10,000 rows)
+2026-08-11 19:54:04 | INFO | historical_data:190 | Generating 5,000 item profiles...
+2026-08-11 19:54:05 | SUCCESS | historical_data:222 | ✅ Items saved → data\raw\items.csv (5,000 rows)
+2026-08-11 19:54:05 | INFO | historical_data:245 | Generating 500,000 interactions...
+2026-08-11 20:02:43 | SUCCESS | historical_data:352 | ✅ Interactions saved → data\raw\interactions.csv (500,000 rows)
+2026-08-11 20:02:43 | INFO | historical_data:375 | Generating aggregated user features...
+2026-08-11 20:02:45 | SUCCESS | historical_data:441 | ✅ User features saved → data\raw\user_features.csv (10,000 rows)
+2026-08-11 20:02:45 | INFO | historical_data:460 | Generating aggregated item features...
+2026-08-11 20:02:46 | SUCCESS | historical_data:550 | ✅ Item features saved → data\raw\item_features.csv (5,000 rows)
+2026-08-11 20:02:46 | INFO | historical_data:590 | ============================================================
+2026-08-11 20:02:46 | INFO | historical_data:591 |   GENERATION COMPLETE — SUMMARY
+2026-08-11 20:02:46 | INFO | historical_data:592 | ============================================================
+2026-08-11 20:02:46 | INFO | historical_data:593 |   Users:                  10,000
+2026-08-11 20:02:46 | INFO | historical_data:594 |   Items:                   5,000
+2026-08-11 20:02:46 | INFO | historical_data:595 |   Interactions:          500,000
+2026-08-11 20:02:46 | INFO | historical_data:596 |   User feature rows:      10,000
+2026-08-11 20:02:46 | INFO | historical_data:597 |   Item feature rows:       5,000
+2026-08-11 20:02:46 | INFO | historical_data:598 | ============================================================
+2026-08-11 20:02:46 | SUCCESS | __main__:121 | ✅ Historical data generation complete!
