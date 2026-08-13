@@ -1,0 +1,46 @@
+# ================================================================
+# FEAST PROJECT CONFIGURATION  (FIXED)
+# ================================================================
+
+project: recsys
+provider: local
+
+# ----------------------------------------------------------------
+# REGISTRY
+# Stores all metadata (entities, views, services).
+# Using SQL registry (PostgreSQL) — more robust than file registry.
+# ----------------------------------------------------------------
+registry:
+  registry_type: sql
+  path: postgresql+psycopg2://recsys_user:recsys_password@localhost:5433/recsys_db
+  cache_ttl_seconds: 60
+
+# ----------------------------------------------------------------
+# OFFLINE STORE — PostgreSQL
+# Must match source types in feature_views.py (PostgreSQLSource).
+# Used for historical feature retrieval and point-in-time joins.
+# ----------------------------------------------------------------
+offline_store:
+  type: postgres
+  host: localhost
+  port: 5433
+  database: recsys_db
+  db_schema: feast
+  user: recsys_user
+  password: recsys_password
+  sslmode: disable
+
+# ----------------------------------------------------------------
+# ONLINE STORE — Redis
+# Stores latest feature values for real-time serving.
+# Target: <10ms reads from FastAPI.
+# ----------------------------------------------------------------
+online_store:
+  type: redis
+  connection_string: "localhost:6379,db=0"
+  key_ttl_seconds: 86400
+
+# ----------------------------------------------------------------
+# ENTITY KEY SERIALIZATION
+# ----------------------------------------------------------------
+entity_key_serialization_version: 3
