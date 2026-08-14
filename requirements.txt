@@ -20,7 +20,7 @@ pyspark==3.5.0
 feast[postgres,redis]==0.58.0
 
 # --- Machine Learning ---
-torch==2.1.2
+torch>=2.3,<3
 scikit-learn>=1.5.0,<2
 
 # --- MLflow ---
