@@ -54,7 +54,7 @@ logger.add(
     colorize=True,
 )
 
-DATA_RAW_DIR       = Path("data/raw")
+DATA_RAW_DIR = Path(__file__).parent.parent / "data_generator" / "data" / "raw"
 DATA_PROCESSED_DIR = Path("data/processed")
 DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -82,7 +82,8 @@ class TrainingDatasetBuilder:
         sample_size:       int  = None,
     ):
         self.interactions_path = interactions_path
-        self.output_dir        = output_dir
+        self.output_dir        = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
         self.sample_size       = sample_size
         self.manager           = FeastManager()
 
