@@ -1,0 +1,28 @@
+{
+  "means": {
+    "user_click_count_7d_log": 0.0,
+    "user_purchase_count_30d": 0.0,
+    "user_total_spend_30d_log": 0.0,
+    "user_avg_engagement_score": 0.3,
+    "item_view_count_7d_log": 0.0,
+    "item_purchase_count_30d_log": 0.0,
+    "item_avg_rating_events": 3.5,
+    "item_cart_rate": 0.0,
+    "item_conversion_rate": 0.0,
+    "price_log": 0.0,
+    "avg_rating": 3.5
+  },
+  "stds": {
+    "user_click_count_7d_log": 1.0,
+    "user_purchase_count_30d": 1.0,
+    "user_total_spend_30d_log": 1.0,
+    "user_avg_engagement_score": 1.0,
+    "item_view_count_7d_log": 1.0,
+    "item_purchase_count_30d_log": 1.0,
+    "item_avg_rating_events": 1.0,
+    "item_cart_rate": 1.0,
+    "item_conversion_rate": 1.0,
+    "price_log": 1.0,
+    "avg_rating": 1.0
+  }
+}
