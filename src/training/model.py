@@ -81,7 +81,7 @@ class ModelConfig:
             self.item_hidden_layers = [256, 128]
 
     def to_dict(self) -> dict:
-        """Serialize to dict for MLflow logging."""
+        """Serialize for checkpoint save/reload — preserves real types (lists stay lists)."""
         return {
             "n_users":               self.n_users,
             "n_items":               self.n_items,
@@ -91,8 +91,8 @@ class ModelConfig:
             "category_embedding_dim": self.category_embedding_dim,
             "n_user_continuous":     self.n_user_continuous,
             "n_item_continuous":     self.n_item_continuous,
-            "user_hidden_layers":    str(self.user_hidden_layers),
-            "item_hidden_layers":    str(self.item_hidden_layers),
+            "user_hidden_layers":    self.user_hidden_layers,
+            "item_hidden_layers":    self.item_hidden_layers,
             "output_dim":            self.output_dim,
             "dropout_rate":          self.dropout_rate,
             "embedding_dropout":     self.embedding_dropout,
@@ -101,7 +101,13 @@ class ModelConfig:
             "batch_size":            self.batch_size,
         }
 
-
+    def to_mlflow_params(self) -> dict:
+        """Serialize for MLflow log_params — MLflow only accepts simple scalar values."""
+        d = self.to_dict()
+        d["user_hidden_layers"] = str(d["user_hidden_layers"])
+        d["item_hidden_layers"] = str(d["item_hidden_layers"])
+        return d
+    
 # ----------------------------------------------------------------
 # BUILDING BLOCKS
 # ----------------------------------------------------------------

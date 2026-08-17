@@ -311,3 +311,72 @@
 2026-08-14T16:52:46.525706+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=5e1d1d7c8fe34ddea6550e81d6e8257b | best_val_auc=0.5106 | test_auc=0.4984
 2026-08-14T16:52:46.737087+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=5e1d1d7c8fe34ddea6550e81d6e8257b
 2026-08-14T16:52:46.738125+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-14T18:54:11.139510+0100 | INFO | __main__:94 | ============================================================
+2026-08-14T18:54:11.140989+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-14T18:54:11.142710+0100 | INFO | __main__:96 | ============================================================
+2026-08-14T18:54:11.143013+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-14T18:54:11.598791+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-14T18:54:11.600414+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=20 | patience=5
+2026-08-14T18:54:11.610259+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-14T18:54:11.612265+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-14T18:54:11.903204+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-14T18:54:11.924923+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-14T18:54:11.989456+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-14T18:54:11.990454+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-14T18:54:12.008605+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-14T18:54:12.030124+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-14T18:54:12.031159+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-14T18:54:12.051599+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-14T18:54:12.073898+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-14T18:54:12.076104+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-14T18:54:12.078363+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-14T18:54:12.123448+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-14T18:54:12.140707+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-14T18:54:12.153265+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-14T18:54:17.417058+0100 | INFO | trainer:236 | MLflow run started | run_id=37b6215c88874beeafd0072c0c2baff6
+2026-08-14T18:54:19.862431+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.3207
+2026-08-14T18:54:24.974905+0100 | INFO | trainer:305 | Epoch 001/20 | train_loss=1.0577 | AUC=0.4871 | Loss=0.9019 | Recall@5=0.0024 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.3156 | NDCG@10=0.2048 | NDCG@20=0.2029 | MRR=0.3333 | lr=1.00e-03 | time=5.6s
+2026-08-14T18:54:25.004706+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.4871
+2026-08-14T18:54:25.280899+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.8056
+2026-08-14T18:54:30.169478+0100 | INFO | trainer:305 | Epoch 002/20 | train_loss=0.7512 | AUC=0.5037 | Loss=0.8311 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0323 | MRR=0.0500 | lr=1.00e-03 | time=5.1s
+2026-08-14T18:54:30.199536+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5037
+2026-08-14T18:54:30.446059+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.6625
+2026-08-14T18:54:35.317315+0100 | INFO | trainer:305 | Epoch 003/20 | train_loss=0.6007 | AUC=0.5085 | Loss=1.0251 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0059 | NDCG@5=0.1461 | NDCG@10=0.1682 | NDCG@20=0.2200 | MRR=0.2500 | lr=1.00e-03 | time=5.1s
+2026-08-14T18:54:35.347601+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5085
+2026-08-14T18:54:35.568663+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.4403
+2026-08-14T18:54:41.010707+0100 | INFO | trainer:305 | Epoch 004/20 | train_loss=0.4115 | AUC=0.5142 | Loss=1.2381 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0663 | NDCG@20=0.1124 | MRR=0.1111 | lr=1.00e-03 | time=5.6s
+2026-08-14T18:54:41.045030+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5142
+2026-08-14T18:54:41.518612+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.2920
+2026-08-14T18:54:46.200578+0100 | INFO | trainer:305 | Epoch 005/20 | train_loss=0.2793 | AUC=0.5159 | Loss=1.7007 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.3392 | NDCG@10=0.2935 | NDCG@20=0.2563 | MRR=1.0000 | lr=1.00e-03 | time=5.1s
+2026-08-14T18:54:46.223457+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5159
+2026-08-14T18:54:46.447991+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.1967
+2026-08-14T18:54:51.255679+0100 | INFO | trainer:305 | Epoch 006/20 | train_loss=0.1996 | AUC=0.5163 | Loss=2.0815 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.3392 | NDCG@10=0.2201 | NDCG@20=0.1749 | MRR=1.0000 | lr=1.00e-03 | time=5.0s
+2026-08-14T18:54:51.280075+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5163
+2026-08-14T18:54:51.524291+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.1353
+2026-08-14T18:54:56.130593+0100 | INFO | trainer:305 | Epoch 007/20 | train_loss=0.1499 | AUC=0.5136 | Loss=2.3400 | Recall@5=0.0024 | Recall@10=0.0024 | Recall@20=0.0024 | NDCG@5=0.5087 | NDCG@10=0.3301 | NDCG@20=0.2131 | MRR=1.0000 | lr=1.00e-03 | time=4.8s
+2026-08-14T18:54:56.130593+0100 | INFO | trainer:332 |   No improvement for 1/5 epochs
+2026-08-14T18:54:56.415959+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.1303
+2026-08-14T18:55:05.113010+0100 | INFO | trainer:305 | Epoch 008/20 | train_loss=0.1163 | AUC=0.5117 | Loss=2.5993 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.3392 | NDCG@10=0.2201 | NDCG@20=0.2141 | MRR=1.0000 | lr=1.00e-03 | time=8.9s
+2026-08-14T18:55:05.113996+0100 | INFO | trainer:332 |   No improvement for 2/5 epochs
+2026-08-14T18:55:05.575526+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.0555
+2026-08-14T18:55:12.876088+0100 | INFO | trainer:305 | Epoch 009/20 | train_loss=0.0883 | AUC=0.5109 | Loss=2.9415 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.3392 | NDCG@10=0.2201 | NDCG@20=0.2134 | MRR=1.0000 | lr=5.00e-04 | time=7.6s
+2026-08-14T18:55:12.876088+0100 | INFO | trainer:332 |   No improvement for 3/5 epochs
+2026-08-14T18:55:13.127979+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.0694
+2026-08-14T18:55:18.198590+0100 | INFO | trainer:305 | Epoch 010/20 | train_loss=0.0729 | AUC=0.5097 | Loss=3.0625 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0036 | NDCG@5=0.3392 | NDCG@10=0.2935 | NDCG@20=0.2234 | MRR=1.0000 | lr=5.00e-04 | time=5.3s
+2026-08-14T18:55:18.199715+0100 | INFO | trainer:332 |   No improvement for 4/5 epochs
+2026-08-14T18:55:18.419837+0100 | DEBUG | trainer:435 |   Epoch 11 | batch 0/19 | loss=0.0559
+2026-08-14T18:55:23.049021+0100 | INFO | trainer:305 | Epoch 011/20 | train_loss=0.0552 | AUC=0.5118 | Loss=3.3050 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0071 | NDCG@5=0.2140 | NDCG@10=0.1389 | NDCG@20=0.2651 | MRR=0.5000 | lr=5.00e-04 | time=4.8s
+2026-08-14T18:55:23.050014+0100 | INFO | trainer:332 |   No improvement for 5/5 epochs
+2026-08-14T18:55:23.050014+0100 | INFO | trainer:337 | Early stopping triggered at epoch 11
+2026-08-14T18:55:23.050014+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-14T18:55:23.507364+0100 | INFO | trainer:357 | ============================================================
+2026-08-14T18:55:23.508363+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-14T18:55:23.508363+0100 | INFO | trainer:359 |   AUC=0.5116 | Loss=2.1552 | Recall@5=0.0011 | Recall@10=0.0011 | Recall@20=0.0044 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.1677 | MRR=0.2000
+2026-08-14T18:55:23.508363+0100 | INFO | trainer:360 | ============================================================
+2026-08-14T18:55:23.508363+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-14T18:55:28.700816+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/37b6215c88874beeafd0072c0c2baff6/model
+2026-08-14T18:55:28.701821+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-14T18:55:29.029228+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-14T18:55:29.037178+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=37b6215c88874beeafd0072c0c2baff6 | best_val_auc=0.5163 | test_auc=0.5116
+2026-08-14T18:55:29.270805+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=37b6215c88874beeafd0072c0c2baff6
+2026-08-14T18:55:29.271865+0100 | INFO | __main__:123 | View results: http://localhost:5000

@@ -236,7 +236,7 @@ class TwoTowerTrainer:
             logger.info(f"MLflow run started | run_id={self.run_id}")
 
             # Log all hyperparameters
-            mlflow.log_params(self.config.to_dict())
+            mlflow.log_params(self.config.to_mlflow_params())
             mlflow.log_params({
                 "n_epochs":       self.n_epochs,
                 "patience":       self.patience,
