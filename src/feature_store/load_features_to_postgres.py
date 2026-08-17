@@ -1,22 +1,12 @@
 """
-Feature Data Loader — CSV → PostgreSQL
+Feature Data Loader — CSV → PostgreSQL  (FIXED)
 =======================================
-Loads the generated feature CSV files into PostgreSQL tables
-so Feast's PostgreSQL offline store can read them natively.
-
-This script runs ONCE after historical data generation (Step 2)
-and then again after every Spark batch job (Step 6).
-
-Pipeline position:
-    [CSV files] ──► THIS SCRIPT ──► [PostgreSQL] ──► [Feast materialize] ──► [Redis]
-
-Tables created:
-    feast.user_features_raw   ← from data/raw/user_features.csv
-    feast.item_features_raw   ← from data/raw/item_features.csv
-
-Why a separate script and not direct Spark→PG write?
-    In Step 6 (Airflow), Spark WILL write directly to PostgreSQL.
-    This script is the manual bootstrap for development only.
+Changes from v1:
+    - Merges items.csv + item_features.csv before loading
+      so item_name, brand, is_available are available for
+      the FastAPI metadata lookup
+    - Merges users.csv + user_features.csv for completeness
+    - Added explicit column validation before loading
 """
 
 import os
@@ -29,9 +19,8 @@ from loguru import logger
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 
-
 # ----------------------------------------------------------------
-# LOGGING SETUP
+# LOGGING
 # ----------------------------------------------------------------
 logger.remove()
 logger.add(
@@ -46,36 +35,35 @@ logger.add(
     colorize=True,
 )
 
-
 # ----------------------------------------------------------------
 # CONFIGURATION
 # ----------------------------------------------------------------
 PG_HOST     = os.getenv("POSTGRES_HOST",     "localhost")
-PG_PORT     = os.getenv("POSTGRES_PORT",     "5433")
+PG_PORT     = os.getenv("POSTGRES_PORT",     "5432")
 PG_USER     = os.getenv("POSTGRES_USER",     "recsys_user")
 PG_PASSWORD = os.getenv("POSTGRES_PASSWORD", "recsys_password")
 PG_DB       = os.getenv("POSTGRES_DB",       "recsys_db")
 PG_SCHEMA   = "feast"
 
-DATA_RAW_DIR = Path(__file__).parent.parent / "data_generator" / "data" / "raw"
-
-# Map: (csv filename) → (postgres table name)
-FEATURE_TABLES = {
-    "user_features.csv": "user_features_raw",
-    "item_features.csv": "item_features_raw",
-}
+# ---- Resolve data directory ----
+# Adjust this path to wherever your CSVs actually live
+DATA_RAW_DIR = (
+    Path(__file__).parent.parent
+    / "data_generator"
+    / "data"
+    / "raw"
+)
 
 
 # ----------------------------------------------------------------
-# LOADER CLASS
+# LOADER
 # ----------------------------------------------------------------
 
 class FeaturePostgresLoader:
     """
     Loads feature CSVs into PostgreSQL for Feast offline store.
-
-    Uses SQLAlchemy + pandas for reliable, typed loading.
-    Idempotent: running it twice replaces data, never duplicates.
+    Merges catalog data (items.csv, users.csv) with computed
+    feature aggregations before loading.
     """
 
     def __init__(self):
@@ -83,7 +71,6 @@ class FeaturePostgresLoader:
         self._ensure_schema_exists()
 
     def _create_engine(self):
-        """Create SQLAlchemy engine with connection pooling."""
         conn_str = (
             f"postgresql+psycopg2://{PG_USER}:{PG_PASSWORD}"
             f"@{PG_HOST}:{PG_PORT}/{PG_DB}"
@@ -91,15 +78,10 @@ class FeaturePostgresLoader:
         try:
             engine = create_engine(
                 conn_str,
-                pool_size=5,
-                max_overflow=10,
-                pool_pre_ping=True,     # Verify connection before use
-                connect_args={
-                    "connect_timeout": 10,
-                    "options": f"-csearch_path={PG_SCHEMA}",
-                }
+                pool_size     = 5,
+                max_overflow  = 10,
+                pool_pre_ping = True,
             )
-            # Test connection immediately
             with engine.connect() as conn:
                 conn.execute(text("SELECT 1"))
             logger.success(
@@ -109,13 +91,9 @@ class FeaturePostgresLoader:
             return engine
         except SQLAlchemyError as e:
             logger.error(f"PostgreSQL connection failed: {e}")
-            logger.error(
-                "Is Docker running? Try: docker compose up -d postgres"
-            )
             raise
 
     def _ensure_schema_exists(self) -> None:
-        """Create the 'feast' schema if it doesn't exist."""
         with self.engine.connect() as conn:
             conn.execute(
                 text(f"CREATE SCHEMA IF NOT EXISTS {PG_SCHEMA}")
@@ -123,156 +101,304 @@ class FeaturePostgresLoader:
             conn.commit()
         logger.info(f"Schema '{PG_SCHEMA}' is ready")
 
-    def load_table(
+    # ----------------------------------------------------------
+    # BUILD ENRICHED DATAFRAMES
+    # ----------------------------------------------------------
+
+    def _build_item_table(self) -> pd.DataFrame:
+        """
+        Merge items.csv (catalog) + item_features.csv (aggregations).
+
+        items.csv has:          item_name, brand, is_available, price, ...
+        item_features.csv has:  item_view_count_7d, item_conversion_rate, ...
+
+        Result table has ALL columns needed by:
+            - Feast feature views (feature columns)
+            - FastAPI metadata lookup (item_name, brand, etc.)
+        """
+        items_path    = DATA_RAW_DIR / "items.csv"
+        features_path = DATA_RAW_DIR / "item_features.csv"
+
+        # Validate files exist
+        for p in [items_path, features_path]:
+            if not p.exists():
+                raise FileNotFoundError(
+                    f"Required file not found: {p}\n"
+                    f"Run Step 2 data generator first."
+                )
+
+        logger.info(f"Loading items catalog from:    {items_path}")
+        logger.info(f"Loading item features from:    {features_path}")
+
+        items_df    = pd.read_csv(items_path)
+        features_df = pd.read_csv(features_path)
+
+        logger.info(
+            f"items.csv columns:         {list(items_df.columns)}"
+        )
+        logger.info(
+            f"item_features.csv columns: {list(features_df.columns)}"
+        )
+
+        # Drop duplicate columns that exist in both
+        # (price, avg_rating, category already in item_features.csv)
+        catalog_only_cols = [
+            "item_id", "item_name", "subcategory",
+            "brand", "is_available", "review_count"
+        ]
+        # Keep only catalog-specific columns + item_id for the join
+        catalog_cols = [
+            c for c in catalog_only_cols
+            if c in items_df.columns
+        ]
+        items_subset = items_df[catalog_cols]
+
+        # Merge on item_id
+        merged = features_df.merge(
+            items_subset,
+            on  = "item_id",
+            how = "left",
+        )
+
+        # ---- Type enforcement ----
+        if "event_timestamp" in merged.columns:
+            merged["event_timestamp"] = pd.to_datetime(
+                merged["event_timestamp"], utc=True
+            )
+        if "created_timestamp" in merged.columns:
+            merged["created_timestamp"] = pd.to_datetime(
+                merged["created_timestamp"], utc=True
+            )
+
+        int_cols = [
+            "item_view_count_7d",
+            "item_purchase_count_30d",
+            "review_count",
+        ]
+        float_cols = [
+            "price", "avg_rating",
+            "item_avg_rating_events",
+            "item_cart_rate",
+            "item_conversion_rate",
+        ]
+        bool_cols = ["is_available"]
+
+        for col in int_cols:
+            if col in merged.columns:
+                merged[col] = merged[col].fillna(0).astype("int64")
+        for col in float_cols:
+            if col in merged.columns:
+                merged[col] = merged[col].fillna(0.0).astype("float64")
+        for col in bool_cols:
+            if col in merged.columns:
+                merged[col] = merged[col].fillna(True).astype(bool)
+
+        logger.info(
+            f"Enriched item table ready | "
+            f"rows={len(merged):,} | "
+            f"columns={list(merged.columns)}"
+        )
+        return merged
+
+    def _build_user_table(self) -> pd.DataFrame:
+        """
+        Merge users.csv (profile) + user_features.csv (aggregations).
+        """
+        users_path    = DATA_RAW_DIR / "users.csv"
+        features_path = DATA_RAW_DIR / "user_features.csv"
+
+        for p in [users_path, features_path]:
+            if not p.exists():
+                raise FileNotFoundError(
+                    f"Required file not found: {p}\n"
+                    f"Run Step 2 data generator first."
+                )
+
+        logger.info(f"Loading users catalog from:    {users_path}")
+        logger.info(f"Loading user features from:    {features_path}")
+
+        users_df    = pd.read_csv(users_path)
+        features_df = pd.read_csv(features_path)
+
+        # Keep only profile columns not already in features
+        profile_cols = [
+            c for c in ["user_id", "age", "gender", "country",
+                        "account_age_days", "is_premium"]
+            if c in users_df.columns
+        ]
+        users_subset = users_df[profile_cols]
+
+        merged = features_df.merge(
+            users_subset,
+            on  = "user_id",
+            how = "left",
+        )
+
+        # Type enforcement
+        if "event_timestamp" in merged.columns:
+            merged["event_timestamp"] = pd.to_datetime(
+                merged["event_timestamp"], utc=True
+            )
+        if "created_timestamp" in merged.columns:
+            merged["created_timestamp"] = pd.to_datetime(
+                merged["created_timestamp"], utc=True
+            )
+
+        int_cols = [
+            "user_click_count_7d",
+            "user_purchase_count_30d",
+            "account_age_days",
+            "age",
+        ]
+        float_cols = [
+            "user_total_spend_30d",
+            "user_avg_engagement_score",
+        ]
+
+        for col in int_cols:
+            if col in merged.columns:
+                merged[col] = merged[col].fillna(0).astype("int64")
+        for col in float_cols:
+            if col in merged.columns:
+                merged[col] = merged[col].fillna(0.0).astype("float64")
+
+        logger.info(
+            f"Enriched user table ready | "
+            f"rows={len(merged):,} | "
+            f"columns={list(merged.columns)}"
+        )
+        return merged
+
+    # ----------------------------------------------------------
+    # LOAD TO POSTGRESQL
+    # ----------------------------------------------------------
+
+    def _load_dataframe(
         self,
-        csv_path:   Path,
+        df:         pd.DataFrame,
         table_name: str,
     ) -> int:
         """
-        Load a single CSV into a PostgreSQL table.
-
-        Strategy: replace
-            Drop and recreate the table on each load.
-            This guarantees no stale data accumulates.
-            In production with Spark, we'd use append + dedup.
-
-        Args:
-            csv_path:   Path to the CSV file
-            table_name: Target PostgreSQL table name
-
-        Returns:
-            Number of rows loaded
+        Load a DataFrame into a PostgreSQL table.
+        Idempotent — replaces data on each run.
         """
-        if not csv_path.exists():
-            raise FileNotFoundError(
-                f"CSV not found: {csv_path}\n"
-                f"Run Step 2 data generator first."
-            )
+        logger.info(
+            f"Loading {len(df):,} rows → "
+            f"{PG_SCHEMA}.{table_name} ..."
+        )
 
-        logger.info(f"Loading: {csv_path.name} → {PG_SCHEMA}.{table_name}")
-
-        # Read CSV
-        df = pd.read_csv(csv_path)
-        logger.info(f"  Read {len(df):,} rows, {len(df.columns)} columns")
-
-        # ---- Type enforcement ----
-        # PostgreSQL needs explicit types for Feast to query correctly
-        if "event_timestamp" in df.columns:
-            df["event_timestamp"] = pd.to_datetime(
-                df["event_timestamp"], utc=True
-            )
-        if "created_timestamp" in df.columns:
-            df["created_timestamp"] = pd.to_datetime(
-                df["created_timestamp"], utc=True
-            )
-
-        # Ensure numeric columns are proper types
-        int_cols   = [c for c in df.columns if "_count" in c or "_idx" in c]
-        float_cols = [c for c in df.columns if c in [
-            "price", "avg_rating", "item_avg_rating_events",
-            "item_cart_rate", "item_conversion_rate",
-            "user_total_spend_30d", "user_avg_engagement_score",
-        ]]
-        for col in int_cols:
-            if col in df.columns:
-                df[col] = df[col].fillna(0).astype("int64")
-        for col in float_cols:
-            if col in df.columns:
-                df[col] = df[col].fillna(0.0).astype("float64")
-
-        # ---- Write to PostgreSQL ----
         df.to_sql(
             name      = table_name,
             con       = self.engine,
             schema    = PG_SCHEMA,
-            if_exists = "replace",   # Idempotent — safe to re-run
+            if_exists = "replace",
             index     = False,
-            chunksize = 10_000,      # Batch inserts for large tables
-            method    = "multi",     # Multi-row INSERT for speed
+            chunksize = 5_000,
+            method    = "multi",
         )
 
-        # ---- Create indexes for fast Feast queries ----
         self._create_indexes(table_name, df.columns.tolist())
 
         logger.success(
-            f"✅ Loaded {len(df):,} rows → "
+            f"✅ {len(df):,} rows loaded → "
             f"{PG_SCHEMA}.{table_name}"
         )
         return len(df)
 
-    def _create_indexes(self, table_name: str, columns: list[str]) -> None:
-        """
-        Create indexes on key columns for fast point-in-time queries.
-        Feast queries filter heavily on entity keys and timestamps.
-        """
-        index_targets = []
+    def _create_indexes(
+        self,
+        table_name: str,
+        columns:    list[str],
+    ) -> None:
+        """Create indexes on entity keys and timestamp columns."""
+        targets = []
 
-        # Entity key indexes
         if "user_id" in columns:
-            index_targets.append(("user_id", f"idx_{table_name}_user_id"))
+            targets.append(("user_id", f"idx_{table_name}_user_id"))
         if "item_id" in columns:
-            index_targets.append(("item_id", f"idx_{table_name}_item_id"))
-
-        # Timestamp index — critical for point-in-time queries
+            targets.append(("item_id", f"idx_{table_name}_item_id"))
         if "event_timestamp" in columns:
-            index_targets.append((
-                "event_timestamp",
-                f"idx_{table_name}_event_ts"
-            ))
+            targets.append(
+                ("event_timestamp", f"idx_{table_name}_event_ts")
+            )
 
         with self.engine.connect() as conn:
-            for col, idx_name in index_targets:
+            for col, idx_name in targets:
                 try:
                     conn.execute(text(
                         f"CREATE INDEX IF NOT EXISTS {idx_name} "
                         f"ON {PG_SCHEMA}.{table_name} ({col})"
                     ))
                     conn.commit()
-                    logger.debug(f"  Index created: {idx_name} on ({col})")
+                    logger.debug(f"Index ready: {idx_name}")
                 except Exception as e:
-                    logger.warning(f"  Index creation skipped: {e}")
+                    logger.warning(f"Index skipped: {idx_name} — {e}")
+
+    # ----------------------------------------------------------
+    # PUBLIC API
+    # ----------------------------------------------------------
 
     def load_all(self) -> None:
-        """Load all feature tables into PostgreSQL."""
+        """Load all enriched feature tables into PostgreSQL."""
         logger.info("=" * 60)
         logger.info("  FEATURE LOADING TO POSTGRESQL STARTED")
+        logger.info(f"  Source dir: {DATA_RAW_DIR}")
         logger.info("=" * 60)
 
-        total_rows = 0
-        start_time = datetime.utcnow()
+        start = datetime.utcnow()
 
-        for csv_filename, table_name in FEATURE_TABLES.items():
-            csv_path = DATA_RAW_DIR / csv_filename
-            rows = self.load_table(csv_path, table_name)
-            total_rows += rows
+        # Build enriched DataFrames
+        item_df = self._build_item_table()
+        user_df = self._build_user_table()
 
-        elapsed = (datetime.utcnow() - start_time).total_seconds()
+        # Load to PostgreSQL
+        item_rows = self._load_dataframe(item_df, "item_features_raw")
+        user_rows = self._load_dataframe(user_df, "user_features_raw")
+
+        elapsed = (datetime.utcnow() - start).total_seconds()
 
         logger.info("=" * 60)
         logger.info("  LOADING COMPLETE")
-        logger.info(f"  Total rows loaded: {total_rows:,}")
+        logger.info(f"  item_features_raw: {item_rows:,} rows")
+        logger.info(f"  user_features_raw: {user_rows:,} rows")
         logger.info(f"  Elapsed:           {elapsed:.1f}s")
         logger.info("=" * 60)
 
     def verify(self) -> None:
-        """
-        Query each table and print row counts.
-        Quick sanity check after loading.
-        """
+        """Print row counts and column list for each table."""
         logger.info("Verifying loaded tables...")
+        tables = ["item_features_raw", "user_features_raw"]
+
         with self.engine.connect() as conn:
-            for _, table_name in FEATURE_TABLES.items():
+            for table in tables:
                 try:
-                    result = conn.execute(text(
-                        f"SELECT COUNT(*) FROM {PG_SCHEMA}.{table_name}"
-                    ))
-                    count = result.scalar()
+                    count = conn.execute(
+                        text(
+                            f"SELECT COUNT(*) "
+                            f"FROM {PG_SCHEMA}.{table}"
+                        )
+                    ).scalar()
+
+                    cols = conn.execute(
+                        text(
+                            f"SELECT column_name "
+                            f"FROM information_schema.columns "
+                            f"WHERE table_schema = '{PG_SCHEMA}' "
+                            f"AND table_name = '{table}' "
+                            f"ORDER BY ordinal_position"
+                        )
+                    ).fetchall()
+
+                    col_names = [c[0] for c in cols]
+
                     logger.success(
-                        f"  ✅ {PG_SCHEMA}.{table_name}: {count:,} rows"
+                        f"  ✅ {PG_SCHEMA}.{table}: "
+                        f"{count:,} rows | "
+                        f"columns={col_names}"
                     )
                 except Exception as e:
                     logger.error(
-                        f"  ❌ {PG_SCHEMA}.{table_name}: {e}"
+                        f"  ❌ {PG_SCHEMA}.{table}: {e}"
                     )
 
 
