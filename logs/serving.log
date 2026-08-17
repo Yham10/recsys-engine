@@ -1,0 +1,331 @@
+2026-08-14T18:23:58.942051+0100 | INFO | main:76 | ============================================================
+2026-08-14T18:23:58.943056+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-14T18:23:58.943056+0100 | INFO | main:78 |   Environment: development
+2026-08-14T18:23:58.944057+0100 | INFO | main:79 | ============================================================
+2026-08-14T18:23:58.944057+0100 | INFO | model_loader:215 | ============================================================
+2026-08-14T18:23:58.944057+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-14T18:23:58.945566+0100 | INFO | model_loader:217 | ============================================================
+2026-08-14T18:23:58.951297+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-14T18:23:58.952324+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-14T18:23:58.952324+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-14T18:23:58.952324+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-14T18:24:00.656166+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-14T18:38:51.863253+0100 | INFO | main:76 | ============================================================
+2026-08-14T18:38:51.863253+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-14T18:38:51.864688+0100 | INFO | main:78 |   Environment: development
+2026-08-14T18:38:51.864688+0100 | INFO | main:79 | ============================================================
+2026-08-14T18:38:51.866001+0100 | INFO | model_loader:215 | ============================================================
+2026-08-14T18:38:51.866999+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-14T18:38:51.868054+0100 | INFO | model_loader:217 | ============================================================
+2026-08-14T18:38:51.875575+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-14T18:38:51.877889+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-14T18:38:51.878632+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-14T18:38:51.879175+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-14T18:38:53.116788+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-14T18:55:57.078041+0100 | INFO | main:76 | ============================================================
+2026-08-14T18:55:57.078658+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-14T18:55:57.078658+0100 | INFO | main:78 |   Environment: development
+2026-08-14T18:55:57.080189+0100 | INFO | main:79 | ============================================================
+2026-08-14T18:55:57.080189+0100 | INFO | model_loader:215 | ============================================================
+2026-08-14T18:55:57.081453+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-14T18:55:57.081453+0100 | INFO | model_loader:217 | ============================================================
+2026-08-14T18:55:57.088455+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-14T18:55:57.089456+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-14T18:55:57.090489+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-14T18:55:57.091008+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-14T18:55:58.331073+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-14T18:55:58.403193+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-14T18:55:58.413827+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-14T18:55:58.414782+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-14T18:55:58.420073+0100 | SUCCESS | model_loader:158 | ✅ Model loaded from local checkpoint (fallback)
+2026-08-14T18:55:58.426602+0100 | INFO | model_loader:181 | Building FAISS index | n_items=4,998 | dim=64 | type=IndexFlatIP
+2026-08-14T18:55:58.431603+0100 | SUCCESS | model_loader:197 | ✅ FAISS index built | total_vectors=4,998
+2026-08-14T18:55:58.433811+0100 | INFO | model_loader:279 | ============================================================
+2026-08-14T18:55:58.435220+0100 | INFO | model_loader:280 |   ALL ARTIFACTS LOADED
+2026-08-14T18:55:58.435220+0100 | INFO | model_loader:281 |   Model version:  local-checkpoint
+2026-08-14T18:55:58.436455+0100 | INFO | model_loader:282 |   Device:         cpu
+2026-08-14T18:55:58.437454+0100 | INFO | model_loader:283 |   FAISS vectors:  4,998
+2026-08-14T18:55:58.437454+0100 | INFO | model_loader:284 |   Load time:      1.35s
+2026-08-14T18:55:58.438597+0100 | INFO | model_loader:285 | ============================================================
+2026-08-14T18:55:59.794236+0100 | SUCCESS | feature_fetcher:99 | ✅ Feast connected | project=recsys
+2026-08-14T18:55:59.795374+0100 | INFO | feature_fetcher:89 | FeatureFetcher initialized
+2026-08-14T18:55:59.797922+0100 | INFO | recommender:78 | PostgreSQL connection pool created
+2026-08-14T18:55:59.797922+0100 | INFO | recommender:57 | RecommendationEngine initialized
+2026-08-14T18:55:59.799149+0100 | SUCCESS | main:105 | ✅ Service startup complete — ready to serve requests
+2026-08-14T18:56:48.208464+0100 | DEBUG | middleware:81 | GET / | status=404 | 1.6ms
+2026-08-14T18:56:48.562042+0100 | DEBUG | middleware:81 | GET /favicon.ico | status=404 | 0.7ms
+2026-08-14T18:57:22.193359+0100 | DEBUG | middleware:81 | GET /health | status=200 | 8.6ms
+2026-08-14T18:57:54.900421+0100 | DEBUG | middleware:81 | GET /ready | status=200 | 1.4ms
+2026-08-14T18:59:17.282685+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000001
+2026-08-14T18:59:20.331521+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.OperationalError) could not translate host name "postgres" to address: No such host is known. 
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-14T18:59:20.333436+0100 | INFO | recommender:220 | Recommendations generated | user=user_000001 | returned=5/5 | cold_start=True | feature=103.1ms | model=3.8ms | ann=14.1ms
+2026-08-14T18:59:20.336453+0100 | ERROR | middleware:64 | SLA BREACH | GET /api/v1/recommend/user_000001 | status=200 | latency=3157.3ms | threshold=150ms
+2026-08-14T19:08:43.317833+0100 | INFO | main:110 | Shutting down...
+2026-08-14T19:08:43.323840+0100 | INFO | model_loader:297 | ML artifacts unloaded
+2026-08-14T19:08:43.323840+0100 | INFO | main:112 | ✅ Shutdown complete
+2026-08-14T19:09:18.233084+0100 | INFO | main:76 | ============================================================
+2026-08-14T19:09:18.234118+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-14T19:09:18.234118+0100 | INFO | main:78 |   Environment: development
+2026-08-14T19:09:18.235149+0100 | INFO | main:79 | ============================================================
+2026-08-14T19:09:18.235149+0100 | INFO | model_loader:215 | ============================================================
+2026-08-14T19:09:18.236160+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-14T19:09:18.236160+0100 | INFO | model_loader:217 | ============================================================
+2026-08-14T19:09:18.241586+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-14T19:09:18.242585+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-14T19:09:18.243585+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-14T19:09:18.243585+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-14T19:09:19.436231+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-14T19:09:19.498326+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-14T19:09:19.507015+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-14T19:09:19.508022+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-14T19:09:19.513015+0100 | SUCCESS | model_loader:158 | ✅ Model loaded from local checkpoint (fallback)
+2026-08-14T19:09:19.517539+0100 | INFO | model_loader:181 | Building FAISS index | n_items=4,998 | dim=64 | type=IndexFlatIP
+2026-08-14T19:09:19.520600+0100 | SUCCESS | model_loader:197 | ✅ FAISS index built | total_vectors=4,998
+2026-08-14T19:09:19.523134+0100 | INFO | model_loader:279 | ============================================================
+2026-08-14T19:09:19.524173+0100 | INFO | model_loader:280 |   ALL ARTIFACTS LOADED
+2026-08-14T19:09:19.524173+0100 | INFO | model_loader:281 |   Model version:  local-checkpoint
+2026-08-14T19:09:19.525174+0100 | INFO | model_loader:282 |   Device:         cpu
+2026-08-14T19:09:19.525174+0100 | INFO | model_loader:283 |   FAISS vectors:  4,998
+2026-08-14T19:09:19.526686+0100 | INFO | model_loader:284 |   Load time:      1.29s
+2026-08-14T19:09:19.526686+0100 | INFO | model_loader:285 | ============================================================
+2026-08-14T19:09:20.559961+0100 | SUCCESS | feature_fetcher:99 | ✅ Feast connected | project=recsys
+2026-08-14T19:09:20.560954+0100 | INFO | feature_fetcher:89 | FeatureFetcher initialized
+2026-08-14T19:09:20.563953+0100 | INFO | recommender:78 | PostgreSQL connection pool created
+2026-08-14T19:09:20.564953+0100 | INFO | recommender:57 | RecommendationEngine initialized
+2026-08-14T19:09:20.565739+0100 | SUCCESS | main:105 | ✅ Service startup complete — ready to serve requests
+2026-08-14T19:13:06.608564+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000001
+2026-08-14T19:13:06.647155+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.errors.UndefinedColumn) column "item_name" does not exist
+LINE 4:                     item_name,
+                            ^
+
+[SQL: 
+                SELECT
+                    item_id,
+                    item_name,
+                    category,
+                    price,
+                    avg_rating,
+                    brand,
+                    is_available
+                FROM feast.item_features_raw
+                WHERE item_id IN (%(id_0)s,%(id_1)s,%(id_2)s,%(id_3)s,%(id_4)s,%(id_5)s,%(id_6)s,%(id_7)s,%(id_8)s,%(id_9)s,%(id_10)s,%(id_11)s,%(id_12)s,%(id_13)s,%(id_14)s,%(id_15)s,%(id_16)s,%(id_17)s,%(id_18)s,%(id_19)s)
+            ]
+[parameters: {'id_0': 'item_002793', 'id_1': 'item_001374', 'id_2': 'item_000485', 'id_3': 'item_001418', 'id_4': 'item_001159', 'id_5': 'item_002065', 'id_6': 'item_001969', 'id_7': 'item_003073', 'id_8': 'item_001358', 'id_9': 'item_004608', 'id_10': 'item_000258', 'id_11': 'item_000856', 'id_12': 'item_003771', 'id_13': 'item_003439', 'id_14': 'item_001298', 'id_15': 'item_004754', 'id_16': 'item_000672', 'id_17': 'item_003560', 'id_18': 'item_003353', 'id_19': 'item_001107'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-14T19:13:06.647155+0100 | INFO | recommender:220 | Recommendations generated | user=user_000001 | returned=10/10 | cold_start=True | feature=40.0ms | model=1.6ms | ann=1.6ms
+2026-08-14T19:13:06.648154+0100 | WARNING | middleware:70 | SLA WARNING | GET /api/v1/recommend/user_000001 | status=200 | latency=81.3ms | threshold=80ms
+2026-08-14T19:13:22.318441+0100 | DEBUG | middleware:81 | GET /docs | status=200 | 1.1ms
+2026-08-14T19:13:22.716315+0100 | DEBUG | middleware:81 | GET /openapi.json | status=200 | 8.6ms
+2026-08-14T19:15:11.146350+0100 | DEBUG | middleware:81 | GET /health | status=200 | 1.4ms
+2026-08-14T19:19:11.690801+0100 | DEBUG | middleware:81 | GET /health | status=200 | 1.3ms
+2026-08-14T19:25:25.645024+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000001
+2026-08-14T19:25:25.673693+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.errors.UndefinedColumn) column "item_name" does not exist
+LINE 4:                     item_name,
+                            ^
+
+[SQL: 
+                SELECT
+                    item_id,
+                    item_name,
+                    category,
+                    price,
+                    avg_rating,
+                    brand,
+                    is_available
+                FROM feast.item_features_raw
+                WHERE item_id IN (%(id_0)s,%(id_1)s,%(id_2)s,%(id_3)s,%(id_4)s,%(id_5)s,%(id_6)s,%(id_7)s,%(id_8)s,%(id_9)s)
+            ]
+[parameters: {'id_0': 'item_002793', 'id_1': 'item_001374', 'id_2': 'item_000485', 'id_3': 'item_001418', 'id_4': 'item_001159', 'id_5': 'item_002065', 'id_6': 'item_001969', 'id_7': 'item_003073', 'id_8': 'item_001358', 'id_9': 'item_004608'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-14T19:25:25.674692+0100 | INFO | recommender:220 | Recommendations generated | user=user_000001 | returned=5/5 | cold_start=True | feature=37.5ms | model=0.9ms | ann=2.4ms
+2026-08-14T19:25:25.675694+0100 | INFO | middleware:76 | GET /api/v1/recommend/user_000001 | status=200 | latency=68.9ms
+2026-08-14T19:25:44.228779+0100 | DEBUG | middleware:81 | GET /docs | status=200 | 0.2ms
+2026-08-14T19:25:44.407114+0100 | DEBUG | middleware:81 | GET /openapi.json | status=200 | 0.4ms
+2026-08-14T19:26:27.714023+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000123
+2026-08-14T19:26:27.722118+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.errors.UndefinedColumn) column "item_name" does not exist
+LINE 4:                     item_name,
+                            ^
+
+[SQL: 
+                SELECT
+                    item_id,
+                    item_name,
+                    category,
+                    price,
+                    avg_rating,
+                    brand,
+                    is_available
+                FROM feast.item_features_raw
+                WHERE item_id IN (%(id_0)s,%(id_1)s,%(id_2)s,%(id_3)s,%(id_4)s,%(id_5)s,%(id_6)s,%(id_7)s,%(id_8)s,%(id_9)s,%(id_10)s,%(id_11)s,%(id_12)s,%(id_13)s,%(id_14)s,%(id_15)s,%(id_16)s,%(id_17)s,%(id_18)s,%(id_19)s)
+            ]
+[parameters: {'id_0': 'item_003825', 'id_1': 'item_000856', 'id_2': 'item_004838', 'id_3': 'item_001793', 'id_4': 'item_000109', 'id_5': 'item_004952', 'id_6': 'item_004203', 'id_7': 'item_001500', 'id_8': 'item_004830', 'id_9': 'item_004885', 'id_10': 'item_002235', 'id_11': 'item_000325', 'id_12': 'item_000221', 'id_13': 'item_003000', 'id_14': 'item_002744', 'id_15': 'item_000039', 'id_16': 'item_003041', 'id_17': 'item_004081', 'id_18': 'item_001956', 'id_19': 'item_002769'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-14T19:26:27.722118+0100 | INFO | recommender:220 | Recommendations generated | user=user_000123 | returned=0/10 | cold_start=True | feature=44.3ms | model=0.9ms | ann=2.5ms
+2026-08-14T19:26:27.723117+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=200 | latency=54.9ms
+2026-08-14T19:30:09.667804+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000021
+2026-08-14T19:30:09.676835+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.errors.UndefinedColumn) column "item_name" does not exist
+LINE 4:                     item_name,
+                            ^
+
+[SQL: 
+                SELECT
+                    item_id,
+                    item_name,
+                    category,
+                    price,
+                    avg_rating,
+                    brand,
+                    is_available
+                FROM feast.item_features_raw
+                WHERE item_id IN (%(id_0)s,%(id_1)s,%(id_2)s,%(id_3)s,%(id_4)s,%(id_5)s,%(id_6)s,%(id_7)s,%(id_8)s,%(id_9)s,%(id_10)s,%(id_11)s,%(id_12)s,%(id_13)s,%(id_14)s,%(id_15)s,%(id_16)s,%(id_17)s,%(id_18)s,%(id_19)s)
+            ]
+[parameters: {'id_0': 'item_000891', 'id_1': 'item_001161', 'id_2': 'item_001374', 'id_3': 'item_001996', 'id_4': 'item_002769', 'id_5': 'item_001804', 'id_6': 'item_001844', 'id_7': 'item_000320', 'id_8': 'item_000548', 'id_9': 'item_003992', 'id_10': 'item_000170', 'id_11': 'item_004533', 'id_12': 'item_000109', 'id_13': 'item_004688', 'id_14': 'item_002441', 'id_15': 'item_000526', 'id_16': 'item_000591', 'id_17': 'item_003060', 'id_18': 'item_003244', 'id_19': 'item_004830'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-14T19:30:09.676835+0100 | INFO | recommender:220 | Recommendations generated | user=user_000021 | returned=0/10 | cold_start=True | feature=59.4ms | model=1.0ms | ann=2.7ms
+2026-08-14T19:30:09.677836+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=200 | latency=75.4ms
+2026-08-14T19:39:19.387596+0100 | DEBUG | feature_fetcher:158 | Cold start user detected: user_000021
+2026-08-14T19:39:19.416787+0100 | WARNING | recommender:283 | Item metadata fetch failed: (psycopg2.errors.UndefinedColumn) column "item_name" does not exist
+LINE 4:                     item_name,
+                            ^
+
+[SQL: 
+                SELECT
+                    item_id,
+                    item_name,
+                    category,
+                    price,
+                    avg_rating,
+                    brand,
+                    is_available
+                FROM feast.item_features_raw
+                WHERE item_id IN (%(id_0)s,%(id_1)s,%(id_2)s,%(id_3)s,%(id_4)s,%(id_5)s,%(id_6)s,%(id_7)s,%(id_8)s,%(id_9)s,%(id_10)s,%(id_11)s,%(id_12)s,%(id_13)s,%(id_14)s,%(id_15)s,%(id_16)s,%(id_17)s,%(id_18)s,%(id_19)s)
+            ]
+[parameters: {'id_0': 'item_000891', 'id_1': 'item_001161', 'id_2': 'item_001374', 'id_3': 'item_001996', 'id_4': 'item_002769', 'id_5': 'item_001804', 'id_6': 'item_001844', 'id_7': 'item_000320', 'id_8': 'item_000548', 'id_9': 'item_003992', 'id_10': 'item_000170', 'id_11': 'item_004533', 'id_12': 'item_000109', 'id_13': 'item_004688', 'id_14': 'item_002441', 'id_15': 'item_000526', 'id_16': 'item_000591', 'id_17': 'item_003060', 'id_18': 'item_003244', 'id_19': 'item_004830'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-14T19:39:19.417789+0100 | INFO | recommender:220 | Recommendations generated | user=user_000021 | returned=10/10 | cold_start=True | feature=47.3ms | model=0.9ms | ann=2.6ms
+2026-08-14T19:39:19.418790+0100 | WARNING | middleware:70 | SLA WARNING | POST /api/v1/recommend | status=200 | latency=84.4ms | threshold=80ms
+2026-08-17T16:06:07.663872+0100 | INFO | main:110 | Shutting down...
+2026-08-17T16:06:07.669767+0100 | INFO | model_loader:297 | ML artifacts unloaded
+2026-08-17T16:06:07.669767+0100 | INFO | main:112 | ✅ Shutdown complete
+2026-08-17T16:16:25.249668+0100 | INFO | main:76 | ============================================================
+2026-08-17T16:16:25.250686+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-17T16:16:25.250686+0100 | INFO | main:78 |   Environment: development
+2026-08-17T16:16:25.251681+0100 | INFO | main:79 | ============================================================
+2026-08-17T16:16:25.251681+0100 | INFO | model_loader:215 | ============================================================
+2026-08-17T16:16:25.251681+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-17T16:16:25.253071+0100 | INFO | model_loader:217 | ============================================================
+2026-08-17T16:16:25.258087+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-17T16:16:25.259594+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-17T16:16:25.259594+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-17T16:16:25.260178+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-17T16:16:26.510141+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-17T16:16:26.550492+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-17T16:16:26.558005+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-17T16:16:26.558005+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-17T16:16:26.561007+0100 | SUCCESS | model_loader:158 | ✅ Model loaded from local checkpoint (fallback)
+2026-08-17T16:16:26.563522+0100 | INFO | model_loader:181 | Building FAISS index | n_items=4,998 | dim=64 | type=IndexFlatIP
+2026-08-17T16:16:26.564521+0100 | SUCCESS | model_loader:197 | ✅ FAISS index built | total_vectors=4,998
+2026-08-17T16:16:26.567036+0100 | INFO | model_loader:279 | ============================================================
+2026-08-17T16:16:26.567036+0100 | INFO | model_loader:280 |   ALL ARTIFACTS LOADED
+2026-08-17T16:16:26.567036+0100 | INFO | model_loader:281 |   Model version:  local-checkpoint
+2026-08-17T16:16:26.568038+0100 | INFO | model_loader:282 |   Device:         cpu
+2026-08-17T16:16:26.568038+0100 | INFO | model_loader:283 |   FAISS vectors:  4,998
+2026-08-17T16:16:26.569039+0100 | INFO | model_loader:284 |   Load time:      1.32s
+2026-08-17T16:16:26.569039+0100 | INFO | model_loader:285 | ============================================================
+2026-08-17T16:16:27.089466+0100 | SUCCESS | feature_fetcher:99 | ✅ Feast connected | project=recsys
+2026-08-17T16:16:27.089466+0100 | INFO | feature_fetcher:89 | FeatureFetcher initialized
+2026-08-17T16:16:27.089466+0100 | INFO | recommender:78 | PostgreSQL connection pool created
+2026-08-17T16:16:27.090494+0100 | INFO | recommender:57 | RecommendationEngine initialized
+2026-08-17T16:16:27.090494+0100 | SUCCESS | main:105 | ✅ Service startup complete — ready to serve requests
+2026-08-17T16:17:06.464776+0100 | ERROR | main:159 | Unhandled exception | request_id=987661ad-bbd2-48c4-941f-5d67ed70bf03 | path=/api/v1/debug/user_000021 | error='RecommendationEngine' object has no attribute '_fetch_item_metadata'
+2026-08-17T16:18:26.509989+0100 | ERROR | routers.recommendations:117 | Recommendation failed | user=user_000021 | request_id=f71fc98b-3157-4c20-bb78-a8c3218fbd23 | error='RecommendationEngine' object has no attribute '_fetch_item_metadata'
+2026-08-17T16:18:26.509989+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=500 | latency=52.4ms
+2026-08-17T16:19:37.677253+0100 | ERROR | routers.recommendations:117 | Recommendation failed | user=user_000079 | request_id=39090c8e-f8fa-432b-8e8f-33027f625503 | error=index out of range in self
+2026-08-17T16:19:37.678259+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=500 | latency=78.3ms
+2026-08-17T16:43:25.474087+0100 | INFO | main:110 | Shutting down...
+2026-08-17T16:43:25.476178+0100 | INFO | model_loader:297 | ML artifacts unloaded
+2026-08-17T16:43:25.477168+0100 | INFO | main:112 | ✅ Shutdown complete
+2026-08-17T16:45:45.914041+0100 | INFO | main:76 | ============================================================
+2026-08-17T16:45:45.914041+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-17T16:45:45.915129+0100 | INFO | main:78 |   Environment: development
+2026-08-17T16:45:45.915129+0100 | INFO | main:79 | ============================================================
+2026-08-17T16:45:45.916129+0100 | INFO | model_loader:215 | ============================================================
+2026-08-17T16:45:45.916129+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-17T16:45:45.917146+0100 | INFO | model_loader:217 | ============================================================
+2026-08-17T16:45:45.921749+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-17T16:45:45.922773+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-17T16:45:45.922773+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-17T16:45:45.923717+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-17T16:45:46.660093+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-17T16:45:46.690757+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-17T16:45:46.695372+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-17T16:45:46.696072+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-17T16:45:46.699114+0100 | SUCCESS | model_loader:158 | ✅ Model loaded from local checkpoint (fallback)
+2026-08-17T16:45:46.701725+0100 | INFO | model_loader:181 | Building FAISS index | n_items=4,998 | dim=64 | type=IndexFlatIP
+2026-08-17T16:45:46.703728+0100 | SUCCESS | model_loader:197 | ✅ FAISS index built | total_vectors=4,998
+2026-08-17T16:45:46.704728+0100 | INFO | model_loader:279 | ============================================================
+2026-08-17T16:45:46.704728+0100 | INFO | model_loader:280 |   ALL ARTIFACTS LOADED
+2026-08-17T16:45:46.704728+0100 | INFO | model_loader:281 |   Model version:  local-checkpoint
+2026-08-17T16:45:46.705724+0100 | INFO | model_loader:282 |   Device:         cpu
+2026-08-17T16:45:46.706253+0100 | INFO | model_loader:283 |   FAISS vectors:  4,998
+2026-08-17T16:45:46.706253+0100 | INFO | model_loader:284 |   Load time:      0.79s
+2026-08-17T16:45:46.706253+0100 | INFO | model_loader:285 | ============================================================
+2026-08-17T16:45:47.208954+0100 | SUCCESS | feature_fetcher:99 | ✅ Feast connected | project=recsys
+2026-08-17T16:45:47.208954+0100 | INFO | feature_fetcher:89 | FeatureFetcher initialized
+2026-08-17T16:45:47.209918+0100 | INFO | recommender:78 | PostgreSQL connection pool created
+2026-08-17T16:45:47.209918+0100 | INFO | recommender:57 | RecommendationEngine initialized
+2026-08-17T16:45:47.210916+0100 | SUCCESS | main:105 | ✅ Service startup complete — ready to serve requests
+2026-08-17T16:45:58.216941+0100 | DEBUG | middleware:81 | GET /docs | status=200 | 0.9ms
+2026-08-17T16:45:58.342303+0100 | DEBUG | middleware:81 | GET /openapi.json | status=200 | 9.4ms
+2026-08-17T16:46:47.553986+0100 | ERROR | routers.recommendations:117 | Recommendation failed | user=user_000021 | request_id=7d4913a6-d63b-42aa-b048-52b43c30ba5a | error='RecommendationEngine' object has no attribute '_fetch_item_metadata'
+2026-08-17T16:46:47.554987+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=500 | latency=51.4ms
+2026-08-17T16:48:58.656266+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=422 | latency=1.5ms
+2026-08-17T16:49:44.860905+0100 | ERROR | routers.recommendations:117 | Recommendation failed | user=user_000021 | request_id=a928de9d-ac8b-4bd8-870f-694b267dc652 | error='RecommendationEngine' object has no attribute '_fetch_item_metadata'
+2026-08-17T16:49:44.861903+0100 | INFO | middleware:76 | GET /api/v1/recommend/user_000021 | status=500 | latency=44.9ms
+2026-08-17T16:50:03.645338+0100 | ERROR | routers.recommendations:117 | Recommendation failed | user=user_000021 | request_id=30983110-64f1-4376-997a-a30dbecc4768 | error='RecommendationEngine' object has no attribute '_fetch_item_metadata'
+2026-08-17T16:50:03.645338+0100 | INFO | middleware:76 | POST /api/v1/recommend | status=500 | latency=7.7ms
+2026-08-17T16:54:06.425477+0100 | INFO | main:110 | Shutting down...
+2026-08-17T16:54:06.427480+0100 | INFO | model_loader:297 | ML artifacts unloaded
+2026-08-17T16:54:06.428480+0100 | INFO | main:112 | ✅ Shutdown complete
+2026-08-17T16:54:16.705726+0100 | INFO | main:76 | ============================================================
+2026-08-17T16:54:16.706741+0100 | INFO | main:77 |   RecSys Inference API v0.1.0
+2026-08-17T16:54:16.706741+0100 | INFO | main:78 |   Environment: development
+2026-08-17T16:54:16.707738+0100 | INFO | main:79 | ============================================================
+2026-08-17T16:54:16.707738+0100 | INFO | model_loader:215 | ============================================================
+2026-08-17T16:54:16.707738+0100 | INFO | model_loader:216 |   LOADING ML ARTIFACTS
+2026-08-17T16:54:16.708736+0100 | INFO | model_loader:217 | ============================================================
+2026-08-17T16:54:16.712367+0100 | INFO | model_loader:233 | Encoders loaded | users=9,938 | items=4,998
+2026-08-17T16:54:16.713367+0100 | INFO | dataset:106 | Normalization stats loaded ← src\training\data\processed\norm_stats.json
+2026-08-17T16:54:16.713367+0100 | INFO | model_loader:246 | Normalization stats loaded
+2026-08-17T16:54:16.714379+0100 | INFO | model_loader:102 | Loading model from MLflow | uri=models:/two-tower-recommender/latest
+2026-08-17T16:54:17.369777+0100 | WARNING | model_loader:127 | MLflow model load failed: INVALID_PARAMETER_VALUE: Invalid Model Version stage: latest. Value must be one of None, Staging, Production, Archived.
+Attempting fallback to local artifacts...
+2026-08-17T16:54:17.405928+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-17T16:54:17.411549+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-17T16:54:17.412091+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-17T16:54:17.415622+0100 | SUCCESS | model_loader:158 | ✅ Model loaded from local checkpoint (fallback)
+2026-08-17T16:54:17.418628+0100 | INFO | model_loader:181 | Building FAISS index | n_items=4,998 | dim=64 | type=IndexFlatIP
+2026-08-17T16:54:17.419613+0100 | SUCCESS | model_loader:197 | ✅ FAISS index built | total_vectors=4,998
+2026-08-17T16:54:17.421614+0100 | INFO | model_loader:279 | ============================================================
+2026-08-17T16:54:17.421614+0100 | INFO | model_loader:280 |   ALL ARTIFACTS LOADED
+2026-08-17T16:54:17.421614+0100 | INFO | model_loader:281 |   Model version:  local-checkpoint
+2026-08-17T16:54:17.422614+0100 | INFO | model_loader:282 |   Device:         cpu
+2026-08-17T16:54:17.422614+0100 | INFO | model_loader:283 |   FAISS vectors:  4,998
+2026-08-17T16:54:17.422614+0100 | INFO | model_loader:284 |   Load time:      0.71s
+2026-08-17T16:54:17.423614+0100 | INFO | model_loader:285 | ============================================================
+2026-08-17T16:54:17.961774+0100 | SUCCESS | feature_fetcher:99 | ✅ Feast connected | project=recsys
+2026-08-17T16:54:17.961774+0100 | INFO | feature_fetcher:89 | FeatureFetcher initialized
+2026-08-17T16:54:17.962773+0100 | INFO | recommender:78 | PostgreSQL connection pool created
+2026-08-17T16:54:17.962773+0100 | INFO | recommender:57 | RecommendationEngine initialized
+2026-08-17T16:54:17.962773+0100 | SUCCESS | main:105 | ✅ Service startup complete — ready to serve requests
+2026-08-17T16:56:05.956598+0100 | DEBUG | recommender:300 | Metadata fetched | requested=20 | returned=20
+2026-08-17T16:56:05.957595+0100 | INFO | recommender:220 | Recommendations generated | user=user_000021 | returned=10/10 | cold_start=False | feature=42.2ms | model=1.6ms | ann=1.7ms
+2026-08-17T16:56:05.958189+0100 | WARNING | middleware:70 | SLA WARNING | POST /api/v1/recommend | status=200 | latency=93.0ms | threshold=80ms
