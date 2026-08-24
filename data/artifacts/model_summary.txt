@@ -1,0 +1,11 @@
+Two-Tower Model Summary
+========================================
+Total params: 1,088,768
+Test AUC:     0.5934
+Test MRR:     0.7359
+Test Recall@5: 0.9001
+Test NDCG@5:   0.7460
+Test Recall@10: 0.9987
+Test NDCG@10:   0.7929
+Test Recall@20: 1.0000
+Test NDCG@20:   0.7935
