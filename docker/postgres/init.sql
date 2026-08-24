@@ -1,29 +1,33 @@
 -- ================================================================
 -- PostgreSQL Initialization Script
--- Creates separate schemas for MLflow and Feast
--- Runs automatically on first container start
+-- Runs ONCE on first container start (fresh volume)
+-- Creates separate databases for each service
 -- ================================================================
 
--- Create dedicated database schemas
-CREATE SCHEMA IF NOT EXISTS mlflow;
+-- feast_db: Feast offline store (feature tables)
+CREATE DATABASE feast_db;
+
+-- mlflow_db: MLflow experiment tracking metadata
+CREATE DATABASE mlflow_db;
+
+-- airflow_db: Airflow pipeline metadata
+CREATE DATABASE airflow_db;
+
+-- Grant full access to our user
+GRANT ALL PRIVILEGES ON DATABASE feast_db   TO recsys_user;
+GRANT ALL PRIVILEGES ON DATABASE mlflow_db  TO recsys_user;
+GRANT ALL PRIVILEGES ON DATABASE airflow_db TO recsys_user;
+
+-- Connect to feast_db and create the feast schema
+\c feast_db
 CREATE SCHEMA IF NOT EXISTS feast;
-
--- Create a read-only user for analytics/debugging
-CREATE USER recsys_readonly WITH PASSWORD 'readonly_password';
-GRANT CONNECT ON DATABASE recsys_db TO recsys_readonly;
-GRANT USAGE ON SCHEMA mlflow TO recsys_readonly;
-GRANT USAGE ON SCHEMA feast TO recsys_readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA mlflow TO recsys_readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA feast TO recsys_readonly;
-
--- Ensure future tables are also accessible to read-only user
-ALTER DEFAULT PRIVILEGES IN SCHEMA mlflow
-    GRANT SELECT ON TABLES TO recsys_readonly;
+GRANT ALL ON SCHEMA feast TO recsys_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA feast
-    GRANT SELECT ON TABLES TO recsys_readonly;
+    GRANT ALL ON TABLES TO recsys_user;
 
--- Log initialization
+-- Connect back to default db
+\c recsys_db
 DO $$
 BEGIN
-    RAISE NOTICE 'Database initialized successfully at %', NOW();
+    RAISE NOTICE 'All databases created successfully at %', NOW();
 END $$;
