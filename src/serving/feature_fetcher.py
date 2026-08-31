@@ -38,6 +38,10 @@ from dataset import (           # type: ignore
     NormalizationStats,
 )
 
+SRC_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(SRC_DIR))
+from config_paths import DATA_PROCESSED_DIR
+
 
 # ----------------------------------------------------------------
 # DEFAULT FEATURES FOR COLD START USERS
@@ -54,16 +58,16 @@ COLD_START_DEFAULTS = {
 
 # Category name → integer index (must match training encoder)
 CATEGORY_TO_IDX = {
-    "electronics":  1,
-    "clothing":     2,
-    "books":        3,
-    "home_garden":  4,
-    "sports":       5,
-    "beauty":       6,
-    "toys":         7,
-    "food":         8,
-    "automotive":   9,
-    "jewelry":      10,
+    "automotive":  0,
+    "beauty":      1,
+    "books":       2,
+    "clothing":    3,
+    "electronics": 4,
+    "food":        5,
+    "home_garden": 6,
+    "jewelry":     7,
+    "sports":      8,
+    "toys":        9,
 }
 
 
@@ -185,41 +189,37 @@ class FeatureFetcher:
         encoders:  dict,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         """
-        Convert raw feature dict into PyTorch tensors
-        ready for the user tower forward pass.
-
-        Applies identical preprocessing to training:
-            1. Log-transform skewed features
-            2. Z-score normalize using training stats
-            3. Encode categorical → integer index
-            4. Encode user_id → integer index (or 0 for unknown)
-
-        Args:
-            features:  Raw feature dict from Feast
-            user_id:   String user ID
-            encoders:  Encoder mappings from encoders.json
-
-        Returns:
-            (user_emb_idx, user_continuous)
-                user_emb_idx:     [1, 2] LongTensor [user_idx, cat_idx]
-                user_continuous:  [1, 4] FloatTensor normalized features
+        Convert raw feature dict into PyTorch tensors.
+        Includes bounds checking to prevent embedding index errors.
         """
         import numpy as np
 
-        # ---- Encode user_id → integer index ----
+        n_users      = encoders.get("n_users", 1)
+        n_categories = encoders.get("n_categories", 10)
         user_classes = encoders.get("user_classes", [])
+
+        # ---- Encode user_id → integer index ----
+        # Use 0 (padding index) for unknown users — always safe
         if user_id in user_classes:
-            user_idx = user_classes.index(user_id)
+            raw_idx  = user_classes.index(user_id)
+            # Clamp to valid range: 0 to n_users (inclusive, since table is n_users+1)
+            user_idx = min(raw_idx, n_users - 1)
         else:
-            user_idx = 0    # Unknown user maps to padding index
+            user_idx = 0    # Cold start: use padding index
 
         # ---- Encode favorite category → integer index ----
-        fav_cat = features.get("user_favorite_category", "electronics")
-        cat_idx = CATEGORY_TO_IDX.get(str(fav_cat).lower(), 0)
+        fav_cat = str(
+            features.get("user_favorite_category", "electronics")
+        ).lower().strip()
 
-        # ---- Build continuous features (match training preprocessing) ----
+        # Use the fixed alphabetical mapping
+        cat_idx = CATEGORY_TO_IDX.get(fav_cat, 4)  # 4 = electronics (default)
+
+        # Clamp category index to valid range
+        cat_idx = min(cat_idx, n_categories - 1)
+
+        # ---- Build continuous features ----
         continuous = {
-            # Log-transform (same as training_dataset.py)
             "user_click_count_7d_log": np.log1p(
                 float(features.get("user_click_count_7d", 0))
             ),
@@ -234,28 +234,34 @@ class FeatureFetcher:
             ),
         }
 
-        # ---- Apply normalization (identical to training) ----
+        # ---- Normalize ----
         means = self.norm_stats.means
         stds  = self.norm_stats.stds
-
         normalized = []
         for col in USER_CONTINUOUS_COLS:
             val  = continuous.get(col, 0.0)
             mean = means.get(col, 0.0)
-            std  = stds.get(col, 1.0)
-            normalized.append((val - mean) / (std + 1e-8))
+            std  = max(stds.get(col, 1.0), 1e-8)
+            normalized.append((val - mean) / std)
 
-        # ---- Build tensors ----
+        # ---- Build tensors with validated indices ----
         user_emb_idx = torch.tensor(
             [[user_idx, cat_idx]], dtype=torch.long
-        )                                               # [1, 2]
-
+        )
         user_continuous = torch.tensor(
             [normalized], dtype=torch.float32
-        )                                               # [1, 4]
+        )
+
+        logger.debug(
+            f"User tensors built | "
+            f"user_id={user_id} | "
+            f"user_idx={user_idx} | "
+            f"cat_idx={cat_idx} | "
+            f"n_users={n_users} | "
+            f"n_categories={n_categories}"
+        )
 
         return user_emb_idx, user_continuous
-
     def ping(self) -> bool:
         """Quick health check — can we reach the online store?"""
         if self._store is None:

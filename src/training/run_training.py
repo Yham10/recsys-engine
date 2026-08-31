@@ -24,6 +24,16 @@ from loguru import logger
 from dotenv import load_dotenv
 load_dotenv()
 
+# ── Path setup ────────────────────────────────────────────────────
+_THIS_DIR = Path(__file__).resolve().parent
+_SRC_DIR  = _THIS_DIR.parent
+sys.path.insert(0, str(_SRC_DIR))
+
+from config_paths import DATA_PROCESSED_DIR, print_paths
+
+# Show paths at startup
+print_paths()
+
 # ---- Logging Setup ----
 logger.remove()
 logger.add(
@@ -51,39 +61,25 @@ from trainer import TwoTowerTrainer, PROCESSED_DIR
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Train Two-Tower Recommendation Model",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
-    )
-
-    # Model hyperparameters
+    parser = argparse.ArgumentParser(description="Train Two-Tower Model")
     parser.add_argument("--embedding-dim", type=int,   default=64)
     parser.add_argument("--output-dim",    type=int,   default=64)
     parser.add_argument("--dropout",       type=float, default=0.2)
     parser.add_argument("--lr",            type=float, default=1e-3)
     parser.add_argument("--weight-decay",  type=float, default=1e-5)
     parser.add_argument("--batch-size",    type=int,   default=2048)
-
-    # Training config
     parser.add_argument("--epochs",        type=int,   default=20)
     parser.add_argument("--patience",      type=int,   default=5)
     parser.add_argument("--device",        type=str,   default="auto")
     parser.add_argument(
-        "--k-values",
-        type=int,
-        nargs="+",
-        default=[5, 10, 20],
-        help="K values for Recall@K, NDCG@K metrics"
+        "--k-values", type=int, nargs="+", default=[5, 10, 20]
     )
-
-    # Paths
+    # processed-dir now defaults to the shared path
     parser.add_argument(
         "--processed-dir",
         type=str,
-        default=str(PROCESSED_DIR),
+        default=str(DATA_PROCESSED_DIR),
     )
-
     return parser.parse_args()
 
 

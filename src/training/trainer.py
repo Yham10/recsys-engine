@@ -17,11 +17,18 @@ MLflow Tracking:
         Tags        → git commit, run type, dataset version
 """
 
+"""
+Training Loop with MLflow Tracking
+====================================
+Reads from:  recsys-engine/data/processed/
+Writes to:   recsys-engine/data/artifacts/
+             MLflow (http://localhost:5000)
+"""
+
 import os
 import sys
 import json
 import time
-import shutil
 import numpy as np
 import pandas as pd
 import torch
@@ -37,6 +44,15 @@ import mlflow
 import mlflow.pytorch
 from mlflow.models.signature import infer_signature
 
+# ── Path setup ───────────────────────────────────────────────────
+# This file: recsys-engine/src/training/trainer.py
+# We need:   recsys-engine/src/ on the path
+_THIS_DIR = Path(__file__).resolve().parent      # training/
+_SRC_DIR  = _THIS_DIR.parent                     # src/
+sys.path.insert(0, str(_SRC_DIR))
+
+from config_paths import DATA_PROCESSED_DIR, DATA_ARTIFACTS_DIR
+
 from dataset import (
     build_dataloaders,
     USER_CONTINUOUS_COLS,
@@ -46,19 +62,17 @@ from dataset import (
 from model import TwoTowerModel, ModelConfig
 from metrics import RecsysEvaluator, MetricResults
 
+# ── Configuration ─────────────────────────────────────────────────
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI",   "http://localhost:5000")
+MLFLOW_EXPERIMENT   = os.getenv("MLFLOW_EXPERIMENT_NAME", "recsys-recommendation-engine")
+MLFLOW_MODEL_NAME   = os.getenv("MLFLOW_MODEL_NAME",      "two-tower-recommender")
 
-# ----------------------------------------------------------------
-# CONFIGURATION
-# ----------------------------------------------------------------
-
-MLFLOW_TRACKING_URI  = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
-MLFLOW_EXPERIMENT    = os.getenv("MLFLOW_EXPERIMENT_NAME", "recsys-recommendation-engine")
-MLFLOW_MODEL_NAME    = os.getenv("MLFLOW_MODEL_NAME", "two-tower-recommender")
-
-PROCESSED_DIR        = Path("data/processed")
-ARTIFACTS_DIR        = Path("data/artifacts")
+PROCESSED_DIR = DATA_PROCESSED_DIR
+ARTIFACTS_DIR = DATA_ARTIFACTS_DIR
 ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
+logger.info(f"trainer.py | PROCESSED_DIR = {PROCESSED_DIR.resolve()}")
+logger.info(f"trainer.py | ARTIFACTS_DIR = {ARTIFACTS_DIR.resolve()}")
 
 # ----------------------------------------------------------------
 # TRAINER
@@ -155,15 +169,20 @@ class TwoTowerTrainer:
     # ----------------------------------------------------------
 
     def _load_encoder_config(self) -> None:
-        """
-        Load encoder mappings to set vocabulary sizes in ModelConfig.
-        This ensures the embedding layers match the actual data.
-        """
+        """Load encoder mappings to set vocabulary sizes."""
         encoder_path = self.processed_dir / "encoders.json"
+
+        logger.info(f"Reading encoders from: {encoder_path.resolve()}")
+
         if not encoder_path.exists():
             raise FileNotFoundError(
-                f"encoders.json not found at {encoder_path}.\n"
-                f"Run Step 3 training_dataset.py first."
+                f"\n{'='*50}"
+                f"\nENCODERS NOT FOUND at:\n  {encoder_path.resolve()}"
+                f"\nExpected location: recsys-engine/data/processed/encoders.json"
+                f"\nRun this first:"
+                f"\n  cd src/feature_store"
+                f"\n  python training_dataset.py"
+                f"\n{'='*50}"
             )
 
         with open(encoder_path) as f:
@@ -177,9 +196,16 @@ class TwoTowerTrainer:
             f"Encoder config loaded | "
             f"n_users={self.config.n_users:,} | "
             f"n_items={self.config.n_items:,} | "
-            f"n_categories={self.config.n_categories}"
+            f"n_categories={self.config.n_categories} | "
+            f"path={encoder_path.resolve()}"
         )
 
+        # Sanity check
+        if self.config.n_categories < 10:
+            logger.warning(
+                f"n_categories={self.config.n_categories} — expected 10. "
+                f"Re-run training_dataset.py with the fixed ALL_CATEGORIES list."
+            )
     # ----------------------------------------------------------
     # TRAINING LOOP
     # ----------------------------------------------------------
@@ -207,7 +233,7 @@ class TwoTowerTrainer:
 
         # Loss function — weighted BCE to handle class imbalance
         # Positive interactions (~30%) are weighted higher
-        pos_weight = torch.tensor([2.5]).to(self.device)
+        pos_weight = torch.tensor([3.0]).to(self.device)
         criterion  = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
         # Optimizer
@@ -526,57 +552,94 @@ class TwoTowerTrainer:
     # ITEM EMBEDDINGS (ANN INDEX INPUT)
     # ----------------------------------------------------------
 
-    def _save_item_embeddings(
-        self,
-        test_loader: torch.utils.data.DataLoader,
-    ) -> None:
+    def _save_item_embeddings(self, test_loader) -> None:
         """
-        Pre-compute and save ALL item embeddings.
-
-        These embeddings are used to build the ANN (Approximate
-        Nearest Neighbor) index in FastAPI, so we can find the
-        top-K most similar items to a user without scoring all items.
-
-        Saved as:
-            data/artifacts/item_embeddings.npy   [n_items, output_dim]
-            data/artifacts/item_ids.json         [item_id list]
+        Pre-compute item embeddings using REAL features from the dataset.
+        
+        Critical: must use the same 1-based index shift as dataset.py
+        and must use real normalized features, not zeros.
         """
         logger.info("Pre-computing item embeddings for ANN index...")
-
         self.model.eval()
 
-        # Load encoders to get all item indices
-        with open(self.processed_dir / "encoders.json") as f:
+        encoder_path = self.processed_dir / "encoders.json"
+        with open(encoder_path) as f:
             encoders = json.load(f)
 
-        n_items      = encoders["n_items"]
-        item_classes = encoders["item_classes"]    # item_id strings
+        item_classes = encoders["item_classes"]   # list of "item_000000", ...
+        n_items      = len(item_classes)
+        n_item_cont  = len(ITEM_CONTINUOUS_COLS)
 
-        # Build a batch of all item indices
-        item_indices  = torch.arange(0, n_items, dtype=torch.long)
-        cat_indices   = torch.zeros(n_items, dtype=torch.long)  # Default category
-        item_emb_idx  = torch.stack([item_indices, cat_indices], dim=1)
+        # ── Step 1: Collect real features for each item ───────────────
+        # Iterate test_loader to find one real feature vector per item
+        # item_emb_idx[:, 0] is the 1-based item index (shifted in dataset.py)
+        item_feature_store = {}   # 1-based item_idx → (item_emb_idx[B=1], item_feats[B=1])
 
-        # Zero continuous features (embeddings capture catalog features)
-        n_item_cont    = len(ITEM_CONTINUOUS_COLS)
-        item_features  = torch.zeros(n_items, n_item_cont)
+        logger.info("Collecting real item features from test loader...")
+        with torch.no_grad():
+            for batch in test_loader:
+                item_idxs    = batch["item_emb_idx"][:, 0].numpy()   # 1-based
+                item_emb_idx = batch["item_emb_idx"].numpy()
+                item_feats   = batch["item_features"].numpy()
 
-        # Process in batches to avoid OOM
-        batch_size   = 512
+                for i, idx in enumerate(item_idxs):
+                    idx = int(idx)
+                    if idx not in item_feature_store:
+                        item_feature_store[idx] = (
+                            item_emb_idx[i],   # shape [2]
+                            item_feats[i],     # shape [n_item_cont]
+                        )
+
+        n_found  = len(item_feature_store)
+        n_cold   = n_items - n_found
+        logger.info(
+            f"Item features collected | found={n_found} | cold_items={n_cold}"
+        )
+
+        # ── Step 2: Build tensors in item order ───────────────────────
+        # item_classes[i] = "item_000123" → its 0-based index is i
+        # After the +1 shift in dataset.py, its 1-based index is i+1
+        all_item_emb_idx  = []
+        all_item_features = []
+
+        for zero_based_idx in range(n_items):
+            one_based_idx = zero_based_idx + 1   # matches dataset.py shift
+
+            if one_based_idx in item_feature_store:
+                emb_idx, feats = item_feature_store[one_based_idx]
+            else:
+                # Cold item: use correct index, zero continuous features
+                # We still need the correct cat_idx — use 0 (unknown)
+                emb_idx = np.array([one_based_idx, 0], dtype=np.int64)
+                feats   = np.zeros(n_item_cont, dtype=np.float32)
+
+            all_item_emb_idx.append(emb_idx)
+            all_item_features.append(feats)
+
+        item_emb_idx_t  = torch.tensor(
+            np.array(all_item_emb_idx),  dtype=torch.long
+        )
+        item_features_t = torch.tensor(
+            np.array(all_item_features), dtype=torch.float32
+        )
+
+        # ── Step 3: Batch inference ───────────────────────────────────
+        batch_size     = 512
         all_embeddings = []
 
         with torch.no_grad():
             for start in range(0, n_items, batch_size):
                 end = min(start + batch_size, n_items)
                 emb = self.model.get_item_embeddings(
-                    item_emb_idx[start:end].to(self.device),
-                    item_features[start:end].to(self.device),
+                    item_emb_idx_t[start:end].to(self.device),
+                    item_features_t[start:end].to(self.device),
                 )
                 all_embeddings.append(emb.cpu().numpy())
 
         item_embeddings = np.concatenate(all_embeddings, axis=0)
+        # item_embeddings[i] corresponds to item_classes[i]
 
-        # Save
+        # ── Step 4: Save ─────────────────────────────────────────────
         emb_path = ARTIFACTS_DIR / "item_embeddings.npy"
         ids_path = ARTIFACTS_DIR / "item_ids.json"
 
@@ -584,12 +647,11 @@ class TwoTowerTrainer:
         with open(ids_path, "w") as f:
             json.dump(item_classes, f)
 
-        # Also log to MLflow
         mlflow.log_artifact(str(emb_path), artifact_path="embeddings")
         mlflow.log_artifact(str(ids_path), artifact_path="embeddings")
 
         logger.success(
             f"✅ Item embeddings saved | "
             f"shape={item_embeddings.shape} | "
-            f"path={emb_path}"
+            f"found_real_features={n_found}/{n_items}"
         )

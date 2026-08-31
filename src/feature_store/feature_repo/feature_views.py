@@ -60,7 +60,7 @@ item_features_source = PostgreSQLSource(
 user_feature_view = FeatureView(
     name        = "user_features",
     entities    = [user_entity],
-    ttl         = timedelta(days=2),
+    ttl         = timedelta(days=120),
     schema      = [
         Field(
             name        = "user_click_count_7d",
@@ -102,7 +102,7 @@ user_feature_view = FeatureView(
 item_feature_view = FeatureView(
     name        = "item_features",
     entities    = [item_entity],
-    ttl         = timedelta(days=2),
+    ttl         = timedelta(days=120),
     schema      = [
         Field(
             name        = "item_view_count_7d",

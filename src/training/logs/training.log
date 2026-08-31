@@ -380,3 +380,1333 @@
 2026-08-14T18:55:29.037178+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=37b6215c88874beeafd0072c0c2baff6 | best_val_auc=0.5163 | test_auc=0.5116
 2026-08-14T18:55:29.270805+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=37b6215c88874beeafd0072c0c2baff6
 2026-08-14T18:55:29.271865+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-18T18:19:30.117002+0100 | INFO | __main__:94 | ============================================================
+2026-08-18T18:19:30.118006+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-18T18:19:30.118006+0100 | INFO | __main__:96 | ============================================================
+2026-08-18T18:19:30.118006+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-19T15:52:35.940607+0100 | INFO | __main__:94 | ============================================================
+2026-08-19T15:52:35.944135+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-19T15:52:35.944135+0100 | INFO | __main__:96 | ============================================================
+2026-08-19T15:52:35.945135+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-19T15:52:36.062853+0100 | INFO | trainer:144 | MLflow experiment created: recsys-recommendation-engine
+2026-08-19T15:52:36.118376+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-19T15:52:36.118376+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=20 | patience=5
+2026-08-19T15:52:36.126912+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-19T15:52:36.128975+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-19T15:52:36.277150+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-19T15:52:36.287522+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-19T15:52:36.323020+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T15:52:36.323020+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-19T15:52:36.336451+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T15:52:36.354426+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-19T15:52:36.354990+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-19T15:52:36.370435+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T15:52:36.391193+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T15:52:36.392891+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-19T15:52:36.394051+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-19T15:52:36.438222+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-19T15:52:36.446953+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-19T15:52:36.455767+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-19T15:52:41.611031+0100 | INFO | trainer:236 | MLflow run started | run_id=9a23a4a72e574192979217c1f169c553
+2026-08-19T15:52:44.725296+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.3410
+2026-08-19T15:52:50.879592+0100 | INFO | trainer:305 | Epoch 001/20 | train_loss=1.0837 | AUC=0.4959 | Loss=0.8000 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0000 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0000 | MRR=0.0385 | lr=1.00e-03 | time=6.5s
+2026-08-19T15:52:50.929953+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.4959
+2026-08-19T15:52:51.402004+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.7914
+2026-08-19T15:52:58.473346+0100 | INFO | trainer:305 | Epoch 002/20 | train_loss=0.7623 | AUC=0.5049 | Loss=0.8205 | Recall@5=0.0000 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.1357 | NDCG@20=0.1607 | MRR=0.1250 | lr=1.00e-03 | time=7.5s
+2026-08-19T15:52:58.507713+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5049
+2026-08-19T15:52:58.858054+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.6607
+2026-08-19T15:53:05.643894+0100 | INFO | trainer:305 | Epoch 003/20 | train_loss=0.6122 | AUC=0.5186 | Loss=0.8179 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0636 | NDCG@20=0.0784 | MRR=0.1000 | lr=1.00e-03 | time=7.0s
+2026-08-19T15:53:05.676924+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5186
+2026-08-19T15:53:05.996740+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.4594
+2026-08-19T15:53:13.536121+0100 | INFO | trainer:305 | Epoch 004/20 | train_loss=0.4261 | AUC=0.5174 | Loss=1.1795 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0012 | NDCG@5=0.3392 | NDCG@10=0.2201 | NDCG@20=0.1420 | MRR=1.0000 | lr=1.00e-03 | time=7.8s
+2026-08-19T15:53:13.537123+0100 | INFO | trainer:332 |   No improvement for 1/5 epochs
+2026-08-19T15:53:14.177975+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.3018
+2026-08-19T15:53:20.977679+0100 | INFO | trainer:305 | Epoch 005/20 | train_loss=0.2861 | AUC=0.5175 | Loss=1.6604 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0734 | NDCG@20=0.0821 | MRR=0.1429 | lr=1.00e-03 | time=7.4s
+2026-08-19T15:53:20.978677+0100 | INFO | trainer:332 |   No improvement for 2/5 epochs
+2026-08-19T15:53:21.499081+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.2037
+2026-08-19T15:53:27.495525+0100 | INFO | trainer:305 | Epoch 006/20 | train_loss=0.1997 | AUC=0.5156 | Loss=2.0144 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0636 | NDCG@20=0.1115 | MRR=0.1000 | lr=5.00e-04 | time=6.4s
+2026-08-19T15:53:27.496527+0100 | INFO | trainer:332 |   No improvement for 3/5 epochs
+2026-08-19T15:53:27.796651+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.1395
+2026-08-19T15:53:34.845555+0100 | INFO | trainer:305 | Epoch 007/20 | train_loss=0.1386 | AUC=0.5179 | Loss=2.2243 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0696 | MRR=0.0769 | lr=5.00e-04 | time=7.3s
+2026-08-19T15:53:34.846563+0100 | INFO | trainer:332 |   No improvement for 4/5 epochs
+2026-08-19T15:53:35.113823+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.0979
+2026-08-19T15:53:41.082149+0100 | INFO | trainer:305 | Epoch 008/20 | train_loss=0.1020 | AUC=0.5189 | Loss=2.5627 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0684 | MRR=0.0667 | lr=5.00e-04 | time=6.2s
+2026-08-19T15:53:41.112594+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5189
+2026-08-19T15:53:41.412692+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.0979
+2026-08-19T15:53:47.953144+0100 | INFO | trainer:305 | Epoch 009/20 | train_loss=0.0841 | AUC=0.5146 | Loss=2.8334 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0334 | MRR=0.0556 | lr=5.00e-04 | time=6.8s
+2026-08-19T15:53:47.953144+0100 | INFO | trainer:332 |   No improvement for 1/5 epochs
+2026-08-19T15:53:48.233030+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.0830
+2026-08-19T15:53:55.278835+0100 | INFO | trainer:305 | Epoch 010/20 | train_loss=0.0742 | AUC=0.5150 | Loss=2.9485 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0000 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0000 | MRR=0.0435 | lr=5.00e-04 | time=7.3s
+2026-08-19T15:53:55.278835+0100 | INFO | trainer:332 |   No improvement for 2/5 epochs
+2026-08-19T15:53:55.533729+0100 | DEBUG | trainer:435 |   Epoch 11 | batch 0/19 | loss=0.0557
+2026-08-19T15:54:01.890844+0100 | INFO | trainer:305 | Epoch 011/20 | train_loss=0.0604 | AUC=0.5164 | Loss=3.0951 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0334 | MRR=0.0556 | lr=2.50e-04 | time=6.6s
+2026-08-19T15:54:01.890844+0100 | INFO | trainer:332 |   No improvement for 3/5 epochs
+2026-08-19T15:54:02.164334+0100 | DEBUG | trainer:435 |   Epoch 12 | batch 0/19 | loss=0.0621
+2026-08-19T15:54:09.376149+0100 | INFO | trainer:305 | Epoch 012/20 | train_loss=0.0530 | AUC=0.5160 | Loss=3.1898 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0334 | MRR=0.0556 | lr=2.50e-04 | time=7.4s
+2026-08-19T15:54:09.376149+0100 | INFO | trainer:332 |   No improvement for 4/5 epochs
+2026-08-19T15:54:09.732611+0100 | DEBUG | trainer:435 |   Epoch 13 | batch 0/19 | loss=0.0540
+2026-08-19T15:54:17.515504+0100 | INFO | trainer:305 | Epoch 013/20 | train_loss=0.0471 | AUC=0.5151 | Loss=3.3042 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0348 | MRR=0.0625 | lr=2.50e-04 | time=8.1s
+2026-08-19T15:54:17.515504+0100 | INFO | trainer:332 |   No improvement for 5/5 epochs
+2026-08-19T15:54:17.516514+0100 | INFO | trainer:337 | Early stopping triggered at epoch 13
+2026-08-19T15:54:17.516514+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-19T15:54:18.107272+0100 | INFO | trainer:357 | ============================================================
+2026-08-19T15:54:18.107272+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-19T15:54:18.108300+0100 | INFO | trainer:359 |   AUC=0.5036 | Loss=2.7674 | Recall@5=0.0011 | Recall@10=0.0033 | Recall@20=0.0033 | NDCG@5=0.3392 | NDCG@10=0.3500 | NDCG@20=0.2259 | MRR=1.0000
+2026-08-19T15:54:18.108837+0100 | INFO | trainer:360 | ============================================================
+2026-08-19T15:54:18.109367+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-19T15:54:23.987098+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/9a23a4a72e574192979217c1f169c553/model
+2026-08-19T15:54:23.988083+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-19T15:54:24.181276+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-19T15:54:24.183276+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=9a23a4a72e574192979217c1f169c553 | best_val_auc=0.5189 | test_auc=0.5036
+2026-08-19T15:54:24.294387+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=9a23a4a72e574192979217c1f169c553
+2026-08-19T15:54:24.295402+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-19T20:25:40.843761+0100 | INFO | __main__:94 | ============================================================
+2026-08-19T20:25:40.843761+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-19T20:25:40.845274+0100 | INFO | __main__:96 | ============================================================
+2026-08-19T20:25:40.846624+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-19T20:25:41.020700+0100 | INFO | trainer:144 | MLflow experiment created: recsys-recommendation-engine
+2026-08-19T20:25:41.085324+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-19T20:25:41.086311+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-19T20:25:41.093402+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-19T20:25:41.095463+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-19T20:25:41.348217+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-19T20:25:41.365346+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-19T20:25:41.421679+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T20:25:41.422680+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-19T20:25:41.440764+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T20:25:41.459672+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-19T20:25:41.460682+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-19T20:25:41.478627+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T20:25:41.507723+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T20:25:41.509995+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-19T20:25:41.512242+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-19T20:25:41.543689+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-19T20:25:41.560387+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-19T20:25:41.562389+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-19T20:25:49.240246+0100 | INFO | trainer:236 | MLflow run started | run_id=cea621b199534195b32e24adb5fcb05c
+2026-08-19T20:25:51.481696+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.1825
+2026-08-19T20:25:56.741073+0100 | INFO | trainer:305 | Epoch 001/30 | train_loss=1.0524 | AUC=0.4939 | Loss=0.8116 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1348 | MRR=0.0667 | lr=1.00e-03 | time=5.5s
+2026-08-19T20:25:56.773847+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.4939
+2026-08-19T20:25:56.990846+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.8155
+2026-08-19T20:26:01.784246+0100 | INFO | trainer:305 | Epoch 002/30 | train_loss=0.7558 | AUC=0.4932 | Loss=0.8183 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0341 | MRR=0.0588 | lr=1.00e-03 | time=4.9s
+2026-08-19T20:26:01.784804+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:26:02.034298+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.6444
+2026-08-19T20:26:07.207876+0100 | INFO | trainer:305 | Epoch 003/30 | train_loss=0.6044 | AUC=0.5033 | Loss=0.9251 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0696 | MRR=0.0667 | lr=1.00e-03 | time=5.4s
+2026-08-19T20:26:07.239834+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5033
+2026-08-19T20:26:07.490656+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.4480
+2026-08-19T20:26:12.848646+0100 | INFO | trainer:305 | Epoch 004/30 | train_loss=0.4212 | AUC=0.5010 | Loss=1.6496 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.1207 | MRR=0.2000 | lr=1.00e-03 | time=5.6s
+2026-08-19T20:26:12.849279+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:26:13.111847+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.2755
+2026-08-19T20:26:17.944474+0100 | INFO | trainer:305 | Epoch 005/30 | train_loss=0.2806 | AUC=0.5126 | Loss=1.9423 | Recall@5=0.0036 | Recall@10=0.0036 | Recall@20=0.0059 | NDCG@5=0.4913 | NDCG@10=0.3188 | NDCG@20=0.2814 | MRR=0.5000 | lr=1.00e-03 | time=5.0s
+2026-08-19T20:26:17.974955+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5126
+2026-08-19T20:26:18.189428+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.1869
+2026-08-19T20:26:23.031724+0100 | INFO | trainer:305 | Epoch 006/30 | train_loss=0.1957 | AUC=0.5096 | Loss=2.2584 | Recall@5=0.0012 | Recall@10=0.0036 | Recall@20=0.0083 | NDCG@5=0.2140 | NDCG@10=0.2719 | NDCG@20=0.3152 | MRR=0.5000 | lr=1.00e-03 | time=5.0s
+2026-08-19T20:26:23.032752+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:26:23.284118+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.1458
+2026-08-19T20:26:28.317726+0100 | INFO | trainer:305 | Epoch 007/30 | train_loss=0.1461 | AUC=0.5041 | Loss=2.6255 | Recall@5=0.0000 | Recall@10=0.0036 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.2180 | NDCG@20=0.1407 | MRR=0.1667 | lr=1.00e-03 | time=5.2s
+2026-08-19T20:26:28.317726+0100 | INFO | trainer:332 |   No improvement for 2/7 epochs
+2026-08-19T20:26:28.543939+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.1222
+2026-08-19T20:26:33.589351+0100 | INFO | trainer:305 | Epoch 008/30 | train_loss=0.1140 | AUC=0.5026 | Loss=2.6998 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.2140 | NDCG@10=0.1389 | NDCG@20=0.1656 | MRR=0.5000 | lr=5.00e-04 | time=5.2s
+2026-08-19T20:26:33.590748+0100 | INFO | trainer:332 |   No improvement for 3/7 epochs
+2026-08-19T20:26:33.837885+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.0814
+2026-08-19T20:26:43.481429+0100 | INFO | trainer:305 | Epoch 009/30 | train_loss=0.0858 | AUC=0.5047 | Loss=2.9255 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.1461 | NDCG@10=0.1732 | NDCG@20=0.1805 | MRR=0.2500 | lr=5.00e-04 | time=9.8s
+2026-08-19T20:26:43.481988+0100 | INFO | trainer:332 |   No improvement for 4/7 epochs
+2026-08-19T20:26:44.062534+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.0643
+2026-08-19T20:26:52.099331+0100 | INFO | trainer:305 | Epoch 010/30 | train_loss=0.0645 | AUC=0.5034 | Loss=3.2945 | Recall@5=0.0000 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.1299 | NDCG@20=0.1618 | MRR=0.1111 | lr=5.00e-04 | time=8.5s
+2026-08-19T20:26:52.099331+0100 | INFO | trainer:332 |   No improvement for 5/7 epochs
+2026-08-19T20:26:52.687843+0100 | DEBUG | trainer:435 |   Epoch 11 | batch 0/19 | loss=0.0457
+2026-08-19T20:26:57.647294+0100 | INFO | trainer:305 | Epoch 011/30 | train_loss=0.0506 | AUC=0.4997 | Loss=3.6684 | Recall@5=0.0000 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.1357 | NDCG@20=0.1619 | MRR=0.1250 | lr=2.50e-04 | time=5.5s
+2026-08-19T20:26:57.647294+0100 | INFO | trainer:332 |   No improvement for 6/7 epochs
+2026-08-19T20:26:57.977582+0100 | DEBUG | trainer:435 |   Epoch 12 | batch 0/19 | loss=0.0405
+2026-08-19T20:27:06.722589+0100 | INFO | trainer:305 | Epoch 012/30 | train_loss=0.0464 | AUC=0.5011 | Loss=3.7089 | Recall@5=0.0000 | Recall@10=0.0036 | Recall@20=0.0059 | NDCG@5=0.0000 | NDCG@10=0.2115 | NDCG@20=0.2060 | MRR=0.1667 | lr=2.50e-04 | time=9.0s
+2026-08-19T20:27:06.722589+0100 | INFO | trainer:332 |   No improvement for 7/7 epochs
+2026-08-19T20:27:06.723588+0100 | INFO | trainer:337 | Early stopping triggered at epoch 12
+2026-08-19T20:27:06.723588+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-19T20:27:07.428494+0100 | INFO | trainer:357 | ============================================================
+2026-08-19T20:27:07.429454+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-19T20:27:07.429454+0100 | INFO | trainer:359 |   AUC=0.5016 | Loss=2.0639 | Recall@5=0.0011 | Recall@10=0.0022 | Recall@20=0.0033 | NDCG@5=0.3392 | NDCG@10=0.2935 | NDCG@20=0.2249 | MRR=1.0000
+2026-08-19T20:27:07.430461+0100 | INFO | trainer:360 | ============================================================
+2026-08-19T20:27:07.430461+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-19T20:27:11.005432+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/cea621b199534195b32e24adb5fcb05c/model
+2026-08-19T20:27:11.006450+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-19T20:27:11.259487+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-19T20:27:11.261590+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=cea621b199534195b32e24adb5fcb05c | best_val_auc=0.5126 | test_auc=0.5016
+2026-08-19T20:27:11.448181+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=cea621b199534195b32e24adb5fcb05c
+2026-08-19T20:27:11.449182+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-19T20:29:58.476143+0100 | INFO | __main__:94 | ============================================================
+2026-08-19T20:29:58.477143+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-19T20:29:58.477143+0100 | INFO | __main__:96 | ============================================================
+2026-08-19T20:29:58.478126+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-19T20:29:58.563483+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-19T20:29:58.563483+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-19T20:29:58.567803+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-19T20:29:58.568805+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-19T20:29:58.660030+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-19T20:29:58.669146+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-19T20:29:58.708282+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T20:29:58.709804+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-19T20:29:58.722906+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T20:29:58.738201+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-19T20:29:58.739248+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-19T20:29:58.752852+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-19T20:29:58.769045+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-19T20:29:58.771004+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-19T20:29:58.772513+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-19T20:29:58.794560+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-19T20:29:58.807084+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-19T20:29:58.808087+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-19T20:30:02.333529+0100 | INFO | trainer:236 | MLflow run started | run_id=345134ce97fa44d18a7b49acf685558d
+2026-08-19T20:30:03.714590+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.3733
+2026-08-19T20:30:08.974317+0100 | INFO | trainer:305 | Epoch 001/30 | train_loss=1.0993 | AUC=0.5001 | Loss=1.0152 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0036 | NDCG@5=0.1461 | NDCG@10=0.1610 | NDCG@20=0.1403 | MRR=0.2500 | lr=1.00e-03 | time=5.4s
+2026-08-19T20:30:09.005434+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5001
+2026-08-19T20:30:09.229324+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.8681
+2026-08-19T20:30:14.342268+0100 | INFO | trainer:305 | Epoch 002/30 | train_loss=0.8331 | AUC=0.5031 | Loss=0.8524 | Recall@5=0.0012 | Recall@10=0.0048 | Recall@20=0.0059 | NDCG@5=0.1696 | NDCG@10=0.3312 | NDCG@20=0.2478 | MRR=0.3333 | lr=1.00e-03 | time=5.3s
+2026-08-19T20:30:14.372459+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5031
+2026-08-19T20:30:14.616278+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.7511
+2026-08-19T20:30:19.409434+0100 | INFO | trainer:305 | Epoch 003/30 | train_loss=0.7267 | AUC=0.5012 | Loss=0.8556 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0669 | MRR=0.0588 | lr=1.00e-03 | time=5.0s
+2026-08-19T20:30:19.409434+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:30:19.637351+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.6384
+2026-08-19T20:30:24.431877+0100 | INFO | trainer:305 | Epoch 004/30 | train_loss=0.5979 | AUC=0.5089 | Loss=1.1931 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0000 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0000 | MRR=0.0476 | lr=1.00e-03 | time=5.0s
+2026-08-19T20:30:24.460719+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5089
+2026-08-19T20:30:24.721376+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.4779
+2026-08-19T20:30:29.639367+0100 | INFO | trainer:305 | Epoch 005/30 | train_loss=0.4568 | AUC=0.5126 | Loss=1.5366 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0702 | MRR=0.0769 | lr=1.00e-03 | time=5.1s
+2026-08-19T20:30:29.665125+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5126
+2026-08-19T20:30:29.920238+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.3604
+2026-08-19T20:30:35.210672+0100 | INFO | trainer:305 | Epoch 006/30 | train_loss=0.3368 | AUC=0.5091 | Loss=1.8548 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0784 | NDCG@20=0.0506 | MRR=0.1667 | lr=1.00e-03 | time=5.5s
+2026-08-19T20:30:35.210672+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:30:35.442749+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.2672
+2026-08-19T20:30:39.907244+0100 | INFO | trainer:305 | Epoch 007/30 | train_loss=0.2560 | AUC=0.5129 | Loss=2.1756 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0694 | NDCG@20=0.1155 | MRR=0.1250 | lr=1.00e-03 | time=4.6s
+2026-08-19T20:30:39.937950+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5129
+2026-08-19T20:30:40.175175+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.1683
+2026-08-19T20:30:45.414070+0100 | INFO | trainer:305 | Epoch 008/30 | train_loss=0.1882 | AUC=0.5120 | Loss=2.4787 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0724 | MRR=0.0833 | lr=1.00e-03 | time=5.4s
+2026-08-19T20:30:45.415287+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:30:45.621481+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.1413
+2026-08-19T20:30:50.188616+0100 | INFO | trainer:305 | Epoch 009/30 | train_loss=0.1491 | AUC=0.5148 | Loss=2.7343 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.1312 | NDCG@10=0.1585 | NDCG@20=0.1741 | MRR=0.2000 | lr=1.00e-03 | time=4.7s
+2026-08-19T20:30:50.225464+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5148
+2026-08-19T20:30:50.451812+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.1145
+2026-08-19T20:30:55.215929+0100 | INFO | trainer:305 | Epoch 010/30 | train_loss=0.1253 | AUC=0.5149 | Loss=2.8719 | Recall@5=0.0024 | Recall@10=0.0036 | Recall@20=0.0048 | NDCG@5=0.3156 | NDCG@10=0.2743 | NDCG@20=0.2093 | MRR=0.3333 | lr=1.00e-03 | time=4.9s
+2026-08-19T20:30:55.245701+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5149
+2026-08-19T20:30:55.475343+0100 | DEBUG | trainer:435 |   Epoch 11 | batch 0/19 | loss=0.1053
+2026-08-19T20:31:00.359531+0100 | INFO | trainer:305 | Epoch 011/30 | train_loss=0.1047 | AUC=0.5142 | Loss=3.0018 | Recall@5=0.0024 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.4852 | NDCG@10=0.3149 | NDCG@20=0.2743 | MRR=1.0000 | lr=1.00e-03 | time=5.1s
+2026-08-19T20:31:00.359531+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-19T20:31:00.648403+0100 | DEBUG | trainer:435 |   Epoch 12 | batch 0/19 | loss=0.0764
+2026-08-19T20:31:05.570369+0100 | INFO | trainer:305 | Epoch 012/30 | train_loss=0.0862 | AUC=0.5135 | Loss=3.1955 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.1312 | NDCG@10=0.1635 | NDCG@20=0.1751 | MRR=0.2000 | lr=1.00e-03 | time=5.1s
+2026-08-19T20:31:05.570917+0100 | INFO | trainer:332 |   No improvement for 2/7 epochs
+2026-08-19T20:31:06.109596+0100 | DEBUG | trainer:435 |   Epoch 13 | batch 0/19 | loss=0.0775
+2026-08-19T20:31:10.954364+0100 | INFO | trainer:305 | Epoch 013/30 | train_loss=0.0783 | AUC=0.5126 | Loss=3.2187 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0059 | NDCG@5=0.1312 | NDCG@10=0.1514 | NDCG@20=0.2000 | MRR=0.2000 | lr=5.00e-04 | time=5.3s
+2026-08-19T20:31:10.955366+0100 | INFO | trainer:332 |   No improvement for 3/7 epochs
+2026-08-19T20:31:11.213678+0100 | DEBUG | trainer:435 |   Epoch 14 | batch 0/19 | loss=0.0650
+2026-08-19T20:31:15.907095+0100 | INFO | trainer:305 | Epoch 014/30 | train_loss=0.0585 | AUC=0.5137 | Loss=3.4907 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0784 | NDCG@20=0.1266 | MRR=0.1667 | lr=5.00e-04 | time=4.9s
+2026-08-19T20:31:15.908078+0100 | INFO | trainer:332 |   No improvement for 4/7 epochs
+2026-08-19T20:31:16.176740+0100 | DEBUG | trainer:435 |   Epoch 15 | batch 0/19 | loss=0.0486
+2026-08-19T20:31:21.063080+0100 | INFO | trainer:305 | Epoch 015/30 | train_loss=0.0497 | AUC=0.5145 | Loss=3.7909 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.1461 | NDCG@10=0.0948 | NDCG@20=0.1314 | MRR=0.2500 | lr=5.00e-04 | time=5.1s
+2026-08-19T20:31:21.064425+0100 | INFO | trainer:332 |   No improvement for 5/7 epochs
+2026-08-19T20:31:21.339070+0100 | DEBUG | trainer:435 |   Epoch 16 | batch 0/19 | loss=0.0344
+2026-08-19T20:31:26.086601+0100 | INFO | trainer:305 | Epoch 016/30 | train_loss=0.0404 | AUC=0.5140 | Loss=4.0180 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.2140 | NDCG@10=0.1389 | NDCG@20=0.1567 | MRR=0.5000 | lr=2.50e-04 | time=5.0s
+2026-08-19T20:31:26.086601+0100 | INFO | trainer:332 |   No improvement for 6/7 epochs
+2026-08-19T20:31:26.288880+0100 | DEBUG | trainer:435 |   Epoch 17 | batch 0/19 | loss=0.0377
+2026-08-19T20:31:30.801901+0100 | INFO | trainer:305 | Epoch 017/30 | train_loss=0.0340 | AUC=0.5134 | Loss=4.1699 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.2140 | NDCG@10=0.1389 | NDCG@20=0.1269 | MRR=0.5000 | lr=2.50e-04 | time=4.7s
+2026-08-19T20:31:30.803266+0100 | INFO | trainer:332 |   No improvement for 7/7 epochs
+2026-08-19T20:31:30.803266+0100 | INFO | trainer:337 | Early stopping triggered at epoch 17
+2026-08-19T20:31:30.804264+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-19T20:31:31.254168+0100 | INFO | trainer:357 | ============================================================
+2026-08-19T20:31:31.255177+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-19T20:31:31.255177+0100 | INFO | trainer:359 |   AUC=0.4995 | Loss=3.1184 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0033 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1072 | MRR=0.0833
+2026-08-19T20:31:31.256184+0100 | INFO | trainer:360 | ============================================================
+2026-08-19T20:31:31.256704+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-19T20:31:34.236013+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/345134ce97fa44d18a7b49acf685558d/model
+2026-08-19T20:31:34.237049+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-19T20:31:34.564085+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-19T20:31:34.567076+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=345134ce97fa44d18a7b49acf685558d | best_val_auc=0.5149 | test_auc=0.4995
+2026-08-19T20:31:34.788580+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=345134ce97fa44d18a7b49acf685558d
+2026-08-19T20:31:34.790346+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-20T12:08:27.482205+0100 | INFO | __main__:94 | ============================================================
+2026-08-20T12:08:27.485722+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-20T12:08:27.486732+0100 | INFO | __main__:96 | ============================================================
+2026-08-20T12:08:27.487732+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-20T12:08:29.150267+0100 | INFO | trainer:144 | MLflow experiment created: recsys-recommendation-engine
+2026-08-20T12:08:29.174432+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-20T12:08:29.175567+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-20T12:08:29.180095+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-20T12:08:29.180095+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-20T12:08:29.296026+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-20T12:08:29.306359+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-20T12:08:29.342294+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-20T12:08:29.342294+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-20T12:08:29.357473+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-20T12:08:29.368987+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-20T12:08:29.369988+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-20T12:08:29.383158+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-20T12:08:29.395970+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-20T12:08:29.397975+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-20T12:08:29.397975+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-20T12:08:29.418300+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-20T12:08:29.428670+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-20T12:08:29.429671+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-20T12:08:33.952133+0100 | INFO | trainer:236 | MLflow run started | run_id=d89b21b9bc324ceb9a79e0ea6715cd04
+2026-08-20T12:08:37.770321+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.2146
+2026-08-20T12:08:43.275912+0100 | INFO | trainer:305 | Epoch 001/30 | train_loss=1.0523 | AUC=0.5171 | Loss=0.7989 | Recall@5=0.0024 | Recall@10=0.0024 | Recall@20=0.0036 | NDCG@5=0.3156 | NDCG@10=0.2048 | NDCG@20=0.1651 | MRR=0.3333 | lr=1.00e-03 | time=6.0s
+2026-08-20T12:08:43.336283+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5171
+2026-08-20T12:08:43.869952+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.7823
+2026-08-20T12:08:50.212674+0100 | INFO | trainer:305 | Epoch 002/30 | train_loss=0.7562 | AUC=0.5067 | Loss=0.7983 | Recall@5=0.0012 | Recall@10=0.0036 | Recall@20=0.0048 | NDCG@5=0.1696 | NDCG@10=0.2521 | NDCG@20=0.2011 | MRR=0.3333 | lr=1.00e-03 | time=6.8s
+2026-08-20T12:08:50.213679+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-20T12:08:50.470089+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.6744
+2026-08-20T12:08:55.998568+0100 | INFO | trainer:305 | Epoch 003/30 | train_loss=0.6161 | AUC=0.5175 | Loss=0.8398 | Recall@5=0.0000 | Recall@10=0.0024 | Recall@20=0.0059 | NDCG@5=0.0000 | NDCG@10=0.1357 | NDCG@20=0.1895 | MRR=0.1250 | lr=1.00e-03 | time=5.7s
+2026-08-20T12:08:56.030711+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5175
+2026-08-20T12:08:56.301917+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.4457
+2026-08-20T12:09:01.396124+0100 | INFO | trainer:305 | Epoch 004/30 | train_loss=0.4229 | AUC=0.5163 | Loss=1.3875 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0024 | NDCG@5=0.1312 | NDCG@10=0.1488 | NDCG@20=0.0960 | MRR=0.2000 | lr=1.00e-03 | time=5.3s
+2026-08-20T12:09:01.396759+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-20T12:09:01.632679+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.2779
+2026-08-20T12:09:06.322159+0100 | INFO | trainer:305 | Epoch 005/30 | train_loss=0.2831 | AUC=0.5062 | Loss=1.7943 | Recall@5=0.0024 | Recall@10=0.0048 | Recall@20=0.0083 | NDCG@5=0.4704 | NDCG@10=0.4351 | NDCG@20=0.3929 | MRR=1.0000 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:09:06.322159+0100 | INFO | trainer:332 |   No improvement for 2/7 epochs
+2026-08-20T12:09:06.531169+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.2050
+2026-08-20T12:09:11.686256+0100 | INFO | trainer:305 | Epoch 006/30 | train_loss=0.1979 | AUC=0.5024 | Loss=2.1655 | Recall@5=0.0024 | Recall@10=0.0036 | Recall@20=0.0059 | NDCG@5=0.4852 | NDCG@10=0.3811 | NDCG@20=0.3152 | MRR=1.0000 | lr=5.00e-04 | time=5.3s
+2026-08-20T12:09:11.687259+0100 | INFO | trainer:332 |   No improvement for 3/7 epochs
+2026-08-20T12:09:11.913270+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.1498
+2026-08-20T12:09:16.654175+0100 | INFO | trainer:305 | Epoch 007/30 | train_loss=0.1337 | AUC=0.5013 | Loss=2.3665 | Recall@5=0.0036 | Recall@10=0.0036 | Recall@20=0.0048 | NDCG@5=0.6164 | NDCG@10=0.4000 | NDCG@20=0.2955 | MRR=1.0000 | lr=5.00e-04 | time=4.9s
+2026-08-20T12:09:16.655174+0100 | INFO | trainer:332 |   No improvement for 4/7 epochs
+2026-08-20T12:09:16.934737+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.0983
+2026-08-20T12:09:21.743711+0100 | INFO | trainer:305 | Epoch 008/30 | train_loss=0.0975 | AUC=0.5009 | Loss=2.7539 | Recall@5=0.0024 | Recall@10=0.0036 | Recall@20=0.0071 | NDCG@5=0.5087 | NDCG@10=0.3996 | NDCG@20=0.3641 | MRR=1.0000 | lr=5.00e-04 | time=5.0s
+2026-08-20T12:09:21.744709+0100 | INFO | trainer:332 |   No improvement for 5/7 epochs
+2026-08-20T12:09:21.937717+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.0807
+2026-08-20T12:09:26.908211+0100 | INFO | trainer:305 | Epoch 009/30 | train_loss=0.0781 | AUC=0.5003 | Loss=3.0637 | Recall@5=0.0024 | Recall@10=0.0036 | Recall@20=0.0059 | NDCG@5=0.3836 | NDCG@10=0.3125 | NDCG@20=0.2786 | MRR=0.5000 | lr=2.50e-04 | time=5.1s
+2026-08-20T12:09:26.908211+0100 | INFO | trainer:332 |   No improvement for 6/7 epochs
+2026-08-20T12:09:27.223709+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.0650
+2026-08-20T12:09:32.686877+0100 | INFO | trainer:305 | Epoch 010/30 | train_loss=0.0604 | AUC=0.4999 | Loss=3.2389 | Recall@5=0.0024 | Recall@10=0.0036 | Recall@20=0.0059 | NDCG@5=0.3836 | NDCG@10=0.3125 | NDCG@20=0.2737 | MRR=0.5000 | lr=2.50e-04 | time=5.7s
+2026-08-20T12:09:32.687885+0100 | INFO | trainer:332 |   No improvement for 7/7 epochs
+2026-08-20T12:09:32.687885+0100 | INFO | trainer:337 | Early stopping triggered at epoch 10
+2026-08-20T12:09:32.688878+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-20T12:09:33.855066+0100 | INFO | trainer:357 | ============================================================
+2026-08-20T12:09:33.856846+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-20T12:09:33.856846+0100 | INFO | trainer:359 |   AUC=0.5049 | Loss=0.8840 | Recall@5=0.0011 | Recall@10=0.0022 | Recall@20=0.0033 | NDCG@5=0.2140 | NDCG@10=0.2083 | NDCG@20=0.1708 | MRR=0.5000
+2026-08-20T12:09:33.857869+0100 | INFO | trainer:360 | ============================================================
+2026-08-20T12:09:33.858867+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-20T12:09:40.096485+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/d89b21b9bc324ceb9a79e0ea6715cd04/model
+2026-08-20T12:09:40.098475+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-20T12:09:40.424521+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-20T12:09:40.426045+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=d89b21b9bc324ceb9a79e0ea6715cd04 | best_val_auc=0.5175 | test_auc=0.5049
+2026-08-20T12:09:40.641032+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=d89b21b9bc324ceb9a79e0ea6715cd04
+2026-08-20T12:09:40.643037+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-20T12:16:22.722993+0100 | INFO | __main__:94 | ============================================================
+2026-08-20T12:16:22.724248+0100 | INFO | __main__:95 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-20T12:16:22.725247+0100 | INFO | __main__:96 | ============================================================
+2026-08-20T12:16:22.725247+0100 | INFO | trainer:126 | Using device: cpu
+2026-08-20T12:16:22.874762+0100 | INFO | trainer:147 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-20T12:16:22.875797+0100 | INFO | trainer:106 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-20T12:16:22.882628+0100 | INFO | trainer:176 | Encoder config loaded | n_users=9,938 | n_items=4,998 | n_categories=1
+2026-08-20T12:16:22.883609+0100 | INFO | dataset:141 | Loading dataset from data\processed\train.parquet...
+2026-08-20T12:16:23.023352+0100 | INFO | dataset:143 | Dataset loaded | rows=40,000 | cols=27
+2026-08-20T12:16:23.042277+0100 | INFO | dataset:153 | Normalization stats fitted on training set
+2026-08-20T12:16:23.128659+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-20T12:16:23.129769+0100 | INFO | dataset:141 | Loading dataset from data\processed\val.parquet...
+2026-08-20T12:16:23.155614+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-20T12:16:23.184399+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=16.84%
+2026-08-20T12:16:23.185402+0100 | INFO | dataset:141 | Loading dataset from data\processed\test.parquet...
+2026-08-20T12:16:23.211935+0100 | INFO | dataset:143 | Dataset loaded | rows=5,000 | cols=27
+2026-08-20T12:16:23.241412+0100 | SUCCESS | dataset:164 | ✅ RecsysDataset ready | positive_rate=18.00%
+2026-08-20T12:16:23.246461+0100 | INFO | dataset:96 | Normalization stats saved → data\processed\norm_stats.json
+2026-08-20T12:16:23.248693+0100 | INFO | dataset:266 | DataLoaders ready | train=40,000 | val=5,000 | test=5,000 | batch_size=2048
+2026-08-20T12:16:23.292849+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-20T12:16:23.314892+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-20T12:16:23.317882+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,084,225 | trainable=1,084,225
+2026-08-20T12:16:26.711711+0100 | INFO | trainer:236 | MLflow run started | run_id=1651a2f70a7c4a04b05caab177d905e2
+2026-08-20T12:16:28.242473+0100 | DEBUG | trainer:435 |   Epoch 1 | batch 0/19 | loss=1.2533
+2026-08-20T12:16:32.860651+0100 | INFO | trainer:305 | Epoch 001/30 | train_loss=1.0580 | AUC=0.4971 | Loss=0.7998 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0048 | NDCG@5=0.1696 | NDCG@10=0.1763 | NDCG@20=0.1862 | MRR=0.3333 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:16:32.889053+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.4971
+2026-08-20T12:16:33.145930+0100 | DEBUG | trainer:435 |   Epoch 2 | batch 0/19 | loss=0.8820
+2026-08-20T12:16:37.815574+0100 | INFO | trainer:305 | Epoch 002/30 | train_loss=0.8221 | AUC=0.4847 | Loss=0.8068 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0000 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0000 | MRR=0.0357 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:16:37.817033+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-20T12:16:38.079862+0100 | DEBUG | trainer:435 |   Epoch 3 | batch 0/19 | loss=0.7639
+2026-08-20T12:16:43.573595+0100 | INFO | trainer:305 | Epoch 003/30 | train_loss=0.7236 | AUC=0.4994 | Loss=0.8245 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0024 | NDCG@5=0.1461 | NDCG@10=0.1642 | NDCG@20=0.1060 | MRR=0.2500 | lr=1.00e-03 | time=5.7s
+2026-08-20T12:16:43.600988+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.4994
+2026-08-20T12:16:43.835626+0100 | DEBUG | trainer:435 |   Epoch 4 | batch 0/19 | loss=0.5967
+2026-08-20T12:16:48.996078+0100 | INFO | trainer:305 | Epoch 004/30 | train_loss=0.5879 | AUC=0.5103 | Loss=1.1765 | Recall@5=0.0012 | Recall@10=0.0024 | Recall@20=0.0059 | NDCG@5=0.1312 | NDCG@10=0.1635 | NDCG@20=0.2124 | MRR=0.2000 | lr=1.00e-03 | time=5.3s
+2026-08-20T12:16:49.020839+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5103
+2026-08-20T12:16:49.247673+0100 | DEBUG | trainer:435 |   Epoch 5 | batch 0/19 | loss=0.4423
+2026-08-20T12:16:54.292098+0100 | INFO | trainer:305 | Epoch 005/30 | train_loss=0.4555 | AUC=0.5106 | Loss=1.6058 | Recall@5=0.0024 | Recall@10=0.0024 | Recall@20=0.0036 | NDCG@5=0.3008 | NDCG@10=0.1952 | NDCG@20=0.1623 | MRR=0.3333 | lr=1.00e-03 | time=5.2s
+2026-08-20T12:16:54.329148+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5106
+2026-08-20T12:16:54.581138+0100 | DEBUG | trainer:435 |   Epoch 6 | batch 0/19 | loss=0.3320
+2026-08-20T12:16:59.571992+0100 | INFO | trainer:305 | Epoch 006/30 | train_loss=0.3454 | AUC=0.5096 | Loss=1.9142 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0012 | NDCG@5=0.1696 | NDCG@10=0.1100 | NDCG@20=0.0710 | MRR=0.3333 | lr=1.00e-03 | time=5.2s
+2026-08-20T12:16:59.571992+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-20T12:16:59.790899+0100 | DEBUG | trainer:435 |   Epoch 7 | batch 0/19 | loss=0.2682
+2026-08-20T12:17:04.781009+0100 | INFO | trainer:305 | Epoch 007/30 | train_loss=0.2552 | AUC=0.5098 | Loss=2.2647 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0012 | NDCG@5=0.1461 | NDCG@10=0.0948 | NDCG@20=0.0612 | MRR=0.2500 | lr=1.00e-03 | time=5.2s
+2026-08-20T12:17:04.781009+0100 | INFO | trainer:332 |   No improvement for 2/7 epochs
+2026-08-20T12:17:05.035731+0100 | DEBUG | trainer:435 |   Epoch 8 | batch 0/19 | loss=0.1960
+2026-08-20T12:17:09.732733+0100 | INFO | trainer:305 | Epoch 008/30 | train_loss=0.1957 | AUC=0.5128 | Loss=2.5065 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0694 | NDCG@20=0.0803 | MRR=0.1250 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:17:09.756267+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5128
+2026-08-20T12:17:09.981750+0100 | DEBUG | trainer:435 |   Epoch 9 | batch 0/19 | loss=0.1521
+2026-08-20T12:17:15.484992+0100 | INFO | trainer:305 | Epoch 009/30 | train_loss=0.1517 | AUC=0.5151 | Loss=2.7491 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1109 | MRR=0.0909 | lr=1.00e-03 | time=5.7s
+2026-08-20T12:17:15.511876+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5151
+2026-08-20T12:17:15.789074+0100 | DEBUG | trainer:435 |   Epoch 10 | batch 0/19 | loss=0.1120
+2026-08-20T12:17:20.855510+0100 | INFO | trainer:305 | Epoch 010/30 | train_loss=0.1264 | AUC=0.5182 | Loss=2.8377 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0012 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0334 | MRR=0.0556 | lr=1.00e-03 | time=5.3s
+2026-08-20T12:17:20.885811+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5182
+2026-08-20T12:17:21.188177+0100 | DEBUG | trainer:435 |   Epoch 11 | batch 0/19 | loss=0.0708
+2026-08-20T12:17:25.843016+0100 | INFO | trainer:305 | Epoch 011/30 | train_loss=0.1019 | AUC=0.5215 | Loss=3.0971 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0663 | MRR=0.0556 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:17:25.871734+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5215
+2026-08-20T12:17:26.071729+0100 | DEBUG | trainer:435 |   Epoch 12 | batch 0/19 | loss=0.0971
+2026-08-20T12:17:31.319224+0100 | INFO | trainer:305 | Epoch 012/30 | train_loss=0.0849 | AUC=0.5215 | Loss=3.3287 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.0000 | NDCG@10=0.0636 | NDCG@20=0.0751 | MRR=0.1000 | lr=1.00e-03 | time=5.4s
+2026-08-20T12:17:31.350481+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5215
+2026-08-20T12:17:31.642363+0100 | DEBUG | trainer:435 |   Epoch 13 | batch 0/19 | loss=0.0661
+2026-08-20T12:17:36.599736+0100 | INFO | trainer:305 | Epoch 013/30 | train_loss=0.0752 | AUC=0.5229 | Loss=3.3260 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1048 | MRR=0.0833 | lr=1.00e-03 | time=5.2s
+2026-08-20T12:17:36.627373+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5229
+2026-08-20T12:17:36.845051+0100 | DEBUG | trainer:435 |   Epoch 14 | batch 0/19 | loss=0.0606
+2026-08-20T12:17:41.616999+0100 | INFO | trainer:305 | Epoch 014/30 | train_loss=0.0650 | AUC=0.5268 | Loss=3.5142 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.1288 | MRR=0.2000 | lr=1.00e-03 | time=4.9s
+2026-08-20T12:17:41.640924+0100 | SUCCESS | trainer:327 |   ✅ New best model saved | val_auc=0.5268
+2026-08-20T12:17:41.854380+0100 | DEBUG | trainer:435 |   Epoch 15 | batch 0/19 | loss=0.0622
+2026-08-20T12:17:46.722188+0100 | INFO | trainer:305 | Epoch 015/30 | train_loss=0.0587 | AUC=0.5252 | Loss=3.5757 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0024 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.0946 | MRR=0.2000 | lr=1.00e-03 | time=5.0s
+2026-08-20T12:17:46.723187+0100 | INFO | trainer:332 |   No improvement for 1/7 epochs
+2026-08-20T12:17:46.938449+0100 | DEBUG | trainer:435 |   Epoch 16 | batch 0/19 | loss=0.0480
+2026-08-20T12:17:54.134385+0100 | INFO | trainer:305 | Epoch 016/30 | train_loss=0.0534 | AUC=0.5248 | Loss=3.6468 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.1288 | MRR=0.2000 | lr=1.00e-03 | time=7.3s
+2026-08-20T12:17:54.135383+0100 | INFO | trainer:332 |   No improvement for 2/7 epochs
+2026-08-20T12:17:54.486856+0100 | DEBUG | trainer:435 |   Epoch 17 | batch 0/19 | loss=0.0526
+2026-08-20T12:18:00.782580+0100 | INFO | trainer:305 | Epoch 017/30 | train_loss=0.0484 | AUC=0.5234 | Loss=3.8041 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.0663 | NDCG@20=0.1490 | MRR=0.1111 | lr=5.00e-04 | time=6.6s
+2026-08-20T12:18:00.782580+0100 | INFO | trainer:332 |   No improvement for 3/7 epochs
+2026-08-20T12:18:01.174922+0100 | DEBUG | trainer:435 |   Epoch 18 | batch 0/19 | loss=0.0450
+2026-08-20T12:18:07.810302+0100 | INFO | trainer:305 | Epoch 018/30 | train_loss=0.0401 | AUC=0.5226 | Loss=3.9217 | Recall@5=0.0012 | Recall@10=0.0012 | Recall@20=0.0036 | NDCG@5=0.1461 | NDCG@10=0.0948 | NDCG@20=0.1332 | MRR=0.2500 | lr=5.00e-04 | time=7.0s
+2026-08-20T12:18:07.811297+0100 | INFO | trainer:332 |   No improvement for 4/7 epochs
+2026-08-20T12:18:08.163939+0100 | DEBUG | trainer:435 |   Epoch 19 | batch 0/19 | loss=0.0331
+2026-08-20T12:18:14.230609+0100 | INFO | trainer:305 | Epoch 019/30 | train_loss=0.0319 | AUC=0.5236 | Loss=4.1533 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1115 | MRR=0.0909 | lr=5.00e-04 | time=6.4s
+2026-08-20T12:18:14.231833+0100 | INFO | trainer:332 |   No improvement for 5/7 epochs
+2026-08-20T12:18:14.456464+0100 | DEBUG | trainer:435 |   Epoch 20 | batch 0/19 | loss=0.0301
+2026-08-20T12:18:19.687340+0100 | INFO | trainer:305 | Epoch 020/30 | train_loss=0.0289 | AUC=0.5242 | Loss=4.3606 | Recall@5=0.0000 | Recall@10=0.0012 | Recall@20=0.0048 | NDCG@5=0.0000 | NDCG@10=0.0694 | NDCG@20=0.1540 | MRR=0.1250 | lr=2.50e-04 | time=5.4s
+2026-08-20T12:18:19.688856+0100 | INFO | trainer:332 |   No improvement for 6/7 epochs
+2026-08-20T12:18:20.108945+0100 | DEBUG | trainer:435 |   Epoch 21 | batch 0/19 | loss=0.0236
+2026-08-20T12:18:25.029928+0100 | INFO | trainer:305 | Epoch 021/30 | train_loss=0.0254 | AUC=0.5237 | Loss=4.4466 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0036 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1062 | MRR=0.0833 | lr=2.50e-04 | time=5.3s
+2026-08-20T12:18:25.030443+0100 | INFO | trainer:332 |   No improvement for 7/7 epochs
+2026-08-20T12:18:25.031025+0100 | INFO | trainer:337 | Early stopping triggered at epoch 21
+2026-08-20T12:18:25.031025+0100 | INFO | trainer:343 | Loading best model for test evaluation...
+2026-08-20T12:18:25.723132+0100 | INFO | trainer:357 | ============================================================
+2026-08-20T12:18:25.724636+0100 | INFO | trainer:358 |   FINAL TEST RESULTS
+2026-08-20T12:18:25.725633+0100 | INFO | trainer:359 |   AUC=0.5062 | Loss=3.8514 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0022 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0669 | MRR=0.0588
+2026-08-20T12:18:25.726142+0100 | INFO | trainer:360 | ============================================================
+2026-08-20T12:18:25.726142+0100 | INFO | trainer:456 | Logging model to MLflow...
+2026-08-20T12:18:28.541564+0100 | SUCCESS | trainer:520 | ✅ Model logged to MLflow | model_uri=runs:/1651a2f70a7c4a04b05caab177d905e2/model
+2026-08-20T12:18:28.541564+0100 | INFO | trainer:544 | Pre-computing item embeddings for ANN index...
+2026-08-20T12:18:28.738322+0100 | SUCCESS | trainer:591 | ✅ Item embeddings saved | shape=(4998, 64) | path=data\artifacts\item_embeddings.npy
+2026-08-20T12:18:28.741496+0100 | SUCCESS | trainer:373 | ✅ Training complete | run_id=1651a2f70a7c4a04b05caab177d905e2 | best_val_auc=0.5268 | test_auc=0.5062
+2026-08-20T12:18:28.859682+0100 | SUCCESS | __main__:122 | ✅ Training complete | MLflow run_id=1651a2f70a7c4a04b05caab177d905e2
+2026-08-20T12:18:28.860706+0100 | INFO | __main__:123 | View results: http://localhost:5000
+2026-08-20T14:13:28.017097+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-20T14:13:28.018102+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-20T14:13:28.020063+0100 | INFO | __main__:90 | ============================================================
+2026-08-20T14:13:28.020063+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-20T14:13:28.020063+0100 | INFO | __main__:92 | ============================================================
+2026-08-20T14:13:28.020063+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-20T14:13:28.610662+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-20T14:13:28.611704+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-20T14:13:28.611704+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-20T14:13:28.614705+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-20T14:13:28.615718+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-20T14:13:28.748036+0100 | INFO | dataset:148 | Dataset loaded | rows=396,003 | cols=27
+2026-08-20T14:13:28.803508+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-20T14:13:28.936237+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.77%
+2026-08-20T14:13:28.936237+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-20T14:13:28.956085+0100 | INFO | dataset:148 | Dataset loaded | rows=49,500 | cols=27
+2026-08-20T14:13:28.973913+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.82%
+2026-08-20T14:13:28.974915+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-20T14:13:28.993311+0100 | INFO | dataset:148 | Dataset loaded | rows=49,501 | cols=27
+2026-08-20T14:13:29.011611+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=18.01%
+2026-08-20T14:13:29.012566+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-20T14:13:29.014074+0100 | INFO | dataset:271 | DataLoaders ready | train=396,003 | val=49,500 | test=49,501 | batch_size=2048
+2026-08-20T14:13:29.024247+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-20T14:13:29.029254+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-20T14:13:29.029254+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,088,609 | trainable=1,088,609
+2026-08-20T14:13:31.229996+0100 | INFO | trainer:262 | MLflow run started | run_id=7526819c5ed04d2b9a8cb9c10a2da1d8
+2026-08-20T14:13:32.907001+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.2893
+2026-08-20T14:13:56.965387+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.8414
+2026-08-20T14:14:23.694771+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.8486 | AUC=0.4965 | Loss=0.8190 | Recall@5=0.0001 | Recall@10=0.0002 | Recall@20=0.0003 | NDCG@5=0.2140 | NDCG@10=0.2051 | NDCG@20=0.1664 | MRR=0.5000 | lr=1.00e-03 | time=51.1s
+2026-08-20T14:14:23.783186+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.4965
+2026-08-20T14:14:24.446257+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.7973
+2026-08-20T14:14:57.998193+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.8094
+2026-08-20T14:15:34.851934+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.8221 | AUC=0.5079 | Loss=0.8217 | Recall@5=0.0000 | Recall@10=0.0001 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0636 | NDCG@20=0.0411 | MRR=0.1000 | lr=1.00e-03 | time=70.4s
+2026-08-20T14:15:34.871921+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5079
+2026-08-20T14:15:35.131996+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.8007
+2026-08-20T14:16:06.244098+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.8227
+2026-08-20T14:16:40.222031+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.8140 | AUC=0.5125 | Loss=0.8239 | Recall@5=0.0001 | Recall@10=0.0002 | Recall@20=0.0002 | NDCG@5=0.1312 | NDCG@10=0.1546 | NDCG@20=0.0998 | MRR=0.2000 | lr=1.00e-03 | time=65.3s
+2026-08-20T14:16:40.247200+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5125
+2026-08-20T14:16:40.580931+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.7992
+2026-08-20T14:17:12.982364+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.7831
+2026-08-20T14:17:39.714413+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8054 | AUC=0.5132 | Loss=0.8341 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0002 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0696 | MRR=0.0769 | lr=1.00e-03 | time=58.8s
+2026-08-20T14:17:39.730565+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5132
+2026-08-20T14:17:39.951481+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8102
+2026-08-20T14:18:13.698421+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.7824
+2026-08-20T14:18:44.304294+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.7999 | AUC=0.5140 | Loss=0.8403 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0005 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.1363 | MRR=0.0714 | lr=1.00e-03 | time=64.5s
+2026-08-20T14:18:44.323379+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5140
+2026-08-20T14:18:44.570964+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.7630
+2026-08-20T14:19:14.841935+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8040
+2026-08-20T14:19:44.222822+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.7927 | AUC=0.5137 | Loss=0.8494 | Recall@5=0.0000 | Recall@10=0.0002 | Recall@20=0.0003 | NDCG@5=0.0000 | NDCG@10=0.1478 | NDCG@20=0.1338 | MRR=0.1667 | lr=1.00e-03 | time=59.8s
+2026-08-20T14:19:44.224331+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-20T14:19:44.560989+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.7471
+2026-08-20T14:20:10.324395+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.7834
+2026-08-20T14:20:39.715217+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.7794 | AUC=0.5083 | Loss=0.8552 | Recall@5=0.0000 | Recall@10=0.0001 | Recall@20=0.0002 | NDCG@5=0.0000 | NDCG@10=0.0663 | NDCG@20=0.0783 | MRR=0.1111 | lr=1.00e-03 | time=55.4s
+2026-08-20T14:20:39.716243+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-20T14:20:40.026612+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7698
+2026-08-20T14:21:10.182853+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.7372
+2026-08-20T14:21:42.670783+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7594 | AUC=0.5056 | Loss=0.8751 | Recall@5=0.0000 | Recall@10=0.0002 | Recall@20=0.0005 | NDCG@5=0.0000 | NDCG@10=0.1420 | NDCG@20=0.1605 | MRR=0.1667 | lr=5.00e-04 | time=62.9s
+2026-08-20T14:21:42.672290+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-20T14:21:42.991751+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.7229
+2026-08-20T14:22:14.990487+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/193 | loss=0.7076
+2026-08-20T14:22:48.538812+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.7177 | AUC=0.5026 | Loss=0.9423 | Recall@5=0.0001 | Recall@10=0.0001 | Recall@20=0.0002 | NDCG@5=0.3392 | NDCG@10=0.2201 | NDCG@20=0.1804 | MRR=1.0000 | lr=5.00e-04 | time=65.8s
+2026-08-20T14:22:48.538812+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-20T14:22:48.887495+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 0/193 | loss=0.6844
+2026-08-20T14:23:15.912761+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 100/193 | loss=0.7305
+2026-08-20T14:23:44.000927+0100 | INFO | trainer:331 | Epoch 010/30 | train_loss=0.6987 | AUC=0.5027 | Loss=0.9677 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0384 | MRR=0.0833 | lr=5.00e-04 | time=55.4s
+2026-08-20T14:23:44.001482+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-20T14:23:44.310809+0100 | DEBUG | trainer:461 |   Epoch 11 | batch 0/193 | loss=0.6549
+2026-08-20T14:24:17.723931+0100 | DEBUG | trainer:461 |   Epoch 11 | batch 100/193 | loss=0.6759
+2026-08-20T14:24:48.930400+0100 | INFO | trainer:331 | Epoch 011/30 | train_loss=0.6832 | AUC=0.5041 | Loss=0.9947 | Recall@5=0.0000 | Recall@10=0.0001 | Recall@20=0.0002 | NDCG@5=0.0000 | NDCG@10=0.0734 | NDCG@20=0.0857 | MRR=0.1429 | lr=2.50e-04 | time=64.9s
+2026-08-20T14:24:48.930400+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-20T14:24:49.259136+0100 | DEBUG | trainer:461 |   Epoch 12 | batch 0/193 | loss=0.6462
+2026-08-20T14:25:15.834836+0100 | DEBUG | trainer:461 |   Epoch 12 | batch 100/193 | loss=0.6336
+2026-08-20T14:25:44.932143+0100 | INFO | trainer:331 | Epoch 012/30 | train_loss=0.6509 | AUC=0.5036 | Loss=1.0711 | Recall@5=0.0000 | Recall@10=0.0002 | Recall@20=0.0006 | NDCG@5=0.0000 | NDCG@10=0.1299 | NDCG@20=0.1953 | MRR=0.1111 | lr=2.50e-04 | time=55.9s
+2026-08-20T14:25:44.932143+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-20T14:25:44.933144+0100 | INFO | trainer:363 | Early stopping triggered at epoch 12
+2026-08-20T14:25:44.933144+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-20T14:25:48.525396+0100 | INFO | trainer:383 | ============================================================
+2026-08-20T14:25:48.525953+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-20T14:25:48.526539+0100 | INFO | trainer:385 |   AUC=0.5055 | Loss=0.8563 | Recall@5=0.0001 | Recall@10=0.0001 | Recall@20=0.0004 | NDCG@5=0.1312 | NDCG@10=0.0851 | NDCG@20=0.1664 | MRR=0.2000
+2026-08-20T14:25:48.526539+0100 | INFO | trainer:386 | ============================================================
+2026-08-20T14:25:48.527080+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-20T14:25:50.824657+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/7526819c5ed04d2b9a8cb9c10a2da1d8/model
+2026-08-20T14:25:50.825667+0100 | INFO | trainer:557 | Pre-computing item embeddings for ANN index...
+2026-08-20T14:25:50.935365+0100 | SUCCESS | trainer:598 | ✅ Item embeddings saved | shape=(5000, 64) | path=C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts\item_embeddings.npy
+2026-08-20T14:25:50.936369+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=7526819c5ed04d2b9a8cb9c10a2da1d8 | best_val_auc=0.5140 | test_auc=0.5055
+2026-08-20T14:25:51.053956+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=7526819c5ed04d2b9a8cb9c10a2da1d8
+2026-08-20T14:25:51.054491+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-21T15:30:46.460303+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-21T15:30:46.465830+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-21T15:30:46.471615+0100 | INFO | __main__:90 | ============================================================
+2026-08-21T15:30:46.472616+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-21T15:30:46.472616+0100 | INFO | __main__:92 | ============================================================
+2026-08-21T15:30:46.474068+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-21T15:30:47.440950+0100 | INFO | trainer:158 | MLflow experiment created: recsys-recommendation-engine
+2026-08-21T15:30:48.177583+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-21T15:30:48.177583+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-21T15:30:48.179129+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-21T15:30:48.185258+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-21T15:30:48.185258+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-21T15:30:48.587535+0100 | INFO | dataset:148 | Dataset loaded | rows=396,003 | cols=27
+2026-08-21T15:30:48.668698+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-21T15:30:48.877136+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.77%
+2026-08-21T15:30:48.877136+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-21T15:30:48.916479+0100 | INFO | dataset:148 | Dataset loaded | rows=49,500 | cols=27
+2026-08-21T15:30:48.955649+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.82%
+2026-08-21T15:30:48.956833+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-21T15:30:48.987945+0100 | INFO | dataset:148 | Dataset loaded | rows=49,501 | cols=27
+2026-08-21T15:30:49.016459+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=18.01%
+2026-08-21T15:30:49.020457+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-21T15:30:49.021873+0100 | INFO | dataset:271 | DataLoaders ready | train=396,003 | val=49,500 | test=49,501 | batch_size=2048
+2026-08-21T15:30:49.070475+0100 | DEBUG | model:204 | UserTower initialized | input_dim=84 | output_dim=64
+2026-08-21T15:30:49.081586+0100 | DEBUG | model:298 | ItemTower initialized | input_dim=87 | output_dim=64
+2026-08-21T15:30:49.091254+0100 | INFO | model:368 | TwoTowerModel initialized | total_params=1,088,609 | trainable=1,088,609
+2026-08-21T15:30:54.186183+0100 | INFO | trainer:262 | MLflow run started | run_id=d370e2f9e4ca4484b2eb697d6e85d695
+2026-08-21T15:30:57.346573+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.3730
+2026-08-21T15:31:20.500042+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.8395
+2026-08-21T15:31:47.519843+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.8531 | AUC=0.4990 | Loss=0.8185 | Recall@5=0.0001 | Recall@10=0.0002 | Recall@20=0.0003 | NDCG@5=0.1312 | NDCG@10=0.1585 | NDCG@20=0.1357 | MRR=0.2000 | lr=1.00e-03 | time=50.6s
+2026-08-21T15:31:47.549940+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.4990
+2026-08-21T15:31:47.788096+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.8432
+2026-08-21T15:32:12.852206+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.8272
+2026-08-21T15:32:40.336945+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.8221 | AUC=0.5121 | Loss=0.8198 | Recall@5=0.0001 | Recall@10=0.0003 | Recall@20=0.0007 | NDCG@5=0.1696 | NDCG@10=0.2470 | NDCG@20=0.2674 | MRR=0.3333 | lr=1.00e-03 | time=52.7s
+2026-08-21T15:32:40.363375+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5121
+2026-08-21T15:32:40.643574+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.8041
+2026-08-21T15:33:03.879104+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.8004
+2026-08-21T15:33:31.157253+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.8141 | AUC=0.5138 | Loss=0.8274 | Recall@5=0.0001 | Recall@10=0.0001 | Recall@20=0.0002 | NDCG@5=0.1461 | NDCG@10=0.0948 | NDCG@20=0.0935 | MRR=0.2500 | lr=1.00e-03 | time=50.7s
+2026-08-21T15:33:31.191671+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5138
+2026-08-21T15:33:31.476309+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8036
+2026-08-21T15:33:56.244981+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.8360
+2026-08-21T15:34:23.968934+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8055 | AUC=0.5130 | Loss=0.8331 | Recall@5=0.0000 | Recall@10=0.0002 | Recall@20=0.0003 | NDCG@5=0.0000 | NDCG@10=0.1370 | NDCG@20=0.1239 | MRR=0.1429 | lr=1.00e-03 | time=52.7s
+2026-08-21T15:34:23.968934+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-21T15:34:24.236402+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.7907
+2026-08-21T15:34:48.003737+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8260
+2026-08-21T15:35:14.737628+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.7986 | AUC=0.5123 | Loss=0.8383 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0323 | MRR=0.0500 | lr=1.00e-03 | time=50.7s
+2026-08-21T15:35:14.737628+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-21T15:35:14.982336+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.7924
+2026-08-21T15:35:39.487097+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.7714
+2026-08-21T15:36:07.301754+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.7876 | AUC=0.5110 | Loss=0.8535 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0000 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0000 | MRR=0.0323 | lr=5.00e-04 | time=51.7s
+2026-08-21T15:36:07.302823+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-21T15:36:07.635591+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.7525
+2026-08-21T15:36:33.803088+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.7205
+2026-08-21T15:37:01.679583+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.7549 | AUC=0.5096 | Loss=0.8906 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0384 | MRR=0.0833 | lr=5.00e-04 | time=54.3s
+2026-08-21T15:37:01.679583+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-21T15:37:01.986143+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7220
+2026-08-21T15:37:28.288716+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.7557
+2026-08-21T15:38:00.933253+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7353 | AUC=0.5091 | Loss=0.9148 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0341 | MRR=0.0588 | lr=5.00e-04 | time=59.2s
+2026-08-21T15:38:00.933253+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-21T15:38:01.221462+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.6614
+2026-08-21T15:38:32.837239+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/193 | loss=0.7132
+2026-08-21T15:39:30.106796+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.7163 | AUC=0.5083 | Loss=0.9405 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0001 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0334 | MRR=0.0556 | lr=2.50e-04 | time=89.1s
+2026-08-21T15:39:30.108050+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-21T15:39:30.576241+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 0/193 | loss=0.6924
+2026-08-21T15:40:19.558940+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 100/193 | loss=0.6753
+2026-08-21T15:41:12.531271+0100 | INFO | trainer:331 | Epoch 010/30 | train_loss=0.6835 | AUC=0.5068 | Loss=1.0047 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0002 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0692 | MRR=0.0714 | lr=2.50e-04 | time=102.3s
+2026-08-21T15:41:12.532272+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-21T15:41:12.533318+0100 | INFO | trainer:363 | Early stopping triggered at epoch 10
+2026-08-21T15:41:12.533318+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-21T15:41:20.205448+0100 | INFO | trainer:383 | ============================================================
+2026-08-21T15:41:20.205448+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-21T15:41:20.206464+0100 | INFO | trainer:385 |   AUC=0.5068 | Loss=0.8394 | Recall@5=0.0000 | Recall@10=0.0000 | Recall@20=0.0002 | NDCG@5=0.0000 | NDCG@10=0.0000 | NDCG@20=0.0696 | MRR=0.0667
+2026-08-21T15:41:20.214606+0100 | INFO | trainer:386 | ============================================================
+2026-08-21T15:41:20.216120+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-21T15:41:27.271198+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/d370e2f9e4ca4484b2eb697d6e85d695/model
+2026-08-21T15:41:27.272188+0100 | INFO | trainer:557 | Pre-computing item embeddings for ANN index...
+2026-08-21T15:41:27.525381+0100 | SUCCESS | trainer:598 | ✅ Item embeddings saved | shape=(5000, 64) | path=C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts\item_embeddings.npy
+2026-08-21T15:41:27.527388+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=d370e2f9e4ca4484b2eb697d6e85d695 | best_val_auc=0.5138 | test_auc=0.5068
+2026-08-21T15:41:27.786083+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=d370e2f9e4ca4484b2eb697d6e85d695
+2026-08-21T15:41:27.787249+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T14:32:29.780109+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T14:32:29.781191+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T14:32:29.784486+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T14:32:29.784486+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T14:32:29.785041+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T14:32:29.785599+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T14:32:31.060393+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T14:32:31.061397+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T14:32:31.062430+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T14:32:31.065731+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T14:32:31.066733+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T14:32:31.253193+0100 | INFO | dataset:148 | Dataset loaded | rows=396,003 | cols=27
+2026-08-23T14:32:31.320138+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T14:34:09.163035+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T14:34:09.164034+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T14:34:09.165670+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T14:34:09.166707+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T14:34:09.166707+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T14:34:09.166707+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T14:34:09.327720+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T14:34:09.327720+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T14:34:09.328719+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T14:34:09.334648+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T14:34:09.335663+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T14:34:09.519867+0100 | INFO | dataset:148 | Dataset loaded | rows=396,003 | cols=27
+2026-08-23T14:34:09.578316+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T14:34:09.727508+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.77%
+2026-08-23T14:34:09.728508+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T14:34:09.748330+0100 | INFO | dataset:148 | Dataset loaded | rows=49,500 | cols=27
+2026-08-23T14:34:09.767141+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.82%
+2026-08-23T14:34:09.768096+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T14:34:09.788440+0100 | INFO | dataset:148 | Dataset loaded | rows=49,501 | cols=27
+2026-08-23T14:34:09.807406+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=18.01%
+2026-08-23T14:34:09.813970+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T14:34:09.813970+0100 | INFO | dataset:275 | DataLoaders ready | train=396,003 | val=49,500 | test=49,501 | batch_size=2048
+2026-08-23T14:34:09.842426+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T14:34:09.850700+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T14:34:09.851698+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T14:34:12.589417+0100 | INFO | trainer:262 | MLflow run started | run_id=d72e7210fe7848238d1d7553a7982b7e
+2026-08-23T14:34:13.911774+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.1945
+2026-08-23T14:34:40.249098+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.9076
+2026-08-23T14:35:09.562351+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:35:09.638468+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.9373 | AUC=0.5092 | Loss=0.9080 | Recall@5=0.8619 | Recall@10=0.9976 | Recall@20=1.0000 | NDCG@5=0.5934 | NDCG@10=0.6471 | NDCG@20=0.6479 | MRR=0.5387 | lr=1.00e-03 | time=56.0s
+2026-08-23T14:35:09.659497+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5092
+2026-08-23T14:35:09.872893+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.9457
+2026-08-23T14:35:36.223557+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.9072
+2026-08-23T14:36:05.608094+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:36:05.722765+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.9118 | AUC=0.5095 | Loss=0.9091 | Recall@5=0.8569 | Recall@10=0.9971 | Recall@20=1.0000 | NDCG@5=0.5895 | NDCG@10=0.6446 | NDCG@20=0.6455 | MRR=0.5343 | lr=1.00e-03 | time=56.0s
+2026-08-23T14:36:05.745308+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5095
+2026-08-23T14:36:06.095038+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.9028
+2026-08-23T14:36:32.645808+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.9192
+2026-08-23T14:37:00.322126+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:37:00.389240+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.9036 | AUC=0.5124 | Loss=0.9164 | Recall@5=0.8536 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.5891 | NDCG@10=0.6461 | NDCG@20=0.6466 | MRR=0.5356 | lr=1.00e-03 | time=54.6s
+2026-08-23T14:37:00.410377+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5124
+2026-08-23T14:37:00.720348+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8937
+2026-08-23T14:37:26.046767+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.8787
+2026-08-23T14:37:54.917708+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:37:54.997698+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8939 | AUC=0.5108 | Loss=0.9268 | Recall@5=0.8534 | Recall@10=0.9981 | Recall@20=1.0000 | NDCG@5=0.5916 | NDCG@10=0.6487 | NDCG@20=0.6494 | MRR=0.5399 | lr=1.00e-03 | time=54.5s
+2026-08-23T14:37:54.997698+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T14:37:55.313825+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8452
+2026-08-23T14:38:20.648203+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8900
+2026-08-23T14:38:49.861032+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:38:49.916680+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.8859 | AUC=0.5094 | Loss=0.9360 | Recall@5=0.8574 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.5884 | NDCG@10=0.6438 | NDCG@20=0.6444 | MRR=0.5324 | lr=1.00e-03 | time=54.9s
+2026-08-23T14:38:49.916680+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T14:38:50.112056+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.8508
+2026-08-23T14:39:14.835689+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8838
+2026-08-23T14:39:43.047585+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:39:43.455010+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.8765 | AUC=0.5075 | Loss=0.9417 | Recall@5=0.8468 | Recall@10=0.9979 | Recall@20=1.0000 | NDCG@5=0.5857 | NDCG@10=0.6449 | NDCG@20=0.6457 | MRR=0.5337 | lr=5.00e-04 | time=53.1s
+2026-08-23T14:39:43.455010+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T14:39:43.741796+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.8603
+2026-08-23T14:40:09.882827+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.8819
+2026-08-23T14:40:38.369783+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:40:38.420879+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.8440 | AUC=0.5058 | Loss=0.9972 | Recall@5=0.8535 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.5887 | NDCG@10=0.6456 | NDCG@20=0.6463 | MRR=0.5351 | lr=5.00e-04 | time=54.9s
+2026-08-23T14:40:38.420879+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T14:40:38.633361+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7956
+2026-08-23T14:41:03.623284+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.8136
+2026-08-23T14:41:32.144374+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:41:32.190598+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.8182 | AUC=0.5040 | Loss=1.0064 | Recall@5=0.8553 | Recall@10=0.9981 | Recall@20=1.0000 | NDCG@5=0.5874 | NDCG@10=0.6438 | NDCG@20=0.6445 | MRR=0.5332 | lr=5.00e-04 | time=53.7s
+2026-08-23T14:41:32.191603+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T14:41:32.412380+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.7589
+2026-08-23T14:42:00.536398+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/193 | loss=0.7888
+2026-08-23T14:42:36.563539+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:42:36.641804+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.7902 | AUC=0.5055 | Loss=1.0554 | Recall@5=0.8556 | Recall@10=0.9975 | Recall@20=1.0000 | NDCG@5=0.5893 | NDCG@10=0.6453 | NDCG@20=0.6462 | MRR=0.5353 | lr=2.50e-04 | time=64.4s
+2026-08-23T14:42:36.641804+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-23T14:42:37.052181+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 0/193 | loss=0.7057
+2026-08-23T14:43:14.398603+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 100/193 | loss=0.7024
+2026-08-23T14:43:52.526499+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T14:43:52.586018+0100 | INFO | trainer:331 | Epoch 010/30 | train_loss=0.7381 | AUC=0.5059 | Loss=1.1506 | Recall@5=0.8567 | Recall@10=0.9974 | Recall@20=1.0000 | NDCG@5=0.5900 | NDCG@10=0.6456 | NDCG@20=0.6466 | MRR=0.5363 | lr=2.50e-04 | time=75.9s
+2026-08-23T14:43:52.587042+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-23T14:43:52.587042+0100 | INFO | trainer:363 | Early stopping triggered at epoch 10
+2026-08-23T14:43:52.588018+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-23T14:43:58.902652+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4150 (no pos+neg pair)
+2026-08-23T14:43:58.972828+0100 | INFO | trainer:383 | ============================================================
+2026-08-23T14:43:58.973428+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-23T14:43:58.973985+0100 | INFO | trainer:385 |   AUC=0.5084 | Loss=0.9305 | Recall@5=0.8572 | Recall@10=0.9966 | Recall@20=1.0000 | NDCG@5=0.5875 | NDCG@10=0.6426 | NDCG@20=0.6437 | MRR=0.5325
+2026-08-23T14:43:58.974527+0100 | INFO | trainer:386 | ============================================================
+2026-08-23T14:43:58.974527+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-23T14:44:02.505416+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/d72e7210fe7848238d1d7553a7982b7e/model
+2026-08-23T14:44:02.506416+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-23T14:44:02.511534+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-23T14:44:05.841165+0100 | INFO | trainer:595 | Item features collected | found=4999 | cold_items=1
+2026-08-23T14:44:05.999523+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4999/5000
+2026-08-23T14:44:06.002524+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=d72e7210fe7848238d1d7553a7982b7e | best_val_auc=0.5124 | test_auc=0.5084
+2026-08-23T14:44:06.107781+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=d72e7210fe7848238d1d7553a7982b7e
+2026-08-23T14:44:06.108788+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T15:10:43.141717+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T15:10:43.141717+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T15:10:43.144715+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T15:10:43.144715+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T15:10:43.144715+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T15:10:43.144715+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T15:10:43.209773+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T15:10:43.210775+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T15:10:43.210775+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T15:10:43.213808+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T15:10:43.214772+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T15:10:43.343677+0100 | INFO | dataset:148 | Dataset loaded | rows=396,003 | cols=27
+2026-08-23T15:10:43.397841+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T15:10:43.532504+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.77%
+2026-08-23T15:10:43.532504+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T15:10:43.551947+0100 | INFO | dataset:148 | Dataset loaded | rows=49,500 | cols=27
+2026-08-23T15:10:43.570268+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.82%
+2026-08-23T15:10:43.571309+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T15:10:43.591702+0100 | INFO | dataset:148 | Dataset loaded | rows=49,501 | cols=27
+2026-08-23T15:10:43.609355+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=18.01%
+2026-08-23T15:10:43.610319+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T15:10:43.610319+0100 | INFO | dataset:275 | DataLoaders ready | train=396,003 | val=49,500 | test=49,501 | batch_size=2048
+2026-08-23T15:10:43.620263+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T15:10:43.625794+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T15:10:43.626793+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T15:10:45.790999+0100 | INFO | trainer:262 | MLflow run started | run_id=f5653eb2a99f4dc0a3eb94e1aacad331
+2026-08-23T15:10:47.080233+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.2193
+2026-08-23T15:11:13.061526+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.9090
+2026-08-23T15:11:44.754736+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:11:44.803287+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.9410 | AUC=0.4986 | Loss=0.9083 | Recall@5=0.8527 | Recall@10=0.9967 | Recall@20=1.0000 | NDCG@5=0.5853 | NDCG@10=0.6419 | NDCG@20=0.6430 | MRR=0.5320 | lr=1.00e-03 | time=58.0s
+2026-08-23T15:11:44.821920+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.4986
+2026-08-23T15:11:45.022604+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.9506
+2026-08-23T15:12:10.208092+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.9166
+2026-08-23T15:12:37.986581+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:12:38.059044+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.9117 | AUC=0.5066 | Loss=0.9118 | Recall@5=0.8556 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.5906 | NDCG@10=0.6462 | NDCG@20=0.6470 | MRR=0.5376 | lr=1.00e-03 | time=53.2s
+2026-08-23T15:12:38.085227+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5066
+2026-08-23T15:12:38.389336+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.9221
+2026-08-23T15:13:03.749605+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.9281
+2026-08-23T15:13:31.593736+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:13:31.646664+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.9037 | AUC=0.5109 | Loss=0.9126 | Recall@5=0.8567 | Recall@10=0.9977 | Recall@20=1.0000 | NDCG@5=0.5901 | NDCG@10=0.6455 | NDCG@20=0.6462 | MRR=0.5354 | lr=1.00e-03 | time=53.5s
+2026-08-23T15:13:31.668811+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5109
+2026-08-23T15:13:31.931006+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8949
+2026-08-23T15:13:57.131681+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.9143
+2026-08-23T15:14:27.161891+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:14:27.225868+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8944 | AUC=0.5113 | Loss=0.9239 | Recall@5=0.8588 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.5903 | NDCG@10=0.6451 | NDCG@20=0.6459 | MRR=0.5365 | lr=1.00e-03 | time=55.5s
+2026-08-23T15:14:27.254756+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5113
+2026-08-23T15:14:27.499866+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8845
+2026-08-23T15:14:51.982711+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8791
+2026-08-23T15:15:21.095691+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:15:21.198849+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.8853 | AUC=0.5120 | Loss=0.9336 | Recall@5=0.8578 | Recall@10=0.9972 | Recall@20=1.0000 | NDCG@5=0.5870 | NDCG@10=0.6419 | NDCG@20=0.6428 | MRR=0.5302 | lr=1.00e-03 | time=53.8s
+2026-08-23T15:15:21.266001+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5120
+2026-08-23T15:15:21.584337+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.8527
+2026-08-23T15:15:46.638650+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8973
+2026-08-23T15:16:15.115326+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:16:15.197111+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.8716 | AUC=0.5097 | Loss=0.9513 | Recall@5=0.8545 | Recall@10=0.9975 | Recall@20=1.0000 | NDCG@5=0.5847 | NDCG@10=0.6412 | NDCG@20=0.6421 | MRR=0.5301 | lr=1.00e-03 | time=53.9s
+2026-08-23T15:16:15.198437+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T15:16:15.518350+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.8294
+2026-08-23T15:16:41.362278+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.8650
+2026-08-23T15:17:12.647136+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:17:12.719544+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.8397 | AUC=0.5108 | Loss=0.9714 | Recall@5=0.8607 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.5911 | NDCG@10=0.6453 | NDCG@20=0.6461 | MRR=0.5355 | lr=1.00e-03 | time=57.5s
+2026-08-23T15:17:12.720651+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T15:17:12.992896+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7735
+2026-08-23T15:17:37.440893+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.8271
+2026-08-23T15:18:26.783857+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:18:26.854071+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7960 | AUC=0.5094 | Loss=1.0125 | Recall@5=0.8583 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.5902 | NDCG@10=0.6454 | NDCG@20=0.6460 | MRR=0.5367 | lr=5.00e-04 | time=74.1s
+2026-08-23T15:18:26.854071+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T15:18:27.201668+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.7206
+2026-08-23T15:19:16.024927+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/193 | loss=0.7408
+2026-08-23T15:19:49.954883+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:19:50.032617+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.7097 | AUC=0.5117 | Loss=1.1652 | Recall@5=0.8627 | Recall@10=0.9979 | Recall@20=1.0000 | NDCG@5=0.5919 | NDCG@10=0.6454 | NDCG@20=0.6461 | MRR=0.5367 | lr=5.00e-04 | time=83.1s
+2026-08-23T15:19:50.033618+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T15:19:50.366202+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 0/193 | loss=0.6576
+2026-08-23T15:20:17.233997+0100 | DEBUG | trainer:461 |   Epoch 10 | batch 100/193 | loss=0.6944
+2026-08-23T15:20:47.386137+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:20:47.459335+0100 | INFO | trainer:331 | Epoch 010/30 | train_loss=0.6723 | AUC=0.5118 | Loss=1.2265 | Recall@5=0.8581 | Recall@10=0.9980 | Recall@20=1.0000 | NDCG@5=0.5931 | NDCG@10=0.6481 | NDCG@20=0.6488 | MRR=0.5393 | lr=5.00e-04 | time=57.4s
+2026-08-23T15:20:47.460758+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T15:20:47.768891+0100 | DEBUG | trainer:461 |   Epoch 11 | batch 0/193 | loss=0.5868
+2026-08-23T15:21:24.687498+0100 | DEBUG | trainer:461 |   Epoch 11 | batch 100/193 | loss=0.6220
+2026-08-23T15:22:09.577635+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:22:09.689383+0100 | INFO | trainer:331 | Epoch 011/30 | train_loss=0.6402 | AUC=0.5096 | Loss=1.3031 | Recall@5=0.8604 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.5944 | NDCG@10=0.6486 | NDCG@20=0.6492 | MRR=0.5405 | lr=2.50e-04 | time=82.1s
+2026-08-23T15:22:09.690403+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-23T15:22:10.062248+0100 | DEBUG | trainer:461 |   Epoch 12 | batch 0/193 | loss=0.5642
+2026-08-23T15:22:36.988612+0100 | DEBUG | trainer:461 |   Epoch 12 | batch 100/193 | loss=0.5985
+2026-08-23T15:23:10.094588+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4139 (no pos+neg pair)
+2026-08-23T15:23:10.173343+0100 | INFO | trainer:331 | Epoch 012/30 | train_loss=0.5878 | AUC=0.5098 | Loss=1.4493 | Recall@5=0.8608 | Recall@10=0.9986 | Recall@20=1.0000 | NDCG@5=0.5958 | NDCG@10=0.6499 | NDCG@20=0.6504 | MRR=0.5422 | lr=2.50e-04 | time=60.4s
+2026-08-23T15:23:10.173343+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-23T15:23:10.174429+0100 | INFO | trainer:363 | Early stopping triggered at epoch 12
+2026-08-23T15:23:10.175060+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-23T15:23:16.848144+0100 | DEBUG | metrics:186 | Evaluated 5792 users | skipped 4150 (no pos+neg pair)
+2026-08-23T15:23:16.921677+0100 | INFO | trainer:383 | ============================================================
+2026-08-23T15:23:16.922725+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-23T15:23:16.923726+0100 | INFO | trainer:385 |   AUC=0.5059 | Loss=0.9507 | Recall@5=0.8556 | Recall@10=0.9975 | Recall@20=1.0000 | NDCG@5=0.5889 | NDCG@10=0.6449 | NDCG@20=0.6457 | MRR=0.5365
+2026-08-23T15:23:16.923726+0100 | INFO | trainer:386 | ============================================================
+2026-08-23T15:23:16.923726+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-23T15:23:20.582032+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/f5653eb2a99f4dc0a3eb94e1aacad331/model
+2026-08-23T15:23:20.584034+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-23T15:23:20.594396+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-23T15:23:24.838470+0100 | INFO | trainer:595 | Item features collected | found=4999 | cold_items=1
+2026-08-23T15:23:25.025967+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4999/5000
+2026-08-23T15:23:25.028995+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=f5653eb2a99f4dc0a3eb94e1aacad331 | best_val_auc=0.5120 | test_auc=0.5059
+2026-08-23T15:23:25.160451+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=f5653eb2a99f4dc0a3eb94e1aacad331
+2026-08-23T15:23:25.161457+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T16:44:23.145080+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T16:44:23.146078+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T16:44:23.150627+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T16:44:23.151651+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T16:44:23.151651+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T16:44:23.152650+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T16:44:23.499201+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T16:44:23.500202+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T16:44:23.501203+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T16:44:23.505731+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T16:44:23.506727+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T16:44:23.729215+0100 | INFO | dataset:148 | Dataset loaded | rows=396,056 | cols=27
+2026-08-23T16:44:23.838100+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T16:44:24.057925+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.92%
+2026-08-23T16:44:24.057925+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T16:44:24.086350+0100 | INFO | dataset:148 | Dataset loaded | rows=49,507 | cols=27
+2026-08-23T16:44:24.118704+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.70%
+2026-08-23T16:44:24.119678+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T16:44:24.155745+0100 | INFO | dataset:148 | Dataset loaded | rows=49,508 | cols=27
+2026-08-23T16:44:24.184951+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.57%
+2026-08-23T16:44:24.186963+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T16:44:24.186963+0100 | INFO | dataset:275 | DataLoaders ready | train=396,056 | val=49,507 | test=49,508 | batch_size=2048
+2026-08-23T16:44:24.204246+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T16:44:24.212851+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T16:44:24.212851+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T16:44:28.204384+0100 | INFO | trainer:262 | MLflow run started | run_id=3dd53a77f3f84f52a36d6e201211cbfc
+2026-08-23T16:44:30.062093+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.2963
+2026-08-23T16:44:53.804504+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.8971
+2026-08-23T16:45:23.863656+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:45:23.946934+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.9168 | AUC=0.6019 | Loss=0.8914 | Recall@5=0.8781 | Recall@10=0.9979 | Recall@20=1.0000 | NDCG@5=0.6231 | NDCG@10=0.6702 | NDCG@20=0.6709 | MRR=0.5712 | lr=1.00e-03 | time=54.1s
+2026-08-23T16:45:24.028211+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.6019
+2026-08-23T16:45:24.356623+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.9090
+2026-08-23T16:45:48.728603+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.8983
+2026-08-23T16:46:22.177239+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:46:22.484781+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.8910 | AUC=0.5899 | Loss=0.8916 | Recall@5=0.8741 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.6207 | NDCG@10=0.6698 | NDCG@20=0.6703 | MRR=0.5699 | lr=1.00e-03 | time=58.2s
+2026-08-23T16:46:22.486284+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T16:46:22.961933+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.8449
+2026-08-23T16:47:08.611757+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.9276
+2026-08-23T16:47:45.879924+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:47:45.997155+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.8873 | AUC=0.5892 | Loss=0.8949 | Recall@5=0.8814 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.6270 | NDCG@10=0.6733 | NDCG@20=0.6739 | MRR=0.5750 | lr=1.00e-03 | time=83.4s
+2026-08-23T16:47:45.998202+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T16:47:46.340731+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8528
+2026-08-23T16:48:11.834853+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.8836
+2026-08-23T16:48:40.689430+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:48:40.793658+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8823 | AUC=0.5824 | Loss=0.8957 | Recall@5=0.8782 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.6181 | NDCG@10=0.6657 | NDCG@20=0.6663 | MRR=0.5644 | lr=5.00e-04 | time=54.7s
+2026-08-23T16:48:40.795186+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T16:48:41.095407+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8872
+2026-08-23T16:49:05.856512+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8815
+2026-08-23T16:49:34.733812+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:49:34.789080+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.8562 | AUC=0.5571 | Loss=0.9294 | Recall@5=0.8723 | Recall@10=0.9979 | Recall@20=1.0000 | NDCG@5=0.6052 | NDCG@10=0.6550 | NDCG@20=0.6558 | MRR=0.5490 | lr=5.00e-04 | time=53.9s
+2026-08-23T16:49:34.789080+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T16:49:35.113126+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.8242
+2026-08-23T16:50:00.080558+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8475
+2026-08-23T16:50:29.757778+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:50:29.818525+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.8315 | AUC=0.5407 | Loss=0.9595 | Recall@5=0.8660 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.6002 | NDCG@10=0.6521 | NDCG@20=0.6529 | MRR=0.5458 | lr=5.00e-04 | time=55.0s
+2026-08-23T16:50:29.819036+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T16:50:30.153913+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.7910
+2026-08-23T16:50:54.226563+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.8064
+2026-08-23T16:51:23.205690+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:51:23.322534+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.7993 | AUC=0.5325 | Loss=1.0063 | Recall@5=0.8599 | Recall@10=0.9977 | Recall@20=1.0000 | NDCG@5=0.5949 | NDCG@10=0.6491 | NDCG@20=0.6499 | MRR=0.5412 | lr=2.50e-04 | time=53.4s
+2026-08-23T16:51:23.323483+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-23T16:51:23.696550+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7510
+2026-08-23T16:52:06.587784+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.7545
+2026-08-23T16:52:59.029743+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T16:52:59.176154+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7487 | AUC=0.5234 | Loss=1.0943 | Recall@5=0.8607 | Recall@10=0.9977 | Recall@20=1.0000 | NDCG@5=0.5929 | NDCG@10=0.6468 | NDCG@20=0.6476 | MRR=0.5387 | lr=2.50e-04 | time=95.7s
+2026-08-23T16:52:59.177190+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-23T16:52:59.178183+0100 | INFO | trainer:363 | Early stopping triggered at epoch 8
+2026-08-23T16:52:59.179189+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-23T16:53:09.866253+0100 | DEBUG | metrics:186 | Evaluated 5680 users | skipped 4259 (no pos+neg pair)
+2026-08-23T16:53:09.932257+0100 | INFO | trainer:383 | ============================================================
+2026-08-23T16:53:09.932857+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-23T16:53:09.933426+0100 | INFO | trainer:385 |   AUC=0.6013 | Loss=0.8905 | Recall@5=0.8738 | Recall@10=0.9974 | Recall@20=1.0000 | NDCG@5=0.6232 | NDCG@10=0.6717 | NDCG@20=0.6726 | MRR=0.5742
+2026-08-23T16:53:09.934652+0100 | INFO | trainer:386 | ============================================================
+2026-08-23T16:53:09.935223+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-23T16:53:14.969251+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/3dd53a77f3f84f52a36d6e201211cbfc/model
+2026-08-23T16:53:14.970247+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-23T16:53:14.976188+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-23T16:53:21.893544+0100 | INFO | trainer:595 | Item features collected | found=4998 | cold_items=2
+2026-08-23T16:53:22.105777+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4998/5000
+2026-08-23T16:53:22.109606+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=3dd53a77f3f84f52a36d6e201211cbfc | best_val_auc=0.6019 | test_auc=0.6013
+2026-08-23T16:53:22.304018+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=3dd53a77f3f84f52a36d6e201211cbfc
+2026-08-23T16:53:22.305533+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T17:42:35.460682+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T17:42:35.461684+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T17:42:35.463680+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T17:42:35.464681+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T17:42:35.464681+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T17:42:35.464681+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T17:42:35.712809+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T17:42:35.713810+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T17:42:35.713810+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T17:42:35.718916+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T17:42:35.719960+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T17:42:36.020283+0100 | INFO | dataset:148 | Dataset loaded | rows=396,056 | cols=27
+2026-08-23T17:42:36.114292+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T17:42:36.343976+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.92%
+2026-08-23T17:42:36.343976+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T17:42:36.369392+0100 | INFO | dataset:148 | Dataset loaded | rows=49,507 | cols=27
+2026-08-23T17:42:36.398227+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.70%
+2026-08-23T17:42:36.398227+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T17:42:36.426587+0100 | INFO | dataset:148 | Dataset loaded | rows=49,508 | cols=27
+2026-08-23T17:42:36.452883+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.57%
+2026-08-23T17:42:36.454390+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T17:42:36.455400+0100 | INFO | dataset:275 | DataLoaders ready | train=396,056 | val=49,507 | test=49,508 | batch_size=2048
+2026-08-23T17:42:36.468451+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T17:42:36.476501+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T17:42:36.476501+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T17:42:39.021088+0100 | INFO | trainer:262 | MLflow run started | run_id=2c4592b081594c2fbbc8464dd897cb14
+2026-08-23T17:42:40.189083+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.2835
+2026-08-23T17:43:06.351800+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.9052
+2026-08-23T17:43:34.084351+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:43:34.168313+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.9171 | AUC=0.5966 | Loss=0.8920 | Recall@5=0.8769 | Recall@10=0.9975 | Recall@20=1.0000 | NDCG@5=0.6195 | NDCG@10=0.6673 | NDCG@20=0.6682 | MRR=0.5670 | lr=1.00e-03 | time=54.2s
+2026-08-23T17:43:34.194001+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5966
+2026-08-23T17:43:34.397304+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.8776
+2026-08-23T17:43:59.985675+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.8882
+2026-08-23T17:44:27.745601+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:44:27.841084+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.8904 | AUC=0.5887 | Loss=0.8934 | Recall@5=0.8782 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.6229 | NDCG@10=0.6703 | NDCG@20=0.6709 | MRR=0.5712 | lr=1.00e-03 | time=53.6s
+2026-08-23T17:44:27.841084+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T17:44:28.066687+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.8979
+2026-08-23T17:44:52.888626+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.8662
+2026-08-23T17:45:21.820581+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:45:21.919823+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.8873 | AUC=0.5925 | Loss=0.8903 | Recall@5=0.8756 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.6207 | NDCG@10=0.6692 | NDCG@20=0.6698 | MRR=0.5698 | lr=1.00e-03 | time=54.0s
+2026-08-23T17:45:21.921337+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T17:45:22.253190+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8647
+2026-08-23T17:45:47.623835+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.8420
+2026-08-23T17:46:16.430206+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:46:16.504485+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8811 | AUC=0.5854 | Loss=0.8961 | Recall@5=0.8745 | Recall@10=0.9976 | Recall@20=1.0000 | NDCG@5=0.6173 | NDCG@10=0.6658 | NDCG@20=0.6666 | MRR=0.5645 | lr=5.00e-04 | time=54.5s
+2026-08-23T17:46:16.504485+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T17:46:16.767781+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8410
+2026-08-23T17:46:42.115980+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8442
+2026-08-23T17:47:10.123104+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:47:10.200725+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.8492 | AUC=0.5512 | Loss=0.9382 | Recall@5=0.8681 | Recall@10=0.9981 | Recall@20=1.0000 | NDCG@5=0.6018 | NDCG@10=0.6529 | NDCG@20=0.6536 | MRR=0.5466 | lr=5.00e-04 | time=53.6s
+2026-08-23T17:47:10.201728+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T17:47:10.468667+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.8284
+2026-08-23T17:47:35.595307+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8109
+2026-08-23T17:48:06.890448+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:48:07.003699+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.8242 | AUC=0.5353 | Loss=0.9729 | Recall@5=0.8617 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.5940 | NDCG@10=0.6474 | NDCG@20=0.6482 | MRR=0.5390 | lr=5.00e-04 | time=56.7s
+2026-08-23T17:48:07.004705+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T17:48:07.332395+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.7982
+2026-08-23T17:48:32.396171+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.7954
+2026-08-23T17:49:01.331010+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:49:01.432505+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.7955 | AUC=0.5325 | Loss=1.0144 | Recall@5=0.8573 | Recall@10=0.9976 | Recall@20=1.0000 | NDCG@5=0.5913 | NDCG@10=0.6465 | NDCG@20=0.6473 | MRR=0.5376 | lr=2.50e-04 | time=54.3s
+2026-08-23T17:49:01.433067+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-23T17:49:01.861572+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7866
+2026-08-23T17:49:38.087919+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.7479
+2026-08-23T17:50:34.043080+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:50:34.185159+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7522 | AUC=0.5177 | Loss=1.0962 | Recall@5=0.8557 | Recall@10=0.9977 | Recall@20=1.0000 | NDCG@5=0.5891 | NDCG@10=0.6447 | NDCG@20=0.6455 | MRR=0.5354 | lr=2.50e-04 | time=92.6s
+2026-08-23T17:50:34.186310+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-23T17:50:34.187980+0100 | INFO | trainer:363 | Early stopping triggered at epoch 8
+2026-08-23T17:50:34.189994+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-23T17:50:43.829239+0100 | DEBUG | metrics:186 | Evaluated 5680 users | skipped 4259 (no pos+neg pair)
+2026-08-23T17:50:43.942158+0100 | INFO | trainer:383 | ============================================================
+2026-08-23T17:50:43.942719+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-23T17:50:43.943792+0100 | INFO | trainer:385 |   AUC=0.5846 | Loss=0.8956 | Recall@5=0.8709 | Recall@10=0.9969 | Recall@20=1.0000 | NDCG@5=0.6159 | NDCG@10=0.6654 | NDCG@20=0.6665 | MRR=0.5644
+2026-08-23T17:50:43.944790+0100 | INFO | trainer:386 | ============================================================
+2026-08-23T17:50:43.944790+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-23T17:50:50.543760+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/2c4592b081594c2fbbc8464dd897cb14/model
+2026-08-23T17:50:50.545335+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-23T17:50:50.557154+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-23T17:50:57.966397+0100 | INFO | trainer:595 | Item features collected | found=4998 | cold_items=2
+2026-08-23T17:50:58.225934+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4998/5000
+2026-08-23T17:50:58.230926+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=2c4592b081594c2fbbc8464dd897cb14 | best_val_auc=0.5966 | test_auc=0.5846
+2026-08-23T17:50:58.527822+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=2c4592b081594c2fbbc8464dd897cb14
+2026-08-23T17:50:58.528881+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T17:53:42.610776+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T17:53:42.612329+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T17:53:42.616368+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T17:53:42.616368+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T17:53:42.616368+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T17:53:42.618593+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T17:53:42.788550+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T17:53:42.789547+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T17:53:42.791543+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T17:53:42.798874+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T17:53:42.799878+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T17:53:43.264663+0100 | INFO | dataset:148 | Dataset loaded | rows=396,056 | cols=27
+2026-08-23T17:53:43.350275+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T17:53:43.625120+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.92%
+2026-08-23T17:53:43.625120+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T17:53:43.683014+0100 | INFO | dataset:148 | Dataset loaded | rows=49,507 | cols=27
+2026-08-23T17:53:43.740576+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.70%
+2026-08-23T17:53:43.741565+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T17:53:43.804806+0100 | INFO | dataset:148 | Dataset loaded | rows=49,508 | cols=27
+2026-08-23T17:53:43.860624+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=17.57%
+2026-08-23T17:53:43.864846+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T17:53:43.865882+0100 | INFO | dataset:275 | DataLoaders ready | train=396,056 | val=49,507 | test=49,508 | batch_size=2048
+2026-08-23T17:53:43.898577+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T17:53:43.913917+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T17:53:43.913917+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T17:53:49.414516+0100 | INFO | trainer:262 | MLflow run started | run_id=172a05a308314c268a1ace39fb6db3e8
+2026-08-23T17:53:51.443428+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.1614
+2026-08-23T17:54:22.306226+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=0.8855
+2026-08-23T17:55:11.724880+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:55:11.794759+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=0.9170 | AUC=0.5937 | Loss=0.8919 | Recall@5=0.8783 | Recall@10=0.9980 | Recall@20=1.0000 | NDCG@5=0.6206 | NDCG@10=0.6678 | NDCG@20=0.6685 | MRR=0.5681 | lr=1.00e-03 | time=80.7s
+2026-08-23T17:55:11.837079+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5937
+2026-08-23T17:55:12.093025+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=0.8681
+2026-08-23T17:56:00.532836+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=0.9020
+2026-08-23T17:56:59.791551+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:56:59.956722+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=0.8902 | AUC=0.5921 | Loss=0.8905 | Recall@5=0.8805 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.6232 | NDCG@10=0.6697 | NDCG@20=0.6703 | MRR=0.5707 | lr=1.00e-03 | time=108.0s
+2026-08-23T17:56:59.957289+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T17:57:00.599369+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=0.8586
+2026-08-23T17:57:50.441959+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=0.8867
+2026-08-23T17:58:48.098929+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T17:58:48.228214+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=0.8877 | AUC=0.5958 | Loss=0.8927 | Recall@5=0.8765 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.6174 | NDCG@10=0.6655 | NDCG@20=0.6660 | MRR=0.5647 | lr=1.00e-03 | time=108.2s
+2026-08-23T17:58:48.285494+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5958
+2026-08-23T17:58:48.766082+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=0.8837
+2026-08-23T17:59:32.558320+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=0.8955
+2026-08-23T18:00:29.281304+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T18:00:29.429922+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=0.8818 | AUC=0.5833 | Loss=0.8964 | Recall@5=0.8736 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.6153 | NDCG@10=0.6643 | NDCG@20=0.6649 | MRR=0.5613 | lr=1.00e-03 | time=101.0s
+2026-08-23T18:00:29.430974+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T18:00:30.097894+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=0.8747
+2026-08-23T18:01:18.978944+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=0.8775
+2026-08-23T18:02:07.900669+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T18:02:08.012795+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=0.8629 | AUC=0.5594 | Loss=0.9212 | Recall@5=0.8658 | Recall@10=0.9975 | Recall@20=1.0000 | NDCG@5=0.6019 | NDCG@10=0.6538 | NDCG@20=0.6546 | MRR=0.5473 | lr=1.00e-03 | time=98.5s
+2026-08-23T18:02:08.013317+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T18:02:08.719208+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=0.8187
+2026-08-23T18:02:59.932674+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=0.8270
+2026-08-23T18:03:54.769930+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T18:03:54.906159+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=0.8309 | AUC=0.5459 | Loss=0.9575 | Recall@5=0.8589 | Recall@10=0.9977 | Recall@20=1.0000 | NDCG@5=0.5957 | NDCG@10=0.6503 | NDCG@20=0.6510 | MRR=0.5424 | lr=5.00e-04 | time=106.8s
+2026-08-23T18:03:54.907157+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T18:03:55.497883+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=0.8186
+2026-08-23T18:04:45.134534+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=0.7715
+2026-08-23T18:05:25.076963+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T18:05:25.153360+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=0.7721 | AUC=0.5293 | Loss=1.0529 | Recall@5=0.8526 | Recall@10=0.9974 | Recall@20=1.0000 | NDCG@5=0.5891 | NDCG@10=0.6458 | NDCG@20=0.6467 | MRR=0.5354 | lr=5.00e-04 | time=90.2s
+2026-08-23T18:05:25.154876+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T18:05:25.511711+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.7175
+2026-08-23T18:06:01.581402+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.7216
+2026-08-23T18:06:50.328123+0100 | DEBUG | metrics:186 | Evaluated 5785 users | skipped 4129 (no pos+neg pair)
+2026-08-23T18:06:50.456628+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.7428 | AUC=0.5265 | Loss=1.0921 | Recall@5=0.8540 | Recall@10=0.9978 | Recall@20=1.0000 | NDCG@5=0.5893 | NDCG@10=0.6457 | NDCG@20=0.6465 | MRR=0.5358 | lr=5.00e-04 | time=85.2s
+2026-08-23T18:06:50.456628+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T18:06:50.755715+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.6918
+2026-08-23T18:29:30.046758+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T18:29:30.047759+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T18:29:30.050758+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T18:29:30.050758+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T18:29:30.050758+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T18:29:30.051759+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T18:29:30.204656+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T18:29:30.205685+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T18:29:30.206728+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T18:29:30.209933+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T18:29:30.211488+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T18:29:30.435456+0100 | INFO | dataset:148 | Dataset loaded | rows=396,967 | cols=27
+2026-08-23T18:29:30.522616+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T18:29:30.801046+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.43%
+2026-08-23T18:29:30.802045+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T18:29:30.838607+0100 | INFO | dataset:148 | Dataset loaded | rows=49,621 | cols=27
+2026-08-23T18:29:30.879036+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.20%
+2026-08-23T18:29:30.880036+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T18:29:30.921966+0100 | INFO | dataset:148 | Dataset loaded | rows=49,621 | cols=27
+2026-08-23T18:29:30.962335+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.37%
+2026-08-23T18:29:30.964383+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T18:29:30.966054+0100 | INFO | dataset:275 | DataLoaders ready | train=396,967 | val=49,621 | test=49,621 | batch_size=2048
+2026-08-23T18:29:30.991592+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T18:29:31.004812+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T18:29:31.005811+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T18:29:34.595775+0100 | INFO | trainer:262 | MLflow run started | run_id=28eb415b3eb7486f8ce754f21a6ab8ac
+2026-08-23T18:29:36.407686+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.5180
+2026-08-23T18:30:00.380465+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=1.1160
+2026-08-23T18:30:29.715688+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:30:29.810816+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=1.1395 | AUC=0.6055 | Loss=1.1191 | Recall@5=0.8927 | Recall@10=0.9986 | Recall@20=1.0000 | NDCG@5=0.7196 | NDCG@10=0.7681 | NDCG@20=0.7688 | MRR=0.7100 | lr=1.00e-03 | time=53.7s
+2026-08-23T18:30:29.892743+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.6055
+2026-08-23T18:30:30.400669+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=1.1088
+2026-08-23T18:30:54.303090+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=1.1156
+2026-08-23T18:31:23.733513+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:31:23.857268+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=1.1125 | AUC=0.6043 | Loss=1.1131 | Recall@5=0.8927 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.7205 | NDCG@10=0.7691 | NDCG@20=0.7697 | MRR=0.7101 | lr=1.00e-03 | time=53.8s
+2026-08-23T18:31:23.858310+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T18:31:24.170352+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=1.1124
+2026-08-23T18:31:47.805795+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=1.1094
+2026-08-23T18:32:17.927242+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:32:18.004771+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=1.1089 | AUC=0.6099 | Loss=1.1105 | Recall@5=0.8950 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7219 | NDCG@10=0.7693 | NDCG@20=0.7700 | MRR=0.7109 | lr=1.00e-03 | time=54.1s
+2026-08-23T18:32:18.052347+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.6099
+2026-08-23T18:32:18.360818+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=1.0994
+2026-08-23T18:32:42.512257+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=1.1119
+2026-08-23T18:33:13.102279+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:33:13.184930+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=1.1026 | AUC=0.5991 | Loss=1.1175 | Recall@5=0.8915 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.7155 | NDCG@10=0.7646 | NDCG@20=0.7653 | MRR=0.7039 | lr=1.00e-03 | time=55.1s
+2026-08-23T18:33:13.185937+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T18:33:13.447778+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=1.0775
+2026-08-23T18:33:50.128119+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=1.0912
+2026-08-23T18:34:42.060409+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:34:42.230971+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=1.0857 | AUC=0.5910 | Loss=1.1287 | Recall@5=0.8914 | Recall@10=0.9986 | Recall@20=1.0000 | NDCG@5=0.7097 | NDCG@10=0.7589 | NDCG@20=0.7595 | MRR=0.6931 | lr=1.00e-03 | time=88.9s
+2026-08-23T18:34:42.232934+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T18:34:43.018599+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=1.0641
+2026-08-23T18:35:26.514939+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=1.0420
+2026-08-23T18:36:18.625063+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T18:36:18.724524+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=1.0617 | AUC=0.5721 | Loss=1.1563 | Recall@5=0.8851 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.6991 | NDCG@10=0.7509 | NDCG@20=0.7515 | MRR=0.6811 | lr=5.00e-04 | time=96.4s
+2026-08-23T18:36:18.726047+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T18:36:19.200831+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=1.0046
+2026-08-23T19:02:35.353266+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T19:02:35.354264+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T19:02:35.357264+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T19:02:35.358803+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T19:02:35.358803+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T19:02:35.359815+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T19:02:36.060225+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T19:02:36.060225+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T19:02:36.061222+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T19:02:36.065214+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T19:02:36.066215+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T19:02:36.415198+0100 | INFO | dataset:148 | Dataset loaded | rows=396,967 | cols=27
+2026-08-23T19:02:36.511104+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T19:02:36.679314+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.43%
+2026-08-23T19:02:36.679314+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T19:02:36.711299+0100 | INFO | dataset:148 | Dataset loaded | rows=49,621 | cols=27
+2026-08-23T19:02:36.736393+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.20%
+2026-08-23T19:02:36.737431+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T19:02:36.768171+0100 | INFO | dataset:148 | Dataset loaded | rows=49,621 | cols=27
+2026-08-23T19:02:36.788171+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=37.37%
+2026-08-23T19:02:36.790131+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T19:02:36.790131+0100 | INFO | dataset:275 | DataLoaders ready | train=396,967 | val=49,621 | test=49,621 | batch_size=2048
+2026-08-23T19:02:36.820321+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T19:02:36.826794+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T19:02:36.827851+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T19:02:39.672075+0100 | INFO | trainer:262 | MLflow run started | run_id=65524126d13446a0b3e7113fdde3e7a4
+2026-08-23T19:02:41.494548+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/193 | loss=1.5067
+2026-08-23T19:03:06.682724+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/193 | loss=1.1265
+2026-08-23T19:03:36.666173+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:03:37.867426+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=1.1421 | AUC=0.6080 | Loss=1.1119 | Recall@5=0.8921 | Recall@10=0.9988 | Recall@20=1.0000 | NDCG@5=0.7197 | NDCG@10=0.7686 | NDCG@20=0.7692 | MRR=0.7104 | lr=1.00e-03 | time=55.6s
+2026-08-23T19:03:37.913963+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.6080
+2026-08-23T19:03:38.238328+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/193 | loss=1.1147
+2026-08-23T19:04:03.300209+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/193 | loss=1.1214
+2026-08-23T19:04:32.157102+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:04:32.223561+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=1.1128 | AUC=0.6141 | Loss=1.1060 | Recall@5=0.8938 | Recall@10=0.9988 | Recall@20=1.0000 | NDCG@5=0.7216 | NDCG@10=0.7698 | NDCG@20=0.7703 | MRR=0.7115 | lr=1.00e-03 | time=54.3s
+2026-08-23T19:04:32.251286+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.6141
+2026-08-23T19:04:32.586173+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/193 | loss=1.1068
+2026-08-23T19:04:57.683608+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/193 | loss=1.1062
+2026-08-23T19:05:28.480346+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:05:28.566611+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=1.1093 | AUC=0.6094 | Loss=1.1085 | Recall@5=0.8951 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.7205 | NDCG@10=0.7681 | NDCG@20=0.7688 | MRR=0.7093 | lr=1.00e-03 | time=56.2s
+2026-08-23T19:05:28.566611+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-23T19:05:28.903474+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/193 | loss=1.1130
+2026-08-23T19:05:53.873024+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/193 | loss=1.1154
+2026-08-23T19:06:23.416111+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:06:23.505664+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=1.1039 | AUC=0.5996 | Loss=1.1189 | Recall@5=0.8937 | Recall@10=0.9988 | Recall@20=1.0000 | NDCG@5=0.7183 | NDCG@10=0.7667 | NDCG@20=0.7672 | MRR=0.7071 | lr=1.00e-03 | time=54.9s
+2026-08-23T19:06:23.506673+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-23T19:06:23.807518+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/193 | loss=1.0920
+2026-08-23T19:07:05.978130+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/193 | loss=1.0816
+2026-08-23T19:07:57.818527+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:07:57.901450+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=1.0893 | AUC=0.5885 | Loss=1.1266 | Recall@5=0.8869 | Recall@10=0.9986 | Recall@20=1.0000 | NDCG@5=0.7053 | NDCG@10=0.7564 | NDCG@20=0.7569 | MRR=0.6904 | lr=5.00e-04 | time=94.3s
+2026-08-23T19:07:57.901450+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-23T19:07:58.605204+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/193 | loss=1.0511
+2026-08-23T19:08:41.650701+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/193 | loss=1.0464
+2026-08-23T19:09:33.760979+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:09:34.029415+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=1.0505 | AUC=0.5605 | Loss=1.1779 | Recall@5=0.8819 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.6918 | NDCG@10=0.7450 | NDCG@20=0.7457 | MRR=0.6715 | lr=5.00e-04 | time=95.9s
+2026-08-23T19:09:34.030392+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-23T19:09:34.592600+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/193 | loss=1.0153
+2026-08-23T19:10:19.691059+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/193 | loss=1.0188
+2026-08-23T19:11:10.094866+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:11:10.317224+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=1.0248 | AUC=0.5517 | Loss=1.2093 | Recall@5=0.8795 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.6883 | NDCG@10=0.7426 | NDCG@20=0.7433 | MRR=0.6681 | lr=5.00e-04 | time=96.1s
+2026-08-23T19:11:10.318259+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-23T19:11:10.701015+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/193 | loss=0.9969
+2026-08-23T19:11:55.750535+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/193 | loss=0.9817
+2026-08-23T19:12:39.103452+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:12:40.527670+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.9974 | AUC=0.5429 | Loss=1.2489 | Recall@5=0.8800 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.6837 | NDCG@10=0.7379 | NDCG@20=0.7385 | MRR=0.6613 | lr=2.50e-04 | time=88.8s
+2026-08-23T19:12:40.527670+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-23T19:12:40.897620+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/193 | loss=0.9678
+2026-08-23T19:13:07.700077+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/193 | loss=0.9478
+2026-08-23T19:13:37.152140+0100 | DEBUG | metrics:186 | Evaluated 8049 users | skipped 1888 (no pos+neg pair)
+2026-08-23T19:13:37.228837+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.9549 | AUC=0.5357 | Loss=1.3259 | Recall@5=0.8785 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.6810 | NDCG@10=0.7361 | NDCG@20=0.7367 | MRR=0.6567 | lr=2.50e-04 | time=56.6s
+2026-08-23T19:13:37.228837+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-23T19:13:37.229836+0100 | INFO | trainer:363 | Early stopping triggered at epoch 9
+2026-08-23T19:13:37.230841+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-23T19:13:43.311627+0100 | DEBUG | metrics:186 | Evaluated 8095 users | skipped 1848 (no pos+neg pair)
+2026-08-23T19:13:43.385124+0100 | INFO | trainer:383 | ============================================================
+2026-08-23T19:13:43.386221+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-23T19:13:43.386221+0100 | INFO | trainer:385 |   AUC=0.6026 | Loss=1.1171 | Recall@5=0.8951 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7169 | NDCG@10=0.7645 | NDCG@20=0.7653 | MRR=0.7040
+2026-08-23T19:13:43.387736+0100 | INFO | trainer:386 | ============================================================
+2026-08-23T19:13:43.389289+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-23T19:13:48.072616+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/65524126d13446a0b3e7113fdde3e7a4/model
+2026-08-23T19:13:48.073629+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-23T19:13:48.079556+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-23T19:13:51.990122+0100 | INFO | trainer:595 | Item features collected | found=4998 | cold_items=2
+2026-08-23T19:13:52.199176+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4998/5000
+2026-08-23T19:13:52.203197+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=65524126d13446a0b3e7113fdde3e7a4 | best_val_auc=0.6141 | test_auc=0.6026
+2026-08-23T19:13:52.392802+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=65524126d13446a0b3e7113fdde3e7a4
+2026-08-23T19:13:52.392802+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-23T21:06:52.481568+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-23T21:06:52.487618+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-23T21:06:52.523801+0100 | INFO | __main__:90 | ============================================================
+2026-08-23T21:06:52.524809+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-23T21:06:52.525807+0100 | INFO | __main__:92 | ============================================================
+2026-08-23T21:06:52.527811+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-23T21:06:55.392049+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-23T21:06:55.393056+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-23T21:06:55.393056+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T21:06:55.399977+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-23T21:06:55.400976+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-23T21:06:55.893077+0100 | INFO | dataset:148 | Dataset loaded | rows=389,092 | cols=27
+2026-08-23T21:06:56.027655+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-23T21:06:56.272178+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.54%
+2026-08-23T21:06:56.273424+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-23T21:06:56.344496+0100 | INFO | dataset:148 | Dataset loaded | rows=48,636 | cols=27
+2026-08-23T21:06:56.408758+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.68%
+2026-08-23T21:06:56.409774+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-23T21:06:56.477986+0100 | INFO | dataset:148 | Dataset loaded | rows=48,637 | cols=27
+2026-08-23T21:06:56.540153+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.21%
+2026-08-23T21:06:56.543233+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-23T21:06:56.545264+0100 | INFO | dataset:275 | DataLoaders ready | train=389,092 | val=48,636 | test=48,637 | batch_size=2048
+2026-08-23T21:06:56.552535+0100 | INFO | trainer:241 | Class balance | positives=181,077 | negatives=208,015 | pos_weight=1.149
+2026-08-23T21:06:56.594851+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-23T21:06:56.619890+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-23T21:06:56.621901+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-23T21:07:05.755015+0100 | INFO | trainer:277 | MLflow run started | run_id=3ba594d49eb4433a9e567968730eb414
+2026-08-23T21:07:10.138539+0100 | DEBUG | trainer:476 |   Epoch 1 | batch 0/189 | loss=0.9213
+2026-08-23T21:07:36.020628+0100 | DEBUG | trainer:476 |   Epoch 1 | batch 100/189 | loss=0.7293
+2026-08-23T21:08:05.291163+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:08:05.374345+0100 | INFO | trainer:346 | Epoch 001/30 | train_loss=0.7424 | AUC=0.5891 | Loss=0.7301 | Recall@5=0.8996 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7507 | NDCG@10=0.7973 | NDCG@20=0.7981 | MRR=0.7460 | lr=1.00e-03 | time=55.7s
+2026-08-23T21:08:05.402717+0100 | SUCCESS | trainer:368 |   ✅ New best model saved | val_auc=0.5891
+2026-08-23T21:08:05.690464+0100 | DEBUG | trainer:476 |   Epoch 2 | batch 0/189 | loss=0.7401
+2026-08-23T21:08:33.118409+0100 | DEBUG | trainer:476 |   Epoch 2 | batch 100/189 | loss=0.7306
+2026-08-23T21:09:02.372011+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:09:02.591557+0100 | INFO | trainer:346 | Epoch 002/30 | train_loss=0.7264 | AUC=0.6006 | Loss=0.7246 | Recall@5=0.9027 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7529 | NDCG@10=0.7981 | NDCG@20=0.7988 | MRR=0.7463 | lr=1.00e-03 | time=57.0s
+2026-08-23T21:09:02.653841+0100 | SUCCESS | trainer:368 |   ✅ New best model saved | val_auc=0.6006
+2026-08-23T21:09:03.119489+0100 | DEBUG | trainer:476 |   Epoch 3 | batch 0/189 | loss=0.7229
+2026-08-23T21:09:27.766656+0100 | DEBUG | trainer:476 |   Epoch 3 | batch 100/189 | loss=0.7204
+2026-08-23T21:09:56.744736+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:09:56.830861+0100 | INFO | trainer:346 | Epoch 003/30 | train_loss=0.7227 | AUC=0.5990 | Loss=0.7262 | Recall@5=0.9031 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7521 | NDCG@10=0.7972 | NDCG@20=0.7980 | MRR=0.7445 | lr=1.00e-03 | time=54.1s
+2026-08-23T21:09:56.832125+0100 | INFO | trainer:373 |   No improvement for 1/7 epochs
+2026-08-23T21:09:57.094483+0100 | DEBUG | trainer:476 |   Epoch 4 | batch 0/189 | loss=0.7117
+2026-08-23T21:10:21.866677+0100 | DEBUG | trainer:476 |   Epoch 4 | batch 100/189 | loss=0.7077
+2026-08-23T21:10:51.793902+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:10:53.767406+0100 | INFO | trainer:346 | Epoch 004/30 | train_loss=0.7180 | AUC=0.5953 | Loss=0.7294 | Recall@5=0.9037 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7510 | NDCG@10=0.7960 | NDCG@20=0.7968 | MRR=0.7429 | lr=1.00e-03 | time=55.0s
+2026-08-23T21:10:53.768449+0100 | INFO | trainer:373 |   No improvement for 2/7 epochs
+2026-08-23T21:10:54.113394+0100 | DEBUG | trainer:476 |   Epoch 5 | batch 0/189 | loss=0.7137
+2026-08-23T21:11:29.731770+0100 | DEBUG | trainer:476 |   Epoch 5 | batch 100/189 | loss=0.7114
+2026-08-23T21:12:19.366646+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:12:19.496722+0100 | INFO | trainer:346 | Epoch 005/30 | train_loss=0.7081 | AUC=0.5850 | Loss=0.7353 | Recall@5=0.9002 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.7436 | NDCG@10=0.7904 | NDCG@20=0.7911 | MRR=0.7338 | lr=5.00e-04 | time=85.6s
+2026-08-23T21:12:19.498396+0100 | INFO | trainer:373 |   No improvement for 3/7 epochs
+2026-08-23T21:12:20.037587+0100 | DEBUG | trainer:476 |   Epoch 6 | batch 0/189 | loss=0.6869
+2026-08-23T21:13:06.815000+0100 | DEBUG | trainer:476 |   Epoch 6 | batch 100/189 | loss=0.6698
+2026-08-23T21:13:58.997812+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:13:59.074607+0100 | INFO | trainer:346 | Epoch 006/30 | train_loss=0.6832 | AUC=0.5633 | Loss=0.7606 | Recall@5=0.8974 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7334 | NDCG@10=0.7814 | NDCG@20=0.7822 | MRR=0.7192 | lr=5.00e-04 | time=99.5s
+2026-08-23T21:13:59.074607+0100 | INFO | trainer:373 |   No improvement for 4/7 epochs
+2026-08-23T21:13:59.441077+0100 | DEBUG | trainer:476 |   Epoch 7 | batch 0/189 | loss=0.6623
+2026-08-23T21:14:42.962590+0100 | DEBUG | trainer:476 |   Epoch 7 | batch 100/189 | loss=0.6782
+2026-08-23T21:15:39.946077+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:15:40.079538+0100 | INFO | trainer:346 | Epoch 007/30 | train_loss=0.6673 | AUC=0.5574 | Loss=0.7761 | Recall@5=0.8953 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.7310 | NDCG@10=0.7798 | NDCG@20=0.7807 | MRR=0.7168 | lr=5.00e-04 | time=100.9s
+2026-08-23T21:15:40.081055+0100 | INFO | trainer:373 |   No improvement for 5/7 epochs
+2026-08-23T21:15:40.744575+0100 | DEBUG | trainer:476 |   Epoch 8 | batch 0/189 | loss=0.6420
+2026-08-23T21:16:29.816099+0100 | DEBUG | trainer:476 |   Epoch 8 | batch 100/189 | loss=0.6478
+2026-08-23T21:17:27.651282+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:17:27.769347+0100 | INFO | trainer:346 | Epoch 008/30 | train_loss=0.6502 | AUC=0.5480 | Loss=0.7986 | Recall@5=0.8925 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.7267 | NDCG@10=0.7770 | NDCG@20=0.7778 | MRR=0.7123 | lr=2.50e-04 | time=107.6s
+2026-08-23T21:17:27.769347+0100 | INFO | trainer:373 |   No improvement for 6/7 epochs
+2026-08-23T21:17:28.796015+0100 | DEBUG | trainer:476 |   Epoch 9 | batch 0/189 | loss=0.6171
+2026-08-23T21:18:16.542727+0100 | DEBUG | trainer:476 |   Epoch 9 | batch 100/189 | loss=0.6151
+2026-08-23T21:19:04.364866+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-23T21:19:04.462484+0100 | INFO | trainer:346 | Epoch 009/30 | train_loss=0.6238 | AUC=0.5409 | Loss=0.8375 | Recall@5=0.8915 | Recall@10=0.9982 | Recall@20=1.0000 | NDCG@5=0.7230 | NDCG@10=0.7737 | NDCG@20=0.7746 | MRR=0.7067 | lr=2.50e-04 | time=96.6s
+2026-08-23T21:19:04.463490+0100 | INFO | trainer:373 |   No improvement for 7/7 epochs
+2026-08-23T21:19:04.464487+0100 | INFO | trainer:378 | Early stopping triggered at epoch 9
+2026-08-23T21:19:04.464487+0100 | INFO | trainer:384 | Loading best model for test evaluation...
+2026-08-23T21:19:11.663540+0100 | DEBUG | metrics:186 | Evaluated 8265 users | skipped 1661 (no pos+neg pair)
+2026-08-23T21:19:11.765661+0100 | INFO | trainer:398 | ============================================================
+2026-08-23T21:19:11.766672+0100 | INFO | trainer:399 |   FINAL TEST RESULTS
+2026-08-23T21:19:11.767717+0100 | INFO | trainer:400 |   AUC=0.5818 | Loss=0.7312 | Recall@5=0.9005 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.7423 | NDCG@10=0.7893 | NDCG@20=0.7899 | MRR=0.7300
+2026-08-23T21:19:11.769285+0100 | INFO | trainer:401 | ============================================================
+2026-08-23T21:19:11.770334+0100 | INFO | trainer:497 | Logging model to MLflow...
+2026-08-23T21:19:16.683350+0100 | SUCCESS | trainer:561 | ✅ Model logged to MLflow | model_uri=runs:/3ba594d49eb4433a9e567968730eb414/model
+2026-08-23T21:19:16.683934+0100 | INFO | trainer:577 | Pre-computing item embeddings for ANN index...
+2026-08-23T21:19:16.690795+0100 | INFO | trainer:593 | Collecting real item features from test loader...
+2026-08-23T21:19:21.007043+0100 | INFO | trainer:610 | Item features collected | found=4999 | cold_items=1
+2026-08-23T21:19:21.246126+0100 | SUCCESS | trainer:668 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4999/5000
+2026-08-23T21:19:21.248128+0100 | SUCCESS | trainer:414 | ✅ Training complete | run_id=3ba594d49eb4433a9e567968730eb414 | best_val_auc=0.6006 | test_auc=0.5818
+2026-08-23T21:19:21.469541+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=3ba594d49eb4433a9e567968730eb414
+2026-08-23T21:19:21.470570+0100 | INFO | __main__:119 | View results: http://localhost:5000
+2026-08-24T12:20:03.361500+0100 | INFO | trainer:74 | trainer.py | PROCESSED_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\processed
+2026-08-24T12:20:03.362550+0100 | INFO | trainer:75 | trainer.py | ARTIFACTS_DIR = C:\Users\info\Desktop\PFA\recsys-engine\data\artifacts
+2026-08-24T12:20:03.367308+0100 | INFO | __main__:90 | ============================================================
+2026-08-24T12:20:03.368273+0100 | INFO | __main__:91 |   TWO-TOWER RECOMMENDER — TRAINING STARTED
+2026-08-24T12:20:03.368273+0100 | INFO | __main__:92 | ============================================================
+2026-08-24T12:20:03.369307+0100 | INFO | trainer:140 | Using device: cpu
+2026-08-24T12:20:04.468274+0100 | INFO | trainer:161 | MLflow configured | uri=http://localhost:5000 | experiment=recsys-recommendation-engine
+2026-08-24T12:20:04.468274+0100 | INFO | trainer:120 | TwoTowerTrainer initialized | device=cpu | epochs=30 | patience=7
+2026-08-24T12:20:04.469273+0100 | INFO | trainer:175 | Reading encoders from: C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-24T12:20:04.474312+0100 | INFO | trainer:195 | Encoder config loaded | n_users=10,000 | n_items=5,000 | n_categories=10 | path=C:\Users\info\Desktop\PFA\recsys-engine\data\processed\encoders.json
+2026-08-24T12:20:04.475269+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\train.parquet...
+2026-08-24T12:20:04.781031+0100 | INFO | dataset:148 | Dataset loaded | rows=389,092 | cols=27
+2026-08-24T12:20:04.878686+0100 | INFO | dataset:158 | Normalization stats fitted on training set
+2026-08-24T12:20:05.106290+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.54%
+2026-08-24T12:20:05.107281+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\val.parquet...
+2026-08-24T12:20:05.143288+0100 | INFO | dataset:148 | Dataset loaded | rows=48,636 | cols=27
+2026-08-24T12:20:05.177880+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.68%
+2026-08-24T12:20:05.178883+0100 | INFO | dataset:146 | Loading dataset from C:\Users\info\Desktop\PFA\recsys-engine\data\processed\test.parquet...
+2026-08-24T12:20:05.214837+0100 | INFO | dataset:148 | Dataset loaded | rows=48,637 | cols=27
+2026-08-24T12:20:05.247670+0100 | SUCCESS | dataset:169 | ✅ RecsysDataset ready | positive_rate=46.21%
+2026-08-24T12:20:05.249699+0100 | INFO | dataset:101 | Normalization stats saved → C:\Users\info\Desktop\PFA\recsys-engine\data\processed\norm_stats.json
+2026-08-24T12:20:05.250702+0100 | INFO | dataset:275 | DataLoaders ready | train=389,092 | val=48,636 | test=48,637 | batch_size=2048
+2026-08-24T12:20:05.304077+0100 | DEBUG | model:125 | UserTower | input_dim=84 | output_dim=64
+2026-08-24T12:20:05.315312+0100 | DEBUG | model:185 | ItemTower | input_dim=87 | output_dim=64
+2026-08-24T12:20:05.316310+0100 | INFO | model:231 | TwoTowerModel initialized | total_params=1,088,768 | trainable=1,088,768
+2026-08-24T12:20:10.337912+0100 | INFO | trainer:262 | MLflow run started | run_id=f0f64b5b07ac4f8d9ec49e537b07247d
+2026-08-24T12:20:15.110206+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 0/189 | loss=1.4683
+2026-08-24T12:20:40.703155+0100 | DEBUG | trainer:461 |   Epoch 1 | batch 100/189 | loss=1.1358
+2026-08-24T12:21:09.225978+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:21:09.360498+0100 | INFO | trainer:331 | Epoch 001/30 | train_loss=1.1438 | AUC=0.5904 | Loss=1.1200 | Recall@5=0.8989 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7476 | NDCG@10=0.7947 | NDCG@20=0.7955 | MRR=0.7408 | lr=1.00e-03 | time=54.7s
+2026-08-24T12:21:09.438873+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5904
+2026-08-24T12:21:09.742363+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 0/189 | loss=1.1221
+2026-08-24T12:21:35.395484+0100 | DEBUG | trainer:461 |   Epoch 2 | batch 100/189 | loss=1.1079
+2026-08-24T12:22:03.317757+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:22:03.455624+0100 | INFO | trainer:331 | Epoch 002/30 | train_loss=1.1165 | AUC=0.5990 | Loss=1.1165 | Recall@5=0.9036 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.7531 | NDCG@10=0.7980 | NDCG@20=0.7988 | MRR=0.7457 | lr=1.00e-03 | time=53.9s
+2026-08-24T12:22:03.519089+0100 | SUCCESS | trainer:353 |   ✅ New best model saved | val_auc=0.5990
+2026-08-24T12:22:04.050000+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 0/189 | loss=1.1049
+2026-08-24T12:22:29.523850+0100 | DEBUG | trainer:461 |   Epoch 3 | batch 100/189 | loss=1.1006
+2026-08-24T12:22:56.951689+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:22:57.054358+0100 | INFO | trainer:331 | Epoch 003/30 | train_loss=1.1107 | AUC=0.5981 | Loss=1.1168 | Recall@5=0.9036 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7531 | NDCG@10=0.7979 | NDCG@20=0.7987 | MRR=0.7456 | lr=1.00e-03 | time=53.4s
+2026-08-24T12:22:57.055518+0100 | INFO | trainer:358 |   No improvement for 1/7 epochs
+2026-08-24T12:22:57.468103+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 0/189 | loss=1.0996
+2026-08-24T12:23:22.497608+0100 | DEBUG | trainer:461 |   Epoch 4 | batch 100/189 | loss=1.1050
+2026-08-24T12:23:50.730884+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:23:51.831467+0100 | INFO | trainer:331 | Epoch 004/30 | train_loss=1.1001 | AUC=0.5932 | Loss=1.1221 | Recall@5=0.9021 | Recall@10=0.9985 | Recall@20=1.0000 | NDCG@5=0.7507 | NDCG@10=0.7966 | NDCG@20=0.7974 | MRR=0.7419 | lr=1.00e-03 | time=53.7s
+2026-08-24T12:23:51.832530+0100 | INFO | trainer:358 |   No improvement for 2/7 epochs
+2026-08-24T12:23:52.156742+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 0/189 | loss=1.0636
+2026-08-24T12:24:25.246649+0100 | DEBUG | trainer:461 |   Epoch 5 | batch 100/189 | loss=1.0845
+2026-08-24T12:25:17.848305+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:25:17.945295+0100 | INFO | trainer:331 | Epoch 005/30 | train_loss=1.0806 | AUC=0.5799 | Loss=1.1371 | Recall@5=0.8993 | Recall@10=0.9986 | Recall@20=1.0000 | NDCG@5=0.7423 | NDCG@10=0.7893 | NDCG@20=0.7900 | MRR=0.7302 | lr=5.00e-04 | time=86.0s
+2026-08-24T12:25:17.945295+0100 | INFO | trainer:358 |   No improvement for 3/7 epochs
+2026-08-24T12:25:18.403602+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 0/189 | loss=1.0423
+2026-08-24T12:25:46.793948+0100 | DEBUG | trainer:461 |   Epoch 6 | batch 100/189 | loss=1.0316
+2026-08-24T12:26:35.948740+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:26:36.068118+0100 | INFO | trainer:331 | Epoch 006/30 | train_loss=1.0365 | AUC=0.5636 | Loss=1.1827 | Recall@5=0.8963 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7345 | NDCG@10=0.7831 | NDCG@20=0.7839 | MRR=0.7203 | lr=5.00e-04 | time=78.0s
+2026-08-24T12:26:36.069267+0100 | INFO | trainer:358 |   No improvement for 4/7 epochs
+2026-08-24T12:26:36.596119+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 0/189 | loss=0.9950
+2026-08-24T12:27:20.944817+0100 | DEBUG | trainer:461 |   Epoch 7 | batch 100/189 | loss=0.9981
+2026-08-24T12:28:13.122156+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:28:13.254439+0100 | INFO | trainer:331 | Epoch 007/30 | train_loss=1.0092 | AUC=0.5576 | Loss=1.2099 | Recall@5=0.8945 | Recall@10=0.9983 | Recall@20=1.0000 | NDCG@5=0.7318 | NDCG@10=0.7811 | NDCG@20=0.7819 | MRR=0.7178 | lr=5.00e-04 | time=97.1s
+2026-08-24T12:28:13.256037+0100 | INFO | trainer:358 |   No improvement for 5/7 epochs
+2026-08-24T12:28:13.991157+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 0/189 | loss=0.9598
+2026-08-24T12:28:49.910232+0100 | DEBUG | trainer:461 |   Epoch 8 | batch 100/189 | loss=0.9504
+2026-08-24T12:29:28.553041+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:29:28.693515+0100 | INFO | trainer:331 | Epoch 008/30 | train_loss=0.9830 | AUC=0.5514 | Loss=1.2461 | Recall@5=0.8939 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7302 | NDCG@10=0.7799 | NDCG@20=0.7806 | MRR=0.7169 | lr=2.50e-04 | time=75.3s
+2026-08-24T12:29:28.695122+0100 | INFO | trainer:358 |   No improvement for 6/7 epochs
+2026-08-24T12:29:29.796706+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 0/189 | loss=0.9492
+2026-08-24T12:30:10.407725+0100 | DEBUG | trainer:461 |   Epoch 9 | batch 100/189 | loss=0.9113
+2026-08-24T12:30:58.218817+0100 | DEBUG | metrics:186 | Evaluated 8286 users | skipped 1630 (no pos+neg pair)
+2026-08-24T12:30:58.275438+0100 | INFO | trainer:331 | Epoch 009/30 | train_loss=0.9431 | AUC=0.5430 | Loss=1.3156 | Recall@5=0.8910 | Recall@10=0.9984 | Recall@20=1.0000 | NDCG@5=0.7248 | NDCG@10=0.7757 | NDCG@20=0.7765 | MRR=0.7098 | lr=2.50e-04 | time=89.5s
+2026-08-24T12:30:58.275438+0100 | INFO | trainer:358 |   No improvement for 7/7 epochs
+2026-08-24T12:30:58.275438+0100 | INFO | trainer:363 | Early stopping triggered at epoch 9
+2026-08-24T12:30:58.275438+0100 | INFO | trainer:369 | Loading best model for test evaluation...
+2026-08-24T12:31:07.037183+0100 | DEBUG | metrics:186 | Evaluated 8265 users | skipped 1661 (no pos+neg pair)
+2026-08-24T12:31:07.105175+0100 | INFO | trainer:383 | ============================================================
+2026-08-24T12:31:07.106178+0100 | INFO | trainer:384 |   FINAL TEST RESULTS
+2026-08-24T12:31:07.106178+0100 | INFO | trainer:385 |   AUC=0.5927 | Loss=1.1212 | Recall@5=0.9030 | Recall@10=0.9987 | Recall@20=1.0000 | NDCG@5=0.7473 | NDCG@10=0.7928 | NDCG@20=0.7934 | MRR=0.7361
+2026-08-24T12:31:07.107179+0100 | INFO | trainer:386 | ============================================================
+2026-08-24T12:31:07.107179+0100 | INFO | trainer:482 | Logging model to MLflow...
+2026-08-24T12:31:14.093983+0100 | SUCCESS | trainer:546 | ✅ Model logged to MLflow | model_uri=runs:/f0f64b5b07ac4f8d9ec49e537b07247d/model
+2026-08-24T12:31:14.096029+0100 | INFO | trainer:562 | Pre-computing item embeddings for ANN index...
+2026-08-24T12:31:14.108792+0100 | INFO | trainer:578 | Collecting real item features from test loader...
+2026-08-24T12:31:21.878473+0100 | INFO | trainer:595 | Item features collected | found=4999 | cold_items=1
+2026-08-24T12:31:22.086821+0100 | SUCCESS | trainer:653 | ✅ Item embeddings saved | shape=(5000, 64) | found_real_features=4999/5000
+2026-08-24T12:31:22.090337+0100 | SUCCESS | trainer:399 | ✅ Training complete | run_id=f0f64b5b07ac4f8d9ec49e537b07247d | best_val_auc=0.5990 | test_auc=0.5927
+2026-08-24T12:31:22.210664+0100 | SUCCESS | __main__:118 | ✅ Training complete | MLflow run_id=f0f64b5b07ac4f8d9ec49e537b07247d
+2026-08-24T12:31:22.211689+0100 | INFO | __main__:119 | View results: http://localhost:5000

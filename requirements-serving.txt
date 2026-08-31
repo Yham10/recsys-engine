@@ -1,0 +1,35 @@
+# ================================================================
+# Serving Container Dependencies
+# Lean subset — no training/data-gen/testing packages
+# ================================================================
+
+# --- API ---
+fastapi==0.108.0
+uvicorn[standard]>=0.30.6,<=0.34.0
+pydantic>=2.5.3,<3
+pydantic-settings>=2.1.0,<3
+
+# --- ML Inference ---
+# torch>=2.3,<3
+# numpy>=1.23.2,<2
+pandas>=2.2.3,<3
+
+# --- Feature Store (Feast → Redis) ---
+feast[postgres,redis]==0.58.0
+redis>=4.2.2,<5
+
+# --- MLflow Model Loading ---
+mlflow>=2.16.0,<3
+boto3==1.34.0
+
+# --- Database ---
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+
+# --- Utilities ---
+python-dotenv==1.0.0
+loguru==0.7.2
+tenacity==8.2.3
+
+# --- ANN Search ---
+faiss-cpu>=1.8.0,<2

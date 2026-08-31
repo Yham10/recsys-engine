@@ -22,6 +22,8 @@ volumes:
     name: recsys_mlflow_data
   airflow_logs:
     name: recsys_airflow_logs
+  serving_logs:
+    name: recsys_serving_logs
 
 
 services:
@@ -331,6 +333,7 @@ services:
       AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
       MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      FASTAPI_BASE_URL: http://recsys-serving:8000
     volumes:
       - ./src/orchestration/dags:/opt/airflow/dags
       - ./src:/opt/airflow/recsys_src
@@ -382,6 +385,7 @@ services:
       AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
       MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      FASTAPI_BASE_URL: http://recsys-serving:8000
     volumes:
       - ./src/orchestration/dags:/opt/airflow/dags
       - ./src:/opt/airflow/recsys_src
@@ -394,4 +398,59 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    restart: unless-stopped
+
+    # ==============================================================
+  # 11. SERVING (FastAPI)
+  # UI: http://localhost:8000/docs
+  # ==============================================================
+  serving:
+    build:
+      context: .
+      dockerfile: docker/serving/Dockerfile
+    container_name: recsys-serving
+    hostname: serving
+    networks:
+      - recsys-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mlflow:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: production
+      LOG_LEVEL: INFO
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_MODEL_NAME: two-tower-recommender
+      MLFLOW_MODEL_STAGE: latest
+      MINIO_ENDPOINT: http://minio:9000
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      FEAST_DB: feast_db
+      FEAST_REPO_PATH: /app/feature_repo
+      ARTIFACTS_DIR: /app/artifacts
+      PROCESSED_DIR: /data/processed
+    volumes:
+      - ./data/artifacts:/data/artifacts
+      - ./data/processed:/data/processed
+      - serving_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
     restart: unless-stopped

@@ -114,23 +114,18 @@ async def get_recommendations(
         )
 
     except Exception as e:
-        logger.error(
-            f"Recommendation failed | "
-            f"user={body.user_id} | "
-            f"request_id={request_id} | "
-            f"error={e}",
-            exc_info=True,
+        logger.opt(exception=True).error(
+            f"Recommendation failed | user={body.user_id} | request_id={request_id}"
         )
         raise HTTPException(
             status_code = 500,
             detail      = f"Recommendation generation failed: {str(e)}",
         )
 
-
 @router.get(
     "/recommend/{user_id}",
     response_model = RecommendationResponse,
-    summary        = "Quick GET recommendation (convenience endpoint)",
+    summary        = "Quick GET recommendation",
 )
 async def get_recommendations_simple(
     user_id:  str,
@@ -140,10 +135,16 @@ async def get_recommendations_simple(
     settings  = Depends(get_settings),
 ) -> RecommendationResponse:
     """
-    Convenience GET endpoint for quick testing.
-    Same logic as POST /recommend but via URL params.
+    GET convenience endpoint.
+    Strips any accidental quotes from user_id.
     """
-    body = RecommendationRequest(user_id=user_id, top_k=top_k)
+    # Strip quotes that URL encoding sometimes adds
+    clean_user_id = user_id.strip('"').strip("'").strip()
+
+    body = RecommendationRequest(
+        user_id = clean_user_id,
+        top_k   = top_k
+    )
     return await get_recommendations(body, request, engine, settings)
 
 @router.get(

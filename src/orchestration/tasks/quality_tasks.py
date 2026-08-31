@@ -73,7 +73,7 @@ def task_check_data_freshness(**context) -> dict:
         pg_pass = os.getenv("POSTGRES_PASSWORD", "recsys_password")
         pg_host = os.getenv("POSTGRES_HOST", "postgres")
         pg_port = os.getenv("POSTGRES_PORT", "5432")
-        pg_db   = os.getenv("POSTGRES_DB", "recsys_db")
+        pg_db   = os.getenv("FEAST_DB", "feast_db")
 
         engine  = create_engine(
             f"postgresql+psycopg2://{pg_user}:{pg_pass}"
@@ -170,7 +170,7 @@ def task_validate_feature_distributions(**context) -> dict:
         pg_pass = os.getenv("POSTGRES_PASSWORD", "recsys_password")
         pg_host = os.getenv("POSTGRES_HOST", "postgres")
         pg_port = os.getenv("POSTGRES_PORT", "5432")
-        pg_db   = os.getenv("POSTGRES_DB", "recsys_db")
+        pg_db   = os.getenv("FEAST_DB", "feast_db")
 
         engine = create_engine(
             f"postgresql+psycopg2://{pg_user}:{pg_pass}"

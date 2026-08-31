@@ -51,6 +51,26 @@ logger.add(
     compression="zip",
 )
 
+logger.add(
+    sys.stdout,
+    format=(
+        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
+        "<level>{level: <8}</level> | "
+        "<cyan>{name}</cyan>:<cyan>{line}</cyan> | "
+        "<level>{message}</level>\n{exception}"
+    ),
+    level="INFO",
+    colorize=True,
+)
+logger.add(
+    "logs/serving.log",
+    format="{time} | {level} | {name}:{line} | {message}\n{exception}",
+    level="DEBUG",
+    rotation="100 MB",
+    retention="14 days",
+    compression="zip",
+)
+
 from config import get_settings
 from model_loader import load_all_artifacts, unload_artifacts, get_registry
 from feature_fetcher import FeatureFetcher
@@ -96,6 +116,15 @@ async def lifespan(app: FastAPI):
         feature_fetcher = feature_fetcher,
         settings        = settings,
     )
+    
+    # 3.4. Warm up the pipeline with a dummy request so the first real
+    #    request isn't penalized by lazy connection/kernel initialization
+    try:
+        dummy_request = RecommendationRequest(user_id="__warmup__", top_k=1)
+        await engine.recommend(request=dummy_request, request_id="warmup")
+        logger.info("✅ Warm-up request completed")
+    except Exception as e:
+        logger.warning(f"Warm-up request failed (non-fatal): {e}")
 
     # 4. Store singletons in app state for dependency injection
     app.state.engine          = engine

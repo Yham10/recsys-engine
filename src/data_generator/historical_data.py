@@ -293,13 +293,31 @@ class HistoricalDataGenerator:
 
             item_row = items_df[items_df["item_id"] == item_id].iloc[0]
 
-            # Sample event type
-            event_type = random.choices(event_types, weights=event_weights)[0]
+            # ── INJECT LEARNABLE SIGNAL (Option B) ──
+            # Copy base global weights
+            dynamic_weights = EVENT_TYPE_WEIGHTS.copy()
+            
+            # 1. Category Match: 4x higher intent if user likes the category
+            if item_row["category"] in preferred_cats:
+                dynamic_weights[EventType.ADD_TO_CART]  *= 3.0
+                dynamic_weights[EventType.PURCHASE]     *= 4.0
+                dynamic_weights[EventType.WISHLIST_ADD] *= 2.0
+                dynamic_weights[EventType.RATING]       *= 2.0
 
-            # Premium users purchase more
-            if is_premium and event_type == EventType.ITEM_VIEW:
-                if random.random() < 0.1:
-                    event_type = EventType.PURCHASE
+            # 2. High Ratings: Highly rated items convert better
+            if item_row["avg_rating"] >= 4.2:
+                dynamic_weights[EventType.PURCHASE]    *= 2.0
+                dynamic_weights[EventType.ADD_TO_CART] *= 1.5
+                
+            # 3. Low Price: Cheap items trigger impulse buys
+            if item_row["price"] < 50.0:
+                dynamic_weights[EventType.PURCHASE] *= 1.5
+
+            # Convert dict back to ordered list for random.choices
+            d_weights = [dynamic_weights[et] for et in event_types]
+
+            # Sample event type using the dynamic, feature-dependent weights
+            event_type = random.choices(event_types, weights=d_weights)[0]
 
             # Generate a realistic timestamp
             # More activity during business hours (8am-10pm)
@@ -377,6 +395,7 @@ class HistoricalDataGenerator:
         df = interactions_df.copy()
         df["timestamp"] = pd.to_datetime(df["timestamp"])
         cutoff = df["timestamp"].max()
+        feature_event_ts = df["timestamp"].min() - timedelta(days=1)
 
         # --- 7-day features ---
         df_7d = df[df["timestamp"] >= cutoff - timedelta(days=7)]
@@ -433,7 +452,8 @@ class HistoricalDataGenerator:
         )
 
         # Feast requires an 'event_timestamp' column
-        user_features["event_timestamp"] = cutoff
+        user_features["event_timestamp"] = feature_event_ts
+        # user_features["event_timestamp"] = cutoff
         user_features["created_timestamp"] = datetime.now()
 
         output_path = self.output_dir / "user_features.csv"
@@ -462,6 +482,7 @@ class HistoricalDataGenerator:
         df = interactions_df.copy()
         df["timestamp"] = pd.to_datetime(df["timestamp"])
         cutoff = df["timestamp"].max()
+        feature_event_ts = df["timestamp"].min() - timedelta(days=1)
 
         # 7-day views
         df_7d = df[df["timestamp"] >= cutoff - timedelta(days=7)]
@@ -542,7 +563,8 @@ class HistoricalDataGenerator:
         )
 
         # Feast timestamp columns
-        item_features["event_timestamp"]   = cutoff
+        item_features["event_timestamp"] = feature_event_ts
+        # item_features["event_timestamp"]   = cutoff
         item_features["created_timestamp"] = datetime.now()
 
         output_path = self.output_dir / "item_features.csv"

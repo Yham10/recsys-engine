@@ -1,29 +1,6 @@
 """
 Two-Tower Neural Network
 ========================
-Industry-standard architecture for large-scale recommendation systems.
-Used by: YouTube (2016), Google Play, Pinterest, Twitter.
-
-Why Two Towers?
-    A single model that takes (user, item) pairs doesn't scale —
-    you'd need to run inference for every (user, item) combination
-    at serving time. With 10K users × 5K items = 50M forward passes.
-
-    Two towers separate the problem:
-        USER TOWER:  user_id → user_embedding(64d)    [runs once per request]
-        ITEM TOWER:  item_id → item_embedding(64d)    [pre-computed offline]
-
-    At serving time:
-        1. Compute user_embedding for the requesting user     (1 forward pass)
-        2. Find top-K item_embeddings via ANN (FAISS/Redis)   (<5ms)
-        3. No need to score all items at runtime              ✅
-
-Training:
-    Both towers train jointly via dot-product similarity + BCE loss.
-    The gradient flows through BOTH towers simultaneously.
-
-Inference:
-    User tower → embedding → ANN search in pre-built item index
 """
 
 import torch
@@ -33,43 +10,26 @@ from loguru import logger
 from dataclasses import dataclass
 
 
-# ----------------------------------------------------------------
-# MODEL CONFIG
-# Centralized hyperparameters — logged to MLflow
-# ----------------------------------------------------------------
-
 @dataclass
 class ModelConfig:
-    """
-    All hyperparameters for the Two-Tower model.
-    Passed to MLflow for experiment tracking.
-    """
-    # Vocabulary sizes (set from encoders.json)
     n_users:          int   = 10_000
     n_items:          int   = 5_000
     n_categories:     int   = 10
 
-    # Embedding dimensions
     user_embedding_dim:     int   = 64
     item_embedding_dim:     int   = 64
     category_embedding_dim: int   = 16
 
-    # Continuous feature dimensions
-    n_user_continuous: int  = 4    # len(USER_CONTINUOUS_COLS)
-    n_item_continuous: int  = 7    # len(ITEM_CONTINUOUS_COLS)
+    n_user_continuous: int  = 4
+    n_item_continuous: int  = 7
 
-    # Tower hidden layer sizes
     user_hidden_layers: list = None
     item_hidden_layers: list = None
 
-    # Output embedding dimension (must match for dot product)
     output_dim:       int   = 64
-
-    # Regularization
     dropout_rate:     float = 0.2
     embedding_dropout: float = 0.1
 
-    # Training
     learning_rate:    float = 1e-3
     weight_decay:     float = 1e-5
     batch_size:       int   = 2048
@@ -81,7 +41,6 @@ class ModelConfig:
             self.item_hidden_layers = [256, 128]
 
     def to_dict(self) -> dict:
-        """Serialize for checkpoint save/reload — preserves real types (lists stay lists)."""
         return {
             "n_users":               self.n_users,
             "n_items":               self.n_items,
@@ -102,48 +61,26 @@ class ModelConfig:
         }
 
     def to_mlflow_params(self) -> dict:
-        """Serialize for MLflow log_params — MLflow only accepts simple scalar values."""
         d = self.to_dict()
         d["user_hidden_layers"] = str(d["user_hidden_layers"])
         d["item_hidden_layers"] = str(d["item_hidden_layers"])
         return d
-    
-# ----------------------------------------------------------------
-# BUILDING BLOCKS
-# ----------------------------------------------------------------
+
 
 def build_mlp(
     input_dim:    int,
-    hidden_dims:  list[int],
+    hidden_dims:  list,
     output_dim:   int,
     dropout_rate: float = 0.2,
     use_batchnorm: bool = True,
 ) -> nn.Sequential:
-    """
-    Build a Multi-Layer Perceptron with:
-        - BatchNorm (stabilizes training)
-        - ReLU activation
-        - Dropout (regularization)
-        - L2 normalization on the final output embedding
-
-    Args:
-        input_dim:    Size of input tensor
-        hidden_dims:  List of hidden layer sizes
-        output_dim:   Final output embedding size
-        dropout_rate: Dropout probability
-        use_batchnorm: Whether to use BatchNorm layers
-
-    Returns:
-        nn.Sequential MLP
-    """
-    layers     = []
-    in_dim     = input_dim
-    all_dims   = hidden_dims + [output_dim]
+    layers   = []
+    in_dim   = input_dim
+    all_dims = hidden_dims + [output_dim]
 
     for i, out_dim in enumerate(all_dims):
         layers.append(nn.Linear(in_dim, out_dim))
 
-        # No BN or activation on the final layer
         if i < len(all_dims) - 1:
             if use_batchnorm:
                 layers.append(nn.BatchNorm1d(out_dim))
@@ -155,44 +92,28 @@ def build_mlp(
     return nn.Sequential(*layers)
 
 
-# ----------------------------------------------------------------
-# USER TOWER
-# ----------------------------------------------------------------
-
 class UserTower(nn.Module):
-    """
-    Encodes a user into a dense embedding vector.
-
-    Input:
-        user_emb_idx:  [batch, 2]  — [user_idx, user_fav_cat_idx]
-        user_features: [batch, 4]  — continuous behavioral features
-
-    Output:
-        user_embedding: [batch, output_dim]  — L2-normalized
-    """
-
     def __init__(self, config: ModelConfig):
         super().__init__()
         self.config = config
 
-        # Embedding layers
+        # FIX 5: padding_idx=0 is reserved → indices must be 1-based
+        # We allocate n_users+2 to be safe (+1 for shift, +1 for unknown)
         self.user_embedding = nn.Embedding(
-            num_embeddings = config.n_users + 1,    # +1 for unknown users
+            num_embeddings = config.n_users + 2,
             embedding_dim  = config.user_embedding_dim,
             padding_idx    = 0,
         )
         self.category_embedding = nn.Embedding(
-            num_embeddings = config.n_categories + 1,
+            num_embeddings = config.n_categories + 2,
             embedding_dim  = config.category_embedding_dim,
             padding_idx    = 0,
         )
         self.embedding_dropout = nn.Dropout(p=config.embedding_dropout)
 
-        # Compute MLP input dimension
         emb_dim   = config.user_embedding_dim + config.category_embedding_dim
         input_dim = emb_dim + config.n_user_continuous
 
-        # MLP
         self.mlp = build_mlp(
             input_dim    = input_dim,
             hidden_dims  = config.user_hidden_layers,
@@ -201,92 +122,58 @@ class UserTower(nn.Module):
         )
 
         self._init_weights()
-        logger.debug(
-            f"UserTower initialized | "
-            f"input_dim={input_dim} | "
-            f"output_dim={config.output_dim}"
-        )
+        logger.debug(f"UserTower | input_dim={input_dim} | output_dim={config.output_dim}")
 
     def _init_weights(self) -> None:
-        """Xavier initialization for embedding layers."""
         nn.init.xavier_uniform_(self.user_embedding.weight)
         nn.init.xavier_uniform_(self.category_embedding.weight)
-        # Zero out padding embeddings
         with torch.no_grad():
             self.user_embedding.weight[0].fill_(0)
             self.category_embedding.weight[0].fill_(0)
 
     def forward(
         self,
-        user_emb_idx:  torch.Tensor,    # [B, 2]
-        user_features: torch.Tensor,    # [B, n_user_continuous]
+        user_emb_idx:  torch.Tensor,   # [B, 2]  values are 1-based
+        user_features: torch.Tensor,   # [B, n_user_continuous]
     ) -> torch.Tensor:
-        """
-        Returns:
-            user_embedding: [B, output_dim]  L2-normalized
-        """
-        # Unpack embedding indices
-        user_idx     = user_emb_idx[:, 0]   # [B]
-        fav_cat_idx  = user_emb_idx[:, 1]   # [B]
+        user_idx    = user_emb_idx[:, 0]
+        fav_cat_idx = user_emb_idx[:, 1]
 
-        # Lookup embeddings
-        user_emb    = self.user_embedding(user_idx)        # [B, user_emb_dim]
-        cat_emb     = self.category_embedding(fav_cat_idx) # [B, cat_emb_dim]
+        user_emb = self.user_embedding(user_idx)
+        cat_emb  = self.category_embedding(fav_cat_idx)
 
-        # Dropout on embeddings (regularize sparse features)
         user_emb = self.embedding_dropout(user_emb)
         cat_emb  = self.embedding_dropout(cat_emb)
 
-        # Concatenate embeddings + continuous features
         x = torch.cat([user_emb, cat_emb, user_features], dim=1)
 
-        # Pass through MLP
+        # FIX 2: Do NOT L2-normalize here — normalize only at the end
+        # of TwoTowerModel.forward() after the dot product is scaled
         embedding = self.mlp(x)
 
-        # L2 normalize — makes dot product equivalent to cosine similarity
-        embedding = F.normalize(embedding, p=2, dim=1)
+        return embedding   # raw, un-normalized
 
-        return embedding
-
-
-# ----------------------------------------------------------------
-# ITEM TOWER
-# ----------------------------------------------------------------
 
 class ItemTower(nn.Module):
-    """
-    Encodes an item into a dense embedding vector.
-
-    Input:
-        item_emb_idx:  [batch, 2]  — [item_idx, item_cat_idx]
-        item_features: [batch, 7]  — continuous engagement features
-
-    Output:
-        item_embedding: [batch, output_dim]  — L2-normalized
-    """
-
     def __init__(self, config: ModelConfig):
         super().__init__()
         self.config = config
 
-        # Embedding layers
         self.item_embedding = nn.Embedding(
-            num_embeddings = config.n_items + 1,
+            num_embeddings = config.n_items + 2,
             embedding_dim  = config.item_embedding_dim,
             padding_idx    = 0,
         )
         self.category_embedding = nn.Embedding(
-            num_embeddings = config.n_categories + 1,
+            num_embeddings = config.n_categories + 2,
             embedding_dim  = config.category_embedding_dim,
             padding_idx    = 0,
         )
         self.embedding_dropout = nn.Dropout(p=config.embedding_dropout)
 
-        # MLP input dimension
         emb_dim   = config.item_embedding_dim + config.category_embedding_dim
         input_dim = emb_dim + config.n_item_continuous
 
-        # MLP
         self.mlp = build_mlp(
             input_dim    = input_dim,
             hidden_dims  = config.item_hidden_layers,
@@ -295,11 +182,7 @@ class ItemTower(nn.Module):
         )
 
         self._init_weights()
-        logger.debug(
-            f"ItemTower initialized | "
-            f"input_dim={input_dim} | "
-            f"output_dim={config.output_dim}"
-        )
+        logger.debug(f"ItemTower | input_dim={input_dim} | output_dim={config.output_dim}")
 
     def _init_weights(self) -> None:
         nn.init.xavier_uniform_(self.item_embedding.weight)
@@ -310,15 +193,11 @@ class ItemTower(nn.Module):
 
     def forward(
         self,
-        item_emb_idx:  torch.Tensor,    # [B, 2]
-        item_features: torch.Tensor,    # [B, n_item_continuous]
+        item_emb_idx:  torch.Tensor,   # [B, 2]  values are 1-based
+        item_features: torch.Tensor,   # [B, n_item_continuous]
     ) -> torch.Tensor:
-        """
-        Returns:
-            item_embedding: [B, output_dim]  L2-normalized
-        """
-        item_idx = item_emb_idx[:, 0]   # [B]
-        cat_idx  = item_emb_idx[:, 1]   # [B]
+        item_idx = item_emb_idx[:, 0]
+        cat_idx  = item_emb_idx[:, 1]
 
         item_emb = self.item_embedding(item_idx)
         cat_emb  = self.category_embedding(cat_idx)
@@ -329,42 +208,26 @@ class ItemTower(nn.Module):
         x = torch.cat([item_emb, cat_emb, item_features], dim=1)
 
         embedding = self.mlp(x)
-        embedding = F.normalize(embedding, p=2, dim=1)
 
-        return embedding
+        return embedding   # raw, un-normalized
 
-
-# ----------------------------------------------------------------
-# TWO-TOWER MODEL
-# ----------------------------------------------------------------
 
 class TwoTowerModel(nn.Module):
-    """
-    Full Two-Tower recommendation model.
-
-    Combines UserTower + ItemTower.
-    Training objective: predict whether a user will interact with an item.
-    Loss: Binary Cross-Entropy on dot-product similarity score.
-
-    Forward pass returns a scalar score per (user, item) pair.
-    At inference: only the user tower runs per-request.
-                  item embeddings are pre-computed and indexed.
-    """
-
     def __init__(self, config: ModelConfig):
         super().__init__()
-        self.config      = config
-        self.user_tower  = UserTower(config)
-        self.item_tower  = ItemTower(config)
+        self.config     = config
+        self.user_tower = UserTower(config)
+        self.item_tower = ItemTower(config)
 
-        # Learned temperature for scaling dot product
-        # Helps control confidence of predictions
-        self.temperature = nn.Parameter(torch.ones(1) * 0.07)
+        # FIX 1: Remove learned temperature = 0.07
+        # That value is for InfoNCE/contrastive loss, NOT for BCE
+        # With L2-normalized embeddings, dot product ∈ [-1, 1]
+        # We scale by a fixed constant to get logits in [-10, 10]
+        # which gives sigmoid outputs spread across (0, 1)
+        self.score_scale = 10.0
 
         total_params = sum(p.numel() for p in self.parameters())
-        trainable    = sum(
-            p.numel() for p in self.parameters() if p.requires_grad
-        )
+        trainable    = sum(p.numel() for p in self.parameters() if p.requires_grad)
         logger.info(
             f"TwoTowerModel initialized | "
             f"total_params={total_params:,} | "
@@ -373,50 +236,49 @@ class TwoTowerModel(nn.Module):
 
     def forward(
         self,
-        user_emb_idx:  torch.Tensor,    # [B, 2]
-        item_emb_idx:  torch.Tensor,    # [B, 2]
-        user_features: torch.Tensor,    # [B, n_user_continuous]
-        item_features: torch.Tensor,    # [B, n_item_continuous]
+        user_emb_idx:  torch.Tensor,   # [B, 2]
+        item_emb_idx:  torch.Tensor,   # [B, 2]
+        user_features: torch.Tensor,   # [B, n_user_continuous]
+        item_features: torch.Tensor,   # [B, n_item_continuous]
     ) -> torch.Tensor:
-        """
-        Returns:
-            scores: [B]  scalar similarity score per pair
-        """
         user_emb = self.user_tower(user_emb_idx, user_features)
         item_emb = self.item_tower(item_emb_idx, item_features)
 
-        # Dot product similarity (both embeddings are L2-normalized)
-        # Result is equivalent to cosine similarity ∈ [-1, 1]
-        dot_product = (user_emb * item_emb).sum(dim=1)   # [B]
+        # FIX 2: L2-normalize AFTER the MLP, right before dot product
+        # This is the correct place — the towers output raw vectors,
+        # normalization happens once here for the full model
+        user_emb = F.normalize(user_emb, p=2, dim=1)
+        item_emb = F.normalize(item_emb, p=2, dim=1)
 
-        # Scale by temperature (learned)
-        scores = dot_product / self.temperature.clamp(min=1e-6)
+        # Cosine similarity ∈ [-1, 1]
+        dot_product = (user_emb * item_emb).sum(dim=1)
 
-        return scores
+        # FIX 1: Scale to reasonable logit range for BCE
+        # sigmoid(-10) ≈ 0.00005, sigmoid(10) ≈ 0.99995
+        # Gradients are non-zero across the full range
+        scores = dot_product * self.score_scale
+
+        return scores   # raw logits, BCEWithLogitsLoss applies sigmoid
 
     def get_user_embedding(
         self,
         user_emb_idx:  torch.Tensor,
         user_features: torch.Tensor,
     ) -> torch.Tensor:
-        """
-        Extract user embedding only.
-        Called by FastAPI at inference time.
-        """
+        """Returns L2-normalized user embedding for ANN search."""
         with torch.no_grad():
-            return self.user_tower(user_emb_idx, user_features)
+            emb = self.user_tower(user_emb_idx, user_features)
+            return F.normalize(emb, p=2, dim=1)
 
     def get_item_embeddings(
         self,
         item_emb_idx:  torch.Tensor,
         item_features: torch.Tensor,
     ) -> torch.Tensor:
-        """
-        Extract item embeddings for all items.
-        Called once to pre-build the ANN index.
-        """
+        """Returns L2-normalized item embeddings for ANN index."""
         with torch.no_grad():
-            return self.item_tower(item_emb_idx, item_features)
+            emb = self.item_tower(item_emb_idx, item_features)
+            return F.normalize(emb, p=2, dim=1)
 
     @classmethod
     def from_config(cls, config: ModelConfig) -> "TwoTowerModel":

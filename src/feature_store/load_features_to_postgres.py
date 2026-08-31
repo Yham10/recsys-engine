@@ -42,7 +42,7 @@ PG_HOST     = os.getenv("POSTGRES_HOST",     "localhost")
 PG_PORT     = os.getenv("POSTGRES_PORT",     "5432")
 PG_USER     = os.getenv("POSTGRES_USER",     "recsys_user")
 PG_PASSWORD = os.getenv("POSTGRES_PASSWORD", "recsys_password")
-PG_DB       = os.getenv("POSTGRES_DB",       "recsys_db")
+PG_DB       = os.getenv("FEAST_DB", "feast_db")
 PG_SCHEMA   = "feast"
 
 # ---- Resolve data directory ----
@@ -81,6 +81,7 @@ class FeaturePostgresLoader:
                 pool_size     = 5,
                 max_overflow  = 10,
                 pool_pre_ping = True,
+                future        = True,   # ← ADD THIS: enables Connection.commit()/.rollback()
             )
             with engine.connect() as conn:
                 conn.execute(text("SELECT 1"))

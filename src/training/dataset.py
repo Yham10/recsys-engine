@@ -13,6 +13,7 @@ Design decisions:
         FloatTensor for continuous features and labels
 """
 
+import sys
 import json
 import numpy as np
 import pandas as pd
@@ -23,6 +24,10 @@ from loguru import logger
 from typing import Optional
 from dataclasses import dataclass, field
 
+SRC_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(SRC_DIR))
+
+from config_paths import DATA_PROCESSED_DIR
 
 # ----------------------------------------------------------------
 # FEATURE COLUMN DEFINITIONS
@@ -171,8 +176,12 @@ class RecsysDataset(Dataset):
         Pre-convert DataFrame columns to numpy arrays.
         This is 10-50x faster than accessing df.iloc[i] per sample.
         """
-        self._user_emb   = self.df[USER_EMBEDDING_COLS].values.astype(np.int64)
-        self._item_emb   = self.df[ITEM_EMBEDDING_COLS].values.astype(np.int64)
+        emb_raw = self.df[USER_EMBEDDING_COLS].values.astype(np.int64)
+        self._user_emb  = emb_raw + 1          # shift: 0→1, 1→2, ..., 9999→10000
+
+        emb_raw = self.df[ITEM_EMBEDDING_COLS].values.astype(np.int64)
+        self._item_emb  = emb_raw + 1          # shift: 0→1, 1→2, ..., 4999→5000
+
         self._user_cont  = self.df[USER_CONTINUOUS_COLS].values.astype(np.float32)
         self._item_cont  = self.df[ITEM_CONTINUOUS_COLS].values.astype(np.float32)
         self._labels     = self.df[LABEL_COL].values.astype(np.float32)
@@ -195,7 +204,7 @@ class RecsysDataset(Dataset):
 # ----------------------------------------------------------------
 
 def build_dataloaders(
-    processed_dir: Path,
+    processed_dir: Path = DATA_PROCESSED_DIR,
     batch_size:    int  = 2048,
     num_workers:   int  = 4,
     pin_memory:    bool = True,

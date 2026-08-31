@@ -12,7 +12,7 @@ provider: local
 # ----------------------------------------------------------------
 registry:
   registry_type: sql
-  path: postgresql+psycopg2://recsys_user:recsys_password@localhost:5433/recsys_db
+  path: postgresql+psycopg2://recsys_user:recsys_password@postgres:5432/feast_db
   cache_ttl_seconds: 60
 
 # ----------------------------------------------------------------
@@ -22,9 +22,9 @@ registry:
 # ----------------------------------------------------------------
 offline_store:
   type: postgres
-  host: localhost
-  port: 5433
-  database: recsys_db
+  host: postgres
+  port: 5432
+  database: feast_db
   db_schema: feast
   user: recsys_user
   password: recsys_password
@@ -37,7 +37,7 @@ offline_store:
 # ----------------------------------------------------------------
 online_store:
   type: redis
-  connection_string: "localhost:6379,db=0"
+  connection_string: "redis:6379,db=0"
   key_ttl_seconds: 86400
 
 # ----------------------------------------------------------------

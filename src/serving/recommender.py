@@ -64,7 +64,7 @@ class RecommendationEngine:
         s = self.settings
         conn_str = (
             f"postgresql+psycopg2://{s.postgres_user}:{s.postgres_password}"
-            f"@{s.postgres_host}:{s.postgres_port}/{s.postgres_db}"
+            f"@{s.postgres_host}:{s.postgres_port}/{s.feast_db}"
         )
         try:
             engine = create_engine(
@@ -239,78 +239,50 @@ class RecommendationEngine:
     ) -> dict[str, dict]:
         """
         Batch fetch item metadata from PostgreSQL.
-        Queries the enriched item_features_raw table which
-        contains both feature columns AND catalog columns
-        (item_name, brand, is_available).
+        Uses PostgreSQL ANY() operator — works with all psycopg2 versions.
         """
         if not item_ids:
-            logger.warning("_fetch_item_metadata called with empty item_ids")
             return {}
 
         if self._db_engine is None:
-            logger.warning(
-                "DB engine is None — metadata fetch skipped. "
-                "Check PostgreSQL connection settings."
-            )
+            logger.warning("DB engine is None — metadata fetch skipped")
             return {}
 
         try:
-            placeholders = ", ".join(
-                [f":id_{i}" for i in range(len(item_ids))]
-            )
-            params = {
-                f"id_{i}": iid for i, iid in enumerate(item_ids)
-            }
-
-            # Query only columns we KNOW exist in the enriched table
-            query = text(f"""
-                SELECT
-                    item_id,
-                    category,
-                    price,
-                    avg_rating,
-                    item_name,
-                    brand,
-                    is_available,
-                    item_view_count_7d,
-                    item_purchase_count_30d,
-                    item_conversion_rate
-                FROM feast.item_features_raw
-                WHERE item_id IN ({placeholders})
-            """)
+            from sqlalchemy import text
 
             with self._db_engine.connect() as conn:
-                result = conn.execute(query, params)
-                rows   = result.fetchall()
-                cols   = list(result.keys())
+                result = conn.execute(
+                    text("""
+                        SELECT
+                            item_id,
+                            category,
+                            price,
+                            avg_rating,
+                            item_name,
+                            brand,
+                            is_available
+                        FROM feast.item_features_raw
+                        WHERE item_id = ANY(:item_ids)
+                    """),
+                    {"item_ids": list(item_ids)}
+                )
+                rows = result.fetchall()
+                cols = list(result.keys())
 
             if not rows:
                 logger.warning(
-                    f"No metadata rows returned for {len(item_ids)} items. "
-                    f"Sample: {item_ids[:3]}. "
-                    f"Table may be empty — run load_features_to_postgres.py"
+                    f"No metadata for {len(item_ids)} items. "
+                    f"Sample: {item_ids[:3]}"
                 )
                 return {}
 
-            metadata = {
-                row[0]: dict(zip(cols, row))
-                for row in rows
-            }
-
-            logger.debug(
-                f"Metadata fetched | "
-                f"requested={len(item_ids)} | "
-                f"returned={len(metadata)}"
-            )
-            return metadata
+            return {row[0]: dict(zip(cols, row)) for row in rows}
 
         except Exception as e:
-            logger.error(
-                f"_fetch_item_metadata FAILED: {e}",
-                exc_info=True,
-            )
+            logger.error(f"_fetch_item_metadata FAILED: {e}", exc_info=True)
             return {}
-
+        
     # ----------------------------------------------------------
     # EXPLANATION GENERATION
     # ----------------------------------------------------------

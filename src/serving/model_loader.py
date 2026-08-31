@@ -18,6 +18,8 @@ Why FAISS?
     At 500K items, we'd switch to IndexIVFFlat (approximate but faster).
 """
 
+import os
+import sys
 import json
 import time
 import numpy as np
@@ -29,13 +31,15 @@ from pathlib import Path
 from loguru import logger
 from typing import Optional
 
-import sys
+# ── Path setup ────────────────────────────────────────────────────
+_THIS_DIR = Path(__file__).resolve().parent      # serving/
+_SRC_DIR  = _THIS_DIR.parent                     # src/
+sys.path.insert(0, str(_SRC_DIR))
 
-from config import get_settings
+from config_paths import DATA_PROCESSED_DIR, DATA_ARTIFACTS_DIR
 
-# Allow imports from src/training
-sys.path.insert(0, str(Path(__file__).parent.parent / "training"))
-
+# Import NormalizationStats — it lives in training/dataset.py
+sys.path.insert(0, str(_SRC_DIR / "training"))
 from dataset import NormalizationStats
 
 
@@ -86,49 +90,87 @@ def get_registry() -> ModelRegistry:
 # LOADER FUNCTIONS
 # ----------------------------------------------------------------
 
-def load_model_from_mlflow(settings) -> torch.nn.Module:
-    """
-    Load the latest production model from MLflow Model Registry.
-
-    Falls back to loading from local artifacts if MLflow is unavailable.
-    This makes the service resilient to MLflow downtime.
-    """
+def load_model_from_mlflow(settings) -> tuple:
+    """Load latest model version from MLflow Registry."""
     mlflow.set_tracking_uri(settings.mlflow_tracking_uri)
 
-    model_uri = (
-        f"models:/{settings.mlflow_model_name}/{settings.mlflow_model_stage}"
-    )
-
-    logger.info(
-        f"Loading model from MLflow | "
-        f"uri={model_uri}"
-    )
-
     try:
+        client = mlflow.tracking.MlflowClient(
+            tracking_uri=settings.mlflow_tracking_uri
+        )
+
+        # Search all versions — avoid deprecated stage API
+        all_versions = client.search_model_versions(
+            f"name='{settings.mlflow_model_name}'"
+        )
+
+        if not all_versions:
+            raise ValueError(
+                f"No versions found for model '{settings.mlflow_model_name}'"
+            )
+
+        # Take the highest version number
+        latest = sorted(
+            all_versions,
+            key=lambda v: int(v.version),
+            reverse=True
+        )[0]
+
+        version_num = latest.version
+        run_id      = latest.run_id
+        model_uri   = f"runs:/{run_id}/model"
+
+        logger.info(
+            f"Loading model from MLflow | "
+            f"name={settings.mlflow_model_name} | "
+            f"version={version_num}"
+        )
+
         model = mlflow.pytorch.load_model(
-            model_uri  = model_uri,
+            model_uri    = model_uri,
             map_location = "cpu",
         )
         model.eval()
 
-        # Get model version metadata
-        client = mlflow.tracking.MlflowClient()
-        versions = client.get_latest_versions(
-            settings.mlflow_model_name,
-            stages=[settings.mlflow_model_stage]
-        )
-        version_str = versions[0].version if versions else "unknown"
         logger.success(
-            f"✅ Model loaded from MLflow | version={version_str}"
+            f"✅ Model loaded from MLflow | version={version_num}"
         )
-        return model, version_str
+        return model, f"mlflow-v{version_num}"
 
     except Exception as e:
         logger.warning(
-            f"MLflow model load failed: {e}\n"
-            f"Attempting fallback to local artifacts..."
+            f"MLflow load failed: {e}\n"
+            f"Using local checkpoint fallback..."
         )
         return _load_model_local_fallback(settings)
+
+
+def _load_model_local_fallback(settings) -> tuple:
+    """Load from local best_model.pt checkpoint."""
+    checkpoint_path = DATA_ARTIFACTS_DIR / "best_model.pt"
+
+    if not checkpoint_path.exists():
+        raise FileNotFoundError(
+            f"No model found at {checkpoint_path.resolve()}\n"
+            f"Run training first: cd src/training && python run_training.py"
+        )
+
+    # Import model from training/
+    _SRC_DIR = Path(__file__).resolve().parent.parent
+    sys.path.insert(0, str(_SRC_DIR / "training"))
+    from model import TwoTowerModel, ModelConfig
+
+    checkpoint = torch.load(checkpoint_path, map_location="cpu")
+    config     = ModelConfig(**checkpoint["config"])
+    model      = TwoTowerModel(config)
+    model.load_state_dict(checkpoint["model_state"])
+    model.eval()
+
+    logger.success(
+        f"✅ Model loaded from local checkpoint | "
+        f"path={checkpoint_path.resolve()}"
+    )
+    return model, "local-checkpoint"
 
 
 def _load_model_local_fallback(settings) -> tuple:
@@ -204,23 +246,27 @@ def build_faiss_index(
 def load_all_artifacts(settings) -> None:
     """
     Master loading function called at application startup.
-    Loads all artifacts into the global ModelRegistry singleton.
-
-    Raises:
-        RuntimeError if any critical artifact fails to load.
+    Uses absolute paths from config_paths — no ambiguity.
     """
     global _registry
     start = time.time()
 
+    # Use absolute paths — ignore settings paths entirely
+    processed_dir = DATA_PROCESSED_DIR
+    artifacts_dir = DATA_ARTIFACTS_DIR
+
     logger.info("=" * 60)
     logger.info("  LOADING ML ARTIFACTS")
+    logger.info(f"  processed_dir = {processed_dir.resolve()}")
+    logger.info(f"  artifacts_dir = {artifacts_dir.resolve()}")
     logger.info("=" * 60)
 
-    # ---- 1. Load encoders ----
-    encoder_path = settings.processed_dir / "encoders.json"
+    # ── 1. Load encoders ──────────────────────────────────────────
+    encoder_path = processed_dir / "encoders.json"
     if not encoder_path.exists():
         raise FileNotFoundError(
-            f"encoders.json not found at {encoder_path}. Run Step 3."
+            f"encoders.json not found at {encoder_path.resolve()}\n"
+            f"Run: cd src/feature_store && python training_dataset.py"
         )
     with open(encoder_path) as f:
         _registry.encoders = json.load(f)
@@ -233,28 +279,31 @@ def load_all_artifacts(settings) -> None:
     logger.info(
         f"Encoders loaded | "
         f"users={_registry.encoders['n_users']:,} | "
-        f"items={len(_registry.item_ids):,}"
+        f"items={len(_registry.item_ids):,} | "
+        f"categories={_registry.encoders['n_categories']}"
     )
 
-    # ---- 2. Load normalization stats ----
-    norm_path = settings.processed_dir / "norm_stats.json"
+    # ── 2. Load normalization stats ───────────────────────────────
+    norm_path = processed_dir / "norm_stats.json"
     if not norm_path.exists():
         raise FileNotFoundError(
-            f"norm_stats.json not found at {norm_path}. Run Step 3."
+            f"norm_stats.json not found at {norm_path.resolve()}\n"
+            f"Run training first: cd src/training && python run_training.py"
         )
     _registry.norm_stats = NormalizationStats.load(norm_path)
     logger.info("Normalization stats loaded")
 
-    # ---- 3. Load model ----
+    # ── 3. Load model ─────────────────────────────────────────────
     model, version = load_model_from_mlflow(settings)
     _registry.model         = model
     _registry.model_version = version
 
-    # ---- 4. Load item embeddings and build FAISS index ----
-    emb_path = settings.artifacts_dir / "item_embeddings.npy"
+    # ── 4. Load item embeddings → FAISS ──────────────────────────
+    emb_path = artifacts_dir / "item_embeddings.npy"
     if not emb_path.exists():
         raise FileNotFoundError(
-            f"item_embeddings.npy not found at {emb_path}. Run Step 4."
+            f"item_embeddings.npy not found at {emb_path.resolve()}\n"
+            f"Run training first: cd src/training && python run_training.py"
         )
 
     embeddings = np.load(emb_path).astype(np.float32)
@@ -262,7 +311,7 @@ def load_all_artifacts(settings) -> None:
         embeddings, n_probe=settings.faiss_n_probe
     )
 
-    # ---- 5. Select device ----
+    # ── 5. Device ────────────────────────────────────────────────
     if torch.cuda.is_available():
         _registry.device = torch.device("cuda")
     elif torch.backends.mps.is_available():
@@ -272,8 +321,8 @@ def load_all_artifacts(settings) -> None:
 
     _registry.model = _registry.model.to(_registry.device)
 
-    # ---- Mark ready ----
-    _registry.is_ready  = True
+    # ── Mark ready ───────────────────────────────────────────────
+    _registry.is_ready   = True
     _registry._load_time = time.time() - start
 
     logger.info("=" * 60)
@@ -281,9 +330,9 @@ def load_all_artifacts(settings) -> None:
     logger.info(f"  Model version:  {_registry.model_version}")
     logger.info(f"  Device:         {_registry.device}")
     logger.info(f"  FAISS vectors:  {_registry.faiss_index.ntotal:,}")
+    logger.info(f"  n_categories:   {_registry.encoders['n_categories']}")
     logger.info(f"  Load time:      {_registry._load_time:.2f}s")
     logger.info("=" * 60)
-
 
 def unload_artifacts() -> None:
     """

@@ -108,3 +108,117 @@
 2026-08-17T16:45:02.606317+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-17T15:45:02.605344
 2026-08-17T16:45:03.541680+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
 2026-08-17T16:45:03.541680+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=0.9s
+2026-08-17T20:01:34.941552+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-17T20:01:34.942554+0100 | INFO | __main__:81 | ============================================================
+2026-08-17T20:01:34.942554+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-17T20:01:34.943553+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-17
+2026-08-17T20:01:34.943553+0100 | INFO | __main__:84 | ============================================================
+2026-08-17T20:01:34.943553+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-17T19:01:34.942554
+2026-08-17T20:01:37.694823+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-17T20:01:37.695845+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.8s
+2026-08-18T14:00:54.102219+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-18T14:00:54.102876+0100 | INFO | __main__:81 | ============================================================
+2026-08-18T14:00:54.103937+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-18T14:00:54.103937+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-18
+2026-08-18T14:00:54.104948+0100 | INFO | __main__:84 | ============================================================
+2026-08-18T14:00:54.104948+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-18T13:00:54.102876
+2026-08-18T14:00:56.822955+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-18T14:00:56.823426+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.7s
+2026-08-18T15:12:26.965432+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-18T15:12:26.965432+0100 | INFO | __main__:113 | ============================================================
+2026-08-18T15:12:26.965432+0100 | INFO | __main__:114 |   DRY RUN — Validating Feature Store
+2026-08-18T15:12:26.965432+0100 | INFO | __main__:115 | ============================================================
+2026-08-18T15:12:26.970019+0100 | INFO | feast_manager:424 | Registered entities (2):
+2026-08-18T15:12:26.970019+0100 | INFO | feast_manager:426 |   → item | join_key=item_id
+2026-08-18T15:12:26.970019+0100 | INFO | feast_manager:426 |   → user | join_key=user_id
+2026-08-18T15:12:26.975063+0100 | INFO | feast_manager:411 | Registered feature views (2):
+2026-08-18T15:12:26.975063+0100 | INFO | feast_manager:413 |   → item_features | entities=['item'] | features=8 | ttl=2 days, 0:00:00
+2026-08-18T15:12:26.976026+0100 | INFO | feast_manager:413 |   → user_features | entities=['user'] | features=5 | ttl=2 days, 0:00:00
+2026-08-18T15:12:26.988312+0100 | INFO | __main__:123 | Feature Store Stats:
+2026-08-18T15:12:26.988312+0100 | INFO | __main__:124 |   Project:          recsys
+2026-08-18T15:12:26.988840+0100 | INFO | __main__:125 |   Feature Views:    2
+2026-08-18T15:12:26.988840+0100 | INFO | __main__:126 |   Entities:         2
+2026-08-18T15:12:26.989845+0100 | INFO | __main__:127 |   Feature Services: 2
+2026-08-18T15:12:26.989845+0100 | INFO | __main__:130 | 
+  [item_features]
+    Features: ['item_view_count_7d', 'item_purchase_count_30d', 'item_avg_rating_events', 'item_cart_rate', 'item_conversion_rate', 'price', 'avg_rating', 'category']
+    TTL:      2 days
+    Online:   True
+2026-08-18T15:12:26.989845+0100 | INFO | __main__:130 | 
+  [user_features]
+    Features: ['user_click_count_7d', 'user_purchase_count_30d', 'user_total_spend_30d', 'user_avg_engagement_score', 'user_favorite_category']
+    TTL:      2 days
+    Online:   True
+2026-08-18T15:12:26.990870+0100 | SUCCESS | __main__:137 | ✅ Dry run complete — Feature Store is healthy
+2026-08-18T15:12:45.683034+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-18T15:12:45.683034+0100 | INFO | __main__:81 | ============================================================
+2026-08-18T15:12:45.684010+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-18T15:12:45.684010+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-18
+2026-08-18T15:12:45.684010+0100 | INFO | __main__:84 | ============================================================
+2026-08-18T15:12:45.684010+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-18T14:12:45.683034
+2026-08-18T15:12:46.672135+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-18T15:12:46.673132+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=1.0s
+2026-08-19T15:50:22.293817+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-19T15:50:22.304260+0100 | INFO | __main__:81 | ============================================================
+2026-08-19T15:50:22.305315+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-19T15:50:22.305315+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-19
+2026-08-19T15:50:22.306276+0100 | INFO | __main__:84 | ============================================================
+2026-08-19T15:50:22.306276+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-19T14:50:22.304260
+2026-08-19T15:50:25.455016+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-19T15:50:25.456096+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=3.2s
+2026-08-19T20:11:41.489964+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-19T20:11:41.491479+0100 | INFO | __main__:81 | ============================================================
+2026-08-19T20:11:41.492098+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-19T20:11:41.492098+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-19
+2026-08-19T20:11:41.492098+0100 | INFO | __main__:84 | ============================================================
+2026-08-19T20:11:41.492098+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-19T19:11:41.491479
+2026-08-19T20:11:42.971760+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-19T20:11:42.971760+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=1.5s
+2026-08-20T12:06:07.398249+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-20T12:06:07.399261+0100 | INFO | __main__:81 | ============================================================
+2026-08-20T12:06:07.399261+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-20T12:06:07.400258+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-20
+2026-08-20T12:06:07.400258+0100 | INFO | __main__:84 | ============================================================
+2026-08-20T12:06:07.400781+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-20T11:06:07.399261
+2026-08-20T12:06:10.208456+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-20T12:06:10.208456+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.8s
+2026-08-21T15:28:06.771669+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\desktop\pfa\recsys-engine\src\feature_store\feature_repo
+2026-08-21T15:28:06.773669+0100 | INFO | __main__:81 | ============================================================
+2026-08-21T15:28:06.773669+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-21T15:28:06.774668+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-21
+2026-08-21T15:28:06.775668+0100 | INFO | __main__:84 | ============================================================
+2026-08-21T15:28:06.775668+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-21T14:28:06.773669
+2026-08-21T15:28:09.559871+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-21T15:28:09.561394+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.8s
+2026-08-23T13:56:23.576698+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-23T13:56:23.577327+0100 | INFO | __main__:81 | ============================================================
+2026-08-23T13:56:23.577327+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-23T13:56:23.577327+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-23
+2026-08-23T13:56:23.577327+0100 | INFO | __main__:84 | ============================================================
+2026-08-23T13:56:23.577327+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-23T12:56:23.577327
+2026-08-23T13:56:25.068391+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-23T13:56:25.069424+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=1.5s
+2026-08-23T18:27:23.066716+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-23T18:27:23.068252+0100 | INFO | __main__:81 | ============================================================
+2026-08-23T18:27:23.069255+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-23T18:27:23.069255+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-23
+2026-08-23T18:27:23.070257+0100 | INFO | __main__:84 | ============================================================
+2026-08-23T18:27:23.071299+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-23T17:27:23.068252
+2026-08-23T18:27:25.034473+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-23T18:27:25.035468+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.0s
+2026-08-23T21:04:06.826637+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\PFA\recsys-engine\src\feature_store\feature_repo
+2026-08-23T21:04:06.837157+0100 | INFO | __main__:81 | ============================================================
+2026-08-23T21:04:06.838550+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-23T21:04:06.840038+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-23
+2026-08-23T21:04:06.841043+0100 | INFO | __main__:84 | ============================================================
+2026-08-23T21:04:06.842044+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-23T20:04:06.837157
+2026-08-23T21:04:09.352157+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-23T21:04:09.353190+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.5s
+2026-08-24T12:16:12.476341+0100 | INFO | feast_manager:107 | ✅ Feast FeatureStore initialized | project=recsys | repo=C:\Users\info\Desktop\pfa\recsys-engine\src\feature_store\feature_repo
+2026-08-24T12:16:12.477861+0100 | INFO | __main__:81 | ============================================================
+2026-08-24T12:16:12.478881+0100 | INFO | __main__:82 |   FULL MATERIALIZATION STARTED
+2026-08-24T12:16:12.479901+0100 | INFO | __main__:83 |   Range: 2024-01-01 → 2026-08-24
+2026-08-24T12:16:12.480917+0100 | INFO | __main__:84 | ============================================================
+2026-08-24T12:16:12.481890+0100 | INFO | feast_manager:362 | Materializing features to online store | start=2024-01-01T00:00:00 | end=2026-08-24T11:16:12.477861
+2026-08-24T12:16:15.264495+0100 | SUCCESS | feast_manager:373 | ✅ Materialization complete — Redis updated with fresh features
+2026-08-24T12:16:15.265499+0100 | SUCCESS | __main__:141 | ✅ FULL materialization complete | elapsed=2.8s
