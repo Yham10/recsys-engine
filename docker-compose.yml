@@ -448,6 +448,7 @@ services:
       - ./data/artifacts:/data/artifacts
       - ./data/processed:/data/processed
       - serving_logs:/app/logs
+      - ./src/feature_store/feature_repo:/app/feature_repo
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 15s
