@@ -15,7 +15,7 @@ pydantic-settings>=2.1.0,<3
 pandas>=2.2.3,<3
 
 # --- Feature Store (Feast → Redis) ---
-feast[postgres,redis]==0.58.0
+feast[postgres,redis]==0.40.0
 redis>=4.2.2,<5
 
 # --- MLflow Model Loading ---
