@@ -35,6 +35,10 @@ import torch
 import torch.nn as nn
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+
+import torch.nn.functional as F 
+criterion = None
+
 from pathlib import Path
 from datetime import datetime
 from loguru import logger
@@ -409,63 +413,49 @@ class TwoTowerTrainer:
         self,
         loader:    torch.utils.data.DataLoader,
         optimizer: torch.optim.Optimizer,
-        criterion: nn.Module,
+        criterion: None,  # Unused for InfoNCE
         epoch:     int,
     ) -> float:
-        """
-        Single training epoch.
-
-        Returns:
-            Average training loss for the epoch
-        """
         self.model.train()
         total_loss = 0.0
         n_batches  = 0
 
         for batch_idx, batch in enumerate(loader):
-            # Move tensors to device
             user_emb_idx  = batch["user_emb_idx"].to(self.device)
             item_emb_idx  = batch["item_emb_idx"].to(self.device)
             user_features = batch["user_features"].to(self.device)
             item_features = batch["item_features"].to(self.device)
-            labels        = batch["label"].to(self.device)
 
-            # Zero gradients
             optimizer.zero_grad(set_to_none=True)
 
-            # Forward pass
-            scores = self.model(
-                user_emb_idx,
-                item_emb_idx,
-                user_features,
-                item_features,
-            )
+            # Get raw tower outputs
+            user_emb = self.model.user_tower(user_emb_idx, user_features)
+            item_emb = self.model.item_tower(item_emb_idx, item_features)
 
-            # Compute loss
-            loss = criterion(scores, labels)
+            # L2 normalize
+            user_emb = F.normalize(user_emb, p=2, dim=1)
+            item_emb = F.normalize(item_emb, p=2, dim=1)
 
-            # Backward pass
+            # Similarity matrix [B, B] → in-batch negatives are free
+            logits = torch.matmul(user_emb, item_emb.T) * self.model.score_scale
+
+            # Diagonal = positive pairs, off-diagonal = negatives
+            labels = torch.arange(logits.size(0), device=self.device)
+
+            # InfoNCE loss
+            loss = F.cross_entropy(logits, labels)
+
             loss.backward()
-
-            # Gradient clipping — prevents exploding gradients
             nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
-
-            # Update weights
             optimizer.step()
 
             total_loss += loss.item()
             n_batches  += 1
 
-            # Log batch progress every 100 batches
             if batch_idx % 100 == 0:
-                logger.debug(
-                    f"  Epoch {epoch} | "
-                    f"batch {batch_idx}/{len(loader)} | "
-                    f"loss={loss.item():.4f}"
-                )
+                logger.debug(f"  Epoch {epoch} | batch {batch_idx}/{len(loader)} | loss={loss.item():.4f}")
 
         return total_loss / max(n_batches, 1)
-
     # ----------------------------------------------------------
     # MLFLOW MODEL LOGGING
     # ----------------------------------------------------------
