@@ -140,66 +140,63 @@ class RecommendationEngine:
 
         # ── Step 3: ANN Search (FAISS) ───────────────────────────
         t2 = time.perf_counter()
-
-        # Search for more candidates to allow for post-filtering
-        n_candidates = min(top_k * 5, self.registry.faiss_index.ntotal)
-        scores, indices = self.registry.faiss_index.search(
-            user_vec, n_candidates
-        )
-
-        # scores:  [1, n_candidates]  similarity scores
-        # indices: [1, n_candidates]  item integer indices
-
-        scores  = scores[0]    # [n_candidates]
-        indices = indices[0]   # [n_candidates]
-
+        
+        # Widen pool to ensure category diversity reaches re-ranking
+        n_candidates = min(500, self.registry.faiss_index.ntotal)
+        scores, indices = self.registry.faiss_index.search(user_vec, n_candidates)
+        scores, indices = scores[0], indices[0]
         timings["ann_ms"] = (time.perf_counter() - t2) * 1000
 
         # ── Step 4: Apply Filters ────────────────────────────────
-        # Build set of excluded item IDs
-        excluded_ids = set(request.exclude_item_ids)
-
-        # Filter invalid indices and excluded items
+        excluded_ids = set(request.exclude_item_ids or [])
         valid_mask = indices >= 0
-        filtered_scores  = scores[valid_mask]
-        filtered_indices = indices[valid_mask]
+        filtered_scores, filtered_indices = scores[valid_mask], indices[valid_mask]
 
-        # Map integer indices → item_id strings
         candidate_items = []
         for idx, score in zip(filtered_indices, filtered_scores):
-            if idx < len(self.registry.item_ids):
+            if 0 <= idx < len(self.registry.item_ids):
                 item_id = self.registry.item_ids[idx]
-                if item_id not in excluded_ids:
-                    candidate_items.append((item_id, float(score)))
+                if item_id and item_id not in excluded_ids:
+                    candidate_items.append((str(item_id), float(score)))
 
-        # Score threshold filter
-        candidate_items = [
-            (iid, s) for iid, s in candidate_items
-            if s >= self.settings.score_threshold
-        ]
+        if not candidate_items:
+            return [], timings, is_cold_start
 
-        # Limit to top_k
-        candidate_items = candidate_items[:top_k * 2]
+        threshold = getattr(self.settings, "score_threshold", 0.0) or 0.0
+        candidate_items = [(iid, s) for iid, s in candidate_items if s >= threshold]
+        candidate_items = candidate_items[:500]  # Keep wide pool for re-ranking
 
         # ── Step 5: Fetch Item Metadata ──────────────────────────
-        item_metadata = self._fetch_item_metadata(
-            item_ids = [iid for iid, _ in candidate_items]
-        )
+        item_metadata = self._fetch_item_metadata([iid for iid, _ in candidate_items]) or {}
 
-        # ── Step 6: Apply Category Filter & Format Results ───────
+        # ── Step 5.5: Category Boost & Re-Rank ───────────────────
+        user_fav_cat = str(raw_features.get("user_favorite_category", "")).lower().strip()
+
+        boosted_candidates = []
+        for item_id, score in candidate_items:
+            meta = item_metadata.get(item_id, {}) or {}
+            item_cat = str(meta.get("category", "")).lower().strip()
+
+            if user_fav_cat and item_cat and user_fav_cat == item_cat:
+                score += 0.40  # Strong boost to jump ahead of tight FAISS margins
+                logger.debug(f"🔥 Category boost applied | item={item_id} | cat={item_cat} | {score-0.40:.4f} → {score:.4f}")
+
+            boosted_candidates.append((item_id, score, meta))
+
+        # Re-sort by boosted score (descending)
+        boosted_candidates.sort(key=lambda x: x[1], reverse=True)
+
+        # ── Step 6: Format Results ───────────────────────────────
         recommendations = []
         rank = 1
 
-        for item_id, score in candidate_items:
+        for item_id, score, meta in boosted_candidates:
             if len(recommendations) >= top_k:
                 break
 
-            meta = item_metadata.get(item_id, {})
-
-            # Category filter (applied here, not in FAISS)
             if request.category_filter:
                 item_cat = meta.get("category", "")
-                if item_cat.lower() != request.category_filter.lower():
+                if str(item_cat).lower() != str(request.category_filter).lower():
                     continue
 
             recommendations.append(RecommendedItem(
@@ -217,18 +214,7 @@ class RecommendationEngine:
             ))
             rank += 1
 
-        logger.info(
-            f"Recommendations generated | "
-            f"user={user_id} | "
-            f"returned={len(recommendations)}/{top_k} | "
-            f"cold_start={is_cold_start} | "
-            f"feature={timings['feature_ms']:.1f}ms | "
-            f"model={timings['model_ms']:.1f}ms | "
-            f"ann={timings['ann_ms']:.1f}ms"
-        )
-
         return recommendations, timings, is_cold_start
-
     # ----------------------------------------------------------
     # ITEM METADATA
     # ----------------------------------------------------------
