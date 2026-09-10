@@ -185,6 +185,26 @@ class RecommendationEngine:
 
         # Re-sort by boosted score (descending)
         boosted_candidates.sort(key=lambda x: x[1], reverse=True)
+        
+        # If boost didn't promote any preferred items, inject fallback
+        if not any(meta.get("category","").lower() == user_fav_cat for _, _, meta in boosted_candidates[:top_k]):
+            try:
+                with self._db_engine.connect() as conn:
+                    fallback = conn.execute(
+                        text("""SELECT item_id, item_name, category, price, avg_rating 
+                                FROM feast.item_features_raw 
+                                WHERE category ILIKE :cat AND is_available = true 
+                                ORDER BY avg_rating DESC, item_view_count_7d DESC 
+                                LIMIT :lim"""),
+                        {"cat": user_fav_cat, "lim": top_k}
+                    ).fetchall()
+                    for row in fallback:
+                        boosted_candidates.append((row[0], 0.50, {
+                            "item_name": row[1], "category": row[2],
+                            "price": float(row[3]), "avg_rating": float(row[4])
+                        }))
+            except Exception:
+                pass  # Graceful degradation
 
         # ── Step 6: Format Results ───────────────────────────────
         recommendations = []
