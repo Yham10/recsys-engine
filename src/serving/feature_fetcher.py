@@ -24,6 +24,9 @@ from pathlib import Path
 from loguru import logger
 from typing import Optional
 
+import os
+import redis
+
 from feast import FeatureStore
 from tenacity import (
     retry,
@@ -90,6 +93,15 @@ class FeatureFetcher:
     ):
         self.norm_stats = norm_stats
         self._store     = self._init_feast(feast_repo_path)
+        self._redis_rt = redis.Redis(
+            host=os.getenv("REDIS_HOST", "redis"),
+            port=int(os.getenv("REDIS_PORT", 6379)),
+            db=int(os.getenv("REDIS_DB", 0)),
+            decode_responses=True,
+            socket_connect_timeout=1.0,
+            socket_timeout=1.0,
+            retry_on_timeout=True,
+        )
         logger.info("FeatureFetcher initialized")
 
     @staticmethod
@@ -172,7 +184,8 @@ class FeatureFetcher:
                         f"Feature '{key}' missing for user={user_id}, "
                         f"using default={default}"
                     )
-
+            # Merge realtime deltas on top of batch features
+            features = self._merge_realtime_deltas(user_id, features)
             return features, False
 
         except Exception as e:
@@ -275,3 +288,19 @@ class FeatureFetcher:
             return True
         except Exception:
             return False
+        
+    def _merge_realtime_deltas(self, user_id: str, batch_features: dict) -> dict:
+        """Add realtime Redis deltas to batch Feast features."""
+        try:
+            deltas = self._redis_rt.hgetall(f"realtime:user:{user_id}")
+            if not deltas:
+                return batch_features
+
+            merged = batch_features.copy()
+            merged["user_click_count_7d"] = (merged.get("user_click_count_7d") or 0) + int(deltas.get("click_delta", 0))
+            merged["user_purchase_count_30d"] = (merged.get("user_purchase_count_30d") or 0) + int(deltas.get("purchase_delta", 0))
+            merged["user_total_spend_30d"] = (merged.get("user_total_spend_30d") or 0.0) + float(deltas.get("spend_delta", 0.0))
+            return merged
+        except Exception as e:
+            logger.warning(f"Realtime delta merge failed for user={user_id}: {e}. Using batch only.")
+            return batch_features

@@ -107,6 +107,31 @@ services:
     restart: unless-stopped
 
   # ==============================================================
+  # 3.5. KAFKA CONSUMER
+  # ==============================================================
+  kafka-consumer:
+    build:
+      context: .
+      dockerfile: docker/kafka-consumer/Dockerfile
+    container_name: recsys-kafka-consumer
+    networks:
+      - recsys-network
+    depends_on:
+      kafka:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKER: "kafka:9092"
+      KAFKA_TOPIC: "user-events"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      STREAMING_CSV_PATH: "/app/data/raw/streaming_interactions.csv"
+    volumes:
+      - ./data/raw:/app/data/raw
+    restart: unless-stopped
+
+  # ==============================================================
   # 4. POSTGRESQL
   # ── FIX: port changed to 5432:5432 for consistency
   # ── FIX: healthcheck uses recsys_db (the default db)
