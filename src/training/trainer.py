@@ -37,7 +37,6 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 import torch.nn.functional as F 
-criterion = None
 
 from pathlib import Path
 from datetime import datetime
@@ -235,10 +234,9 @@ class TwoTowerTrainer:
         # Initialize model
         self.model = TwoTowerModel(self.config).to(self.device)
 
-        # Loss function — weighted BCE to handle class imbalance
-        # Positive interactions (~30%) are weighted higher
-        pos_weight = torch.tensor([3.0]).to(self.device)
-        criterion  = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+        # Loss function: InfoNCE contrastive loss (implemented in _train_epoch)
+        # BCE criterion is unused — kept as None placeholder for evaluator compatibility
+        criterion = None
 
         # Optimizer
         optimizer = Adam(
@@ -272,8 +270,8 @@ class TwoTowerTrainer:
                 "patience":       self.patience,
                 "optimizer":      "Adam",
                 "scheduler":      "ReduceLROnPlateau",
-                "loss_fn":        "BCEWithLogitsLoss",
-                "pos_weight":     2.5,
+                "loss_fn":        "InfoNCE_Contrastive",
+                "score_scale":    10.0,
                 "k_values":       str(self.k_values),
                 "device":         str(self.device),
                 "train_size":     len(train_loader.dataset),
